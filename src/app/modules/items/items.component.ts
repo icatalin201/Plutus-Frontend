@@ -1,7 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
+import { AppService } from 'src/app/services/app.service';
 import { Item } from './classes/item';
 import { FindItemsResponse } from './interfaces/find.items.response';
 import { ItemService } from './services/item.service';
@@ -15,16 +19,27 @@ export class ItemsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public displayedColumns: string[] = ['id', 'name', 'unitPrice'];
+  public displayedColumns: string[] = ['id', 'name', 'unitPrice', 'type', 'actions'];
   public data: Item[] = [];
   public dataSize: number = 100;
   public loading: boolean = true;
 
   public constructor(
-    private itemService: ItemService
+    private itemService: ItemService,
+    private dialog: MatDialog,
+    private appService: AppService,
+    private snackbar: MatSnackBar
   ) { }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    this.appService
+      .shouldReload(AppService.RELOAD_ITEMS)
+      .subscribe(
+        reload => {
+          this.paginator.page.emit();
+        }
+      )
+  }
 
   public ngAfterViewInit(): void {
     this.paginator.page
@@ -52,6 +67,35 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         this.data = res.items;
         this.dataSize = res.size;
       });
+  }
+
+  public edit(item: Item): void {
+    // this.dialog.open(EditItemComponent, { data: item });
+  }
+
+  public delete(item: Item): void {
+    const ref = this.dialog
+      .open(ConfirmationComponent, 
+        { data: 'Are you sure you want to delete this item?' });
+    ref.afterClosed()
+      .subscribe(
+        data => {
+          if (data && data.delete) {
+            this.itemService
+              .delete(item.id)
+              .subscribe(
+                res => {
+                  this.appService.reloadData(AppService.RELOAD_ITEMS);
+                  this.snackbar.open('Item deleted', 'OK', { duration: 3000 })
+                }
+              );
+          }
+        }
+      )
+  }
+
+  public add(): void {
+    // this.dialog.open(CreateItemComponent);
   }
 
 }

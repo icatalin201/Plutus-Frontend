@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
   public loading: boolean = true;
 
   public constructor(
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void { }
@@ -52,6 +54,10 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
         this.data = res.invoices;
         this.dataSize = res.size;
       });
+  }
+
+  public addInvoice(): void {
+    // this.dialog.open(CreateInvoiceComponent);
   }
 
 }

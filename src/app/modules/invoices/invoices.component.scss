@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+}
+
+.table-container {
+    position: relative;
+    margin: 10px;
+
+    .table-header {
+        h3 {
+            margin: 0;
+            padding: 10px;
+        }
+    }
+
+    .mat-table {
+        height: 300px;
+        overflow-y: auto;
+    }
+
+    .loading-shade {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

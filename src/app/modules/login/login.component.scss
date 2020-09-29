@@ -1,0 +1,31 @@
+$color-primary: #3f51b5;
+
+.login-wrapper {
+    min-height: 100vh;
+
+    .login-loading {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .login-logo {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .login-card {
+        max-width: 430px;
+        margin: 0 auto;
+
+        .login-title {
+            text-align: center;
+            color: $color-primary;
+        }
+
+        .login-field {
+            display: block;
+        }
+    }
+}
