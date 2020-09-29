@@ -1,3 +1,3 @@
 export interface EntityCreatedResponse {
-  id: number;
+  id: string;
 }
