@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.isLoggedIn = this.userService.isLoggedIn();
     this.name = this.dataService.getAppName();
+    this.userService.logoutEvent
+      .subscribe(_ => { this.isLoggedIn = false; });
   }
 
 }

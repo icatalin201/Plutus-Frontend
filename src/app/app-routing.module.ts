@@ -33,18 +33,24 @@ const routes: Routes = [
       .then(m => m.DashboardModule),
     canActivate: [ AppGuard ]
   },
-  { 
-    path: 'login', 
+  {
+    path: 'settings',
+    loadChildren: () => import('./modules/settings/settings.module')
+      .then(m => m.SettingsModule),
+    canActivate: [ AppGuard ]
+  },
+  {
+    path: 'login',
     loadChildren: () => import('./modules/login/login.module')
       .then(m => m.LoginModule),
     canActivate: [ LoginGuard ]
   },
-  { 
-    path: 'register', 
+  {
+    path: 'register',
     loadChildren: () => import('./modules/register/register.module')
       .then(m => m.RegisterModule),
     canActivate: [ LoginGuard ]
-  }
+  },
 ];
 
 @NgModule({

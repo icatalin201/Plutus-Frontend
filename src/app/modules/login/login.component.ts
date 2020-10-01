@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           console.error(err);
-          const message = err.error.message || 'Something went wrong!';
+          const message = 'Please check your credentials';
           this.loading = false;
           this.snackbar.open(message, 'Dismiss', { duration: 3000 });
         }

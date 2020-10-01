@@ -16,12 +16,12 @@ export class InvoiceService {
   ) { }
 
   public findAll(page: Page): Observable<FindInvoicesResponse> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.get(`/invoices?page=${page.number}&size=${page.size}`, token);
   }
 
   public create(request: CreateInvoiceRequest): Observable<EntityCreatedResponse> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.post(`/invoices`, request, token);
   }
 }

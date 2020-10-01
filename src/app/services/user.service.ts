@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { LoggedUser } from '../interfaces/logged.user';
 
 @Injectable({
@@ -6,24 +6,33 @@ import { LoggedUser } from '../interfaces/logged.user';
 })
 export class UserService {
 
-  private readonly LOGGED_USER_FLAG = 'plutus.logged.user.flag';
+  private readonly USER_EMAIL_FLAG = 'plutus.user.email';
+  private readonly USER_TOKEN_FLAG = 'plutus.user.token';
+
+  @Output()
+  public logoutEvent = new EventEmitter();
 
   public constructor() { }
 
   public isLoggedIn(): boolean {
-    return this.getLoggedUser() !== null;
+    return this.getToken() !== null;
   }
 
   public storeLoggedUser(user: LoggedUser): void {
-    const u = JSON.stringify(user);
-    localStorage.setItem(this.LOGGED_USER_FLAG, u);
+    localStorage.setItem(this.USER_EMAIL_FLAG, user.email);
+    localStorage.setItem(this.USER_TOKEN_FLAG, user.token);
   }
 
-  public getLoggedUser(): LoggedUser | null {
-    const u = localStorage.getItem(this.LOGGED_USER_FLAG);
-    if (u === null) {
-      return null;
-    }
-    return JSON.parse(u);
+  public getEmail(): string | null {
+    return localStorage.getItem(this.USER_EMAIL_FLAG);
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem(this.USER_TOKEN_FLAG);
+  }
+
+  public logout(): void {
+    localStorage.removeItem(this.USER_TOKEN_FLAG);
+    this.logoutEvent.emit();
   }
 }

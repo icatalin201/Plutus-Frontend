@@ -18,27 +18,27 @@ export class PartnerService {
   ) { }
 
   public findAll(page: Page): Observable<FindPartnersResponse> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.get(`/partners?page=${page.number}&size=${page.size}`, token);
   }
 
   public findById(id: number): Observable<FindPartnerResponse> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.get(`/partners/${id}`, token);
   }
 
   public create(partner: CreatePartnerRequest): Observable<EntityCreatedResponse> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.post('/partners', partner, token);
   }
 
   public update(id: number, partner: UpdatePartnerRequest): Observable<any> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.put(`/partners/${id}`, partner, token);
   }
 
   public delete(id: number): Observable<any> {
-    const token = this.userService.getLoggedUser().token;
+    const token = this.userService.getToken();
     return this.httpService.delete(`/partners/${id}`, token);
   }
 
