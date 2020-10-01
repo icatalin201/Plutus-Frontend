@@ -1,0 +1,58 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Create item</h1>
+
+        <form [formGroup]="requestForm">
+            <div formGroupName="item" class="flex row wrap">
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" required matInput name="name">
+                    <mat-error>Enter a valid name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Code</mat-label>
+                    <input formControlName="code" matInput name="code">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Unit price</mat-label>
+                    <input formControlName="unitPrice" required matInput type="number" name="unitPrice">
+                    <mat-error>Enter a valid price</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>VAT</mat-label>
+                    <mat-select formControlName="vat" required>
+                        <mat-option value="0.00">0 %</mat-option>
+                        <mat-option value="5.00">5.00 %</mat-option>
+                        <mat-option value="9.00">9.00 %</mat-option>
+                        <mat-option value="19.00">19.00 %</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Unit of measure</mat-label>
+                    <input formControlName="uom" matInput name="uom">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type" required>
+                        <mat-option value="PRODUCT">Product</mat-option>
+                        <mat-option value="SERVICE">Service</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-10">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
+            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+        </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+</div>
+  

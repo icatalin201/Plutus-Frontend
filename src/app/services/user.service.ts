@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { LoggedUser } from '../interfaces/logged.user';
 
 @Injectable({
@@ -8,9 +8,6 @@ export class UserService {
 
   private readonly USER_EMAIL_FLAG = 'plutus.user.email';
   private readonly USER_TOKEN_FLAG = 'plutus.user.token';
-
-  @Output()
-  public logoutEvent = new EventEmitter();
 
   public constructor() { }
 
@@ -33,6 +30,5 @@ export class UserService {
 
   public logout(): void {
     localStorage.removeItem(this.USER_TOKEN_FLAG);
-    this.logoutEvent.emit();
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,15 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 export class SettingsComponent implements OnInit {
 
   public constructor(
-    private userService: UserService,
-    private router: Router
+    private userService: UserService
   ) { }
 
   public ngOnInit(): void { }
 
   public logout(): void {
     this.userService.logout();
-    this.router.navigateByUrl('/login', { replaceUrl: true });
+    location.reload();
   }
 
 }

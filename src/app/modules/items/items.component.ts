@@ -1,3 +1,4 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,20 +8,30 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { AppService } from 'src/app/services/app.service';
 import { Item } from './classes/item';
+import { CreateItemComponent } from './components/create-item/create-item.component';
+import { EditItemComponent } from './components/edit-item/edit-item.component';
 import { FindItemsResponse } from './interfaces/find.items.response';
 import { ItemService } from './services/item.service';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss']
+  styleUrls: ['./items.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ItemsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public displayedColumns: string[] = ['id', 'name', 'unitPrice', 'type', 'actions'];
+  public columnsToDisplay: string[] = ['id', 'name', 'type'];
   public data: Item[] = [];
+  public expandedElement: Item | null;
   public dataSize: number = 100;
   public loading: boolean = true;
 
@@ -70,7 +81,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   public edit(item: Item): void {
-    // this.dialog.open(EditItemComponent, { data: item });
+    this.dialog.open(EditItemComponent, { data: item });
   }
 
   public delete(item: Item): void {
@@ -80,7 +91,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     ref.afterClosed()
       .subscribe(
         data => {
-          if (data && data.delete) {
+          if (data && data.confirm) {
             this.itemService
               .delete(item.id)
               .subscribe(
@@ -95,7 +106,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   public add(): void {
-    // this.dialog.open(CreateItemComponent);
+    this.dialog.open(CreateItemComponent);
   }
 
 }

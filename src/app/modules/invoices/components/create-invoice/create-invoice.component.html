@@ -1,0 +1,107 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Create invoice</h1>
+
+        <form [formGroup]="requestForm">
+            <div formGroupName="invoice" class="flex row wrap">
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Partner</mat-label>
+                    <mat-select formControlName="partner" required>
+                        <mat-option [value]="partner.id" *ngFor="let partner of partners">{{partner.name}}</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error>Choose a valid partner</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Serial</mat-label>
+                    <mat-select formControlName="serial" required>
+                        <mat-option [value]="serial.id" *ngFor="let serial of serials">{{serial.name}}</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>text_format</mat-icon>
+                    <mat-error>Choose a valid serial</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Date</mat-label>
+                    <input matInput required formControlName="date" [matDatepicker]="date">
+                    <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                    <mat-datepicker #date></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Due date</mat-label>
+                    <input matInput required formControlName="dueDate" [matDatepicker]="dueDate">
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type" required>
+                        <mat-option value="INCOME">Income</mat-option>
+                        <mat-option value="EXPENSE">Expense</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>amp_stories</mat-icon>
+                    <mat-error>Choose a valid type</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Currency</mat-label>
+                    <mat-select formControlName="currency" required>
+                        <mat-option value="RON">RON</mat-option>
+                        <mat-option value="EUR">EUR</mat-option>
+                        <mat-option value="USD">USD</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>attach_money</mat-icon>
+                    <mat-error>Choose a valid type</mat-error>
+                </mat-form-field>
+                <div class="flex-10 pt-1 pb-1 flex row justify-between align-center">
+                    Invoice Lines
+                    <button type="button" mat-button color="primary" (click)="addLine()">Add</button>
+                </div>
+                <div formArrayName="lines" style="width: 100%;">
+                    <div class="flex row wrap" *ngFor="let line of getLines(); index as i" [formGroupName]="i">
+                        <mat-form-field appearance="fill" style="flex: 1">
+                            <mat-label>Item</mat-label>
+                            <mat-select formControlName="item" required>
+                                <mat-option [value]="item.id"
+                                    (click)="onSelectItem(item, line)" 
+                                    *ngFor="let item of items">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Choose a valid item</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="flex: 1">
+                            <mat-label>Quantity</mat-label>
+                            <input formControlName="quantity" required matInput name="quantity">
+                            <mat-error>Enter a valid quantity</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="flex: 1">
+                            <mat-label>VAT (percentage)</mat-label>
+                            <input formControlName="vat" required matInput name="vat">
+                            <mat-error>Enter a valid vat</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="flex: 1">
+                            <mat-label>Unit of measure</mat-label>
+                            <input formControlName="uom" matInput name="uom">
+                            <mat-error>Enter a valid uom</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="flex: 1">
+                            <mat-label>Unit price</mat-label>
+                            <input formControlName="price" required matInput name="price">
+                            <mat-error>Enter a valid price</mat-error>
+                        </mat-form-field>
+                        <button type="button" mat-button color="warn" (click)="deleteLine(line)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
+            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+        </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+</div>
+  

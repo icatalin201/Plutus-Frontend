@@ -7,6 +7,8 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { AppService } from 'src/app/services/app.service';
 import { Partner } from './classes/partner';
+import { CreatePartnerComponent } from './components/create-partner/create-partner.component';
+import { EditPartnerComponent } from './components/edit-partner/edit-partner.component';
 import { FindPartnersResponse } from './interfaces/find.partners.response';
 import { PartnerService } from './services/partner.service';
 
@@ -19,10 +21,11 @@ export class PartnersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public displayedColumns: string[] = ['id', 'name', 'email', 'type', 'actions'];
+  public columnsToDisplay: string[] = ['id', 'name', 'email',];
   public data: Partner[] = [];
   public dataSize: number = 100;
   public loading: boolean = true;
+  public expandedElement: Partner | null;
 
   public constructor(
     private partnerService: PartnerService,
@@ -70,7 +73,7 @@ export class PartnersComponent implements OnInit, AfterViewInit {
   }
 
   public edit(partner: Partner): void {
-    // this.dialog.open(EditPartnerComponent, { data: partner });
+    this.dialog.open(EditPartnerComponent, { data: partner });
   }
 
   public delete(partner: Partner): void {
@@ -95,7 +98,7 @@ export class PartnersComponent implements OnInit, AfterViewInit {
   }
 
   public add(): void {
-    // this.dialog.open(CreatePartnerComponent);
+    this.dialog.open(CreatePartnerComponent);
   }
 
 }

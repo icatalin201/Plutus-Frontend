@@ -3,8 +3,10 @@ import { ItemType } from './item.type';
 export class Item {
   id: number;
   name: string;
+  description: string;
   unitPrice: number;
   vat: number;
+  code: string;
   totalPrice: number;
   type: ItemType;
   uom: string;

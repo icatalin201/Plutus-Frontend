@@ -3,14 +3,14 @@ import { CreateInvoiceLineDto } from './create.invoice.line';
 
 export class CreateInvoiceDto {
   partner: number;
-  date: Date;
-  dueDate: Date;
+  date: string;
+  dueDate: string;
   currency: Currency;
   lines: CreateInvoiceLineDto[];
 
   constructor() {
-    this.date = new Date();
-    this.dueDate = new Date();
+    this.date = new Date().toISOString();
+    this.dueDate = new Date().toISOString();
     this.currency = Currency.RON;
     this.lines = [];
   }

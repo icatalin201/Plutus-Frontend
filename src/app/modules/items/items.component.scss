@@ -1,10 +1,10 @@
-table {
-    width: 100%;
-  }
-
 .table-container {
     position: relative;
     margin: 10px;
+
+    table {
+      width: 100%;
+    }
 
     .table-header {
       h3 {
@@ -13,9 +13,30 @@ table {
       }
     }
 
-    .mat-table {
-        height: 300px;
-        overflow-y: auto;
+    .element-detail {
+      overflow: hidden;
+      display: flex;
+    }
+
+    tr.element-detail-row {
+      height: 0 !important;
+      background-color: #efefef;
+    }
+
+    .element-row {
+      cursor: pointer;
+    }
+
+    .element-row:not(.element-expanded-row):hover {
+      background: whitesmoke;
+    }
+    
+    .element-row:not(.element-expanded-row):active {
+      background: #efefef;
+    }
+
+    .element-row td {
+      border-bottom-width: 0;
     }
 
     .loading-shade {

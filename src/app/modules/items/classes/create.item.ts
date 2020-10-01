@@ -5,5 +5,7 @@ export class CreateItem {
   unitPrice: number;
   vat: number;
   uom: string;
+  code: string;
+  description: string;
   type: ItemType
 }

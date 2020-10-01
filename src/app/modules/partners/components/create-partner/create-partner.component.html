@@ -1,0 +1,56 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Create partner</h1>
+
+        <form [formGroup]="requestForm">
+            <div class="flex row wrap pt-1" formGroupName="partner">
+                <mat-card-subtitle class="flex-10" style="text-align: right;">
+                    Partner info
+                </mat-card-subtitle>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>First name</mat-label>
+                    <input formControlName="firstName" required matInput type="text" name="firstName">
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error>Enter a valid name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Last name</mat-label>
+                    <input formControlName="lastName" required matInput type="text" name="lastName">
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error>Enter a valid name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" required matInput type="email" name="email">
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error>Enter a valid email</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Phone</mat-label>
+                    <input formControlName="phone" matInput type="text" name="phone">
+                    <mat-icon matSuffix>phone</mat-icon>
+                    <mat-error>Enter a valid phone</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-10">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type" required>
+                        <mat-option value="CLIENT">Client</mat-option>
+                        <mat-option value="VENDOR">Vendor</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>amp_stories</mat-icon>
+                    <mat-error>Choose a valid business type</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
+            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+        </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+</div>
+  

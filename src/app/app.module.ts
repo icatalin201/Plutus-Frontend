@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,10 +15,10 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
