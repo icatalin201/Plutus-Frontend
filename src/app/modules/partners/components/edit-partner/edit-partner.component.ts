@@ -3,7 +3,10 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from 'src/app/services/app.service';
+import { Bank } from '../../classes/bank';
+import { Country } from '../../classes/country';
 import { Partner } from '../../classes/partner';
+import { UpdatePartnerRequest } from '../../interfaces/update.partner.request';
 import { PartnerService } from '../../services/partner.service';
 
 @Component({
@@ -14,20 +17,29 @@ import { PartnerService } from '../../services/partner.service';
 export class EditPartnerComponent implements OnInit {
 
   public loading: boolean = false;
+  public banks: Bank[] = [];
+  public countries: Country[] = [];
   public requestForm = this.formBuilder.group({
     partner: this.formBuilder.group({
       name: ['', Validators.compose([
-        Validators.pattern("^[a-zA-Z ]{2,30}$"), 
+        Validators.pattern("^[a-zA-Z ]{2,30}$"),
         Validators.required
       ])],
       email: ['', Validators.compose([
-        Validators.email, 
+        Validators.email,
         Validators.required
       ])],
+      type: ['CLIENT', Validators.required],
+      businessType: ['INDIVIDUAL', Validators.required],
       phone: ['', Validators.pattern("^[0-9]{10}$")],
-      type: ['CLIENT', Validators.required]
+      countryCode: ['RO', Validators.required],
+      bankId: [''],
+      address: [''],
+      vat: [''],
+      bankAccount: [''],
+      commercialRegistry: [''],
+      termInDays: [''],
     }),
-
   });
   private partner: Partner;
 
@@ -48,7 +60,15 @@ export class EditPartnerComponent implements OnInit {
         name: this.partner.name,
         email: this.partner.email,
         phone: this.partner.phone,
-        type: this.partner.type
+        type: this.partner.type,
+        businessType: this.partner.businessType,
+        countryCode: this.partner.country.code,
+        address: this.partner.address,
+        bankAccount: this.partner.bankAccount,
+        bankId: this.partner.bank.id || null,
+        vat: this.partner.vat,
+        commercialRegistry: this.partner.commercialRegistry,
+        termInDays: this.partner.termInDays
       },
     }
     this.requestForm.setValue(formValue);
@@ -56,7 +76,9 @@ export class EditPartnerComponent implements OnInit {
 
   public update(): void {
     this.loading = true;
-    this.partnerService.update(this.partner.id, this.requestForm.value)
+    const request: UpdatePartnerRequest = this.requestForm.value;
+    this.partnerService
+      .update(this.partner.id, request)
       .subscribe(
         r => {
           this.loading = false;

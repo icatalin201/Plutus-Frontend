@@ -22,7 +22,7 @@ export class PartnerService {
     return this.httpService.get(`/partners?page=${page.number}&size=${page.size}`, token);
   }
 
-  public findById(id: number): Observable<FindPartnerResponse> {
+  public findById(id: string): Observable<FindPartnerResponse> {
     const token = this.userService.getToken();
     return this.httpService.get(`/partners/${id}`, token);
   }
@@ -32,12 +32,12 @@ export class PartnerService {
     return this.httpService.post('/partners', partner, token);
   }
 
-  public update(id: number, partner: UpdatePartnerRequest): Observable<any> {
+  public update(id: string, partner: UpdatePartnerRequest): Observable<any> {
     const token = this.userService.getToken();
     return this.httpService.put(`/partners/${id}`, partner, token);
   }
 
-  public delete(id: number): Observable<any> {
+  public delete(id: string): Observable<any> {
     const token = this.userService.getToken();
     return this.httpService.delete(`/partners/${id}`, token);
   }

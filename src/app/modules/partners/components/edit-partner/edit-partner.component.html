@@ -5,36 +5,73 @@
 
         <form [formGroup]="requestForm">
             <div class="flex row wrap pt-1" formGroupName="partner">
-                <mat-card-subtitle class="flex-10" style="text-align: right;">
-                    Partner info
-                </mat-card-subtitle>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Name</mat-label>
-                    <input formControlName="name" required matInput type="text" name="name">
-                    <mat-icon matSuffix>person</mat-icon>
-                    <mat-error>Enter a valid name</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="email" required matInput type="email" name="email">
-                    <mat-icon matSuffix>email</mat-icon>
-                    <mat-error>Enter a valid email</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Phone</mat-label>
-                    <input formControlName="phone" matInput type="text" name="phone">
-                    <mat-icon matSuffix>phone</mat-icon>
-                    <mat-error>Enter a valid phone</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Type</mat-label>
-                    <mat-select formControlName="type" required>
-                        <mat-option value="CLIENT">Client</mat-option>
-                        <mat-option value="VENDOR">Vendor</mat-option>
-                    </mat-select>
-                    <mat-icon matSuffix>amp_stories</mat-icon>
-                    <mat-error>Choose a valid business type</mat-error>
-                </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                  <mat-label>Name</mat-label>
+                  <input formControlName="name" required matInput type="text" name="name">
+                  <mat-error>Enter a valid name</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                  <mat-label>Email</mat-label>
+                  <input formControlName="email" required matInput type="email" name="email">
+                  <mat-error>Enter a valid email</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                  <mat-label>Type</mat-label>
+                  <mat-select formControlName="type" required>
+                      <mat-option value="CLIENT">Client</mat-option>
+                      <mat-option value="VENDOR">Vendor</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Business type</mat-label>
+                <mat-select formControlName="businessType" required>
+                    <mat-option value="INDIVIDUAL">Individual</mat-option>
+                    <mat-option value="LEGAL">Legal</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                  <mat-label>Phone</mat-label>
+                  <input formControlName="phone" matInput type="text" name="phone">
+                  <mat-error>Enter a valid phone</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="countryCode" required>
+                  <mat-option *ngFor="let country of countries"
+                    [value]="country.code">
+                    {{country.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Address</mat-label>
+                <input formControlName="address" matInput name="address">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>VAT</mat-label>
+                <input formControlName="vat" matInput name="vat">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Bank</mat-label>
+                <mat-select formControlName="bankId">
+                  <mat-option *ngFor="let bank of banks"
+                    [value]="bank.id">
+                    {{bank.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Bank Account</mat-label>
+                <input formControlName="bankAccount" matInput name="bankAccount">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Commercial Registry</mat-label>
+                <input formControlName="commercialRegistry" matInput name="commercialRegistry">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="flex-5">
+                <mat-label>Term (in days)</mat-label>
+                <input formControlName="termInDays" matInput name="termInDays">
+              </mat-form-field>
             </div>
         </form>
 
@@ -47,4 +84,3 @@
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
 </div>
-  

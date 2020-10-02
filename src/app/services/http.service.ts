@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class HttpService {
   private readonly APP_CONTENT_TYPE: string = environment.contentType;
 
   public constructor(
-    private readonly client: HttpClient
+    private readonly client: HttpClient,
+    private readonly userService: UserService
   ) { }
 
   public get<T>(
@@ -63,7 +65,10 @@ export class HttpService {
   }
 
   private onError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 401 || error.status === 403) { }
+    if (error.status === 401 || error.status === 403) {
+      this.userService.logout();
+      location.reload();
+    }
     return throwError(error);
   }
 

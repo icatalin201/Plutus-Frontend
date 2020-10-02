@@ -22,7 +22,7 @@ export class ItemService {
     return this.httpService.get(`/items?page=${page.number}&size=${page.size}`, token);
   }
 
-  public findById(id: number): Observable<FindItemResponse> {
+  public findById(id: string): Observable<FindItemResponse> {
     const token = this.userService.getToken();
     return this.httpService.get(`/items/${id}`, token);
   }
@@ -32,12 +32,12 @@ export class ItemService {
     return this.httpService.post('/items', item, token);
   }
 
-  public update(id: number, item: UpdateItemRequest): Observable<any> {
+  public update(id: string, item: UpdateItemRequest): Observable<any> {
     const token = this.userService.getToken();
     return this.httpService.put(`/items/${id}`, item, token);
   }
 
-  public delete(id: number): Observable<any> {
+  public delete(id: string): Observable<any> {
     const token = this.userService.getToken();
     return this.httpService.delete(`/items/${id}`, token);
   }

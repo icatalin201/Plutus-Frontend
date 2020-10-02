@@ -3,6 +3,9 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from 'src/app/services/app.service';
+import { Bank } from '../../classes/bank';
+import { Country } from '../../classes/country';
+import { CreatePartnerRequest } from '../../interfaces/create.partner.request';
 import { PartnerService } from '../../services/partner.service';
 
 @Component({
@@ -13,27 +16,29 @@ import { PartnerService } from '../../services/partner.service';
 export class CreatePartnerComponent implements OnInit {
 
   public loading: boolean = false;
+  public banks: Bank[] = [];
+  public countries: Country[] = [];
   public requestForm = this.formBuilder.group({
     partner: this.formBuilder.group({
-      firstName: ['', Validators.compose([Validators.pattern("^[a-zA-Z ]{2,30}$"), Validators.required])],
-      lastName: ['', Validators.compose([Validators.pattern("^[a-zA-Z ]{2,30}$"), Validators.required])],
-      email: ['', Validators.compose([Validators.email, Validators.required])],
+      name: ['', Validators.compose([
+        Validators.pattern("^[a-zA-Z ]{2,30}$"),
+        Validators.required
+      ])],
+      email: ['', Validators.compose([
+        Validators.email,
+        Validators.required
+      ])],
+      type: ['CLIENT', Validators.required],
+      businessType: ['INDIVIDUAL', Validators.required],
       phone: ['', Validators.pattern("^[0-9]{10}$")],
-      type: ['CLIENT', Validators.required]
+      countryCode: ['RO', Validators.required],
+      bankId: [''],
+      address: [''],
+      vat: [''],
+      bankAccount: [''],
+      commercialRegistry: [''],
+      termInDays: [''],
     }),
-    business: this.formBuilder.group({
-      type: ['', Validators.required],
-      name: ['', Validators.compose([Validators.pattern("^[a-zA-Z ]{2,30}$"), Validators.required])],
-      cui: ['', Validators.compose([Validators.pattern('^[0-9]{8}$'), Validators.required])],
-      iban: ['', Validators.compose([Validators.pattern('^[0-9A-Z]{24}$'), Validators.required])],
-      regCom: ['', Validators.required],
-      address: this.formBuilder.group({
-        name: ['', Validators.required],
-        city: ['', Validators.required],
-        countyId: [0, Validators.required],
-        zip: ['', Validators.pattern('^[0-9]{6,10}$')]
-      })
-    })
   });
 
   public constructor(
@@ -48,7 +53,9 @@ export class CreatePartnerComponent implements OnInit {
 
   public create(): void {
     this.loading = true;
-    this.partnerService.create(this.requestForm.value)
+    const request: CreatePartnerRequest = this.requestForm.value;
+    this.partnerService
+      .create(request)
       .subscribe(
         r => {
           this.loading = false;

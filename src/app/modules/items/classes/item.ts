@@ -1,7 +1,7 @@
 import { ItemType } from './item.type';
 
 export class Item {
-  id: number;
+  id: string;
   name: string;
   description: string;
   unitPrice: number;
