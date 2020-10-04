@@ -1,6 +1,6 @@
-import { Bank } from './bank';
+import { Bank } from 'src/app/classes/bank';
+import { Country } from 'src/app/classes/country';
 import { BusinessType } from './business.type';
-import { Country } from './country';
 import { PartnerType } from './partner.type';
 
 export class Partner {

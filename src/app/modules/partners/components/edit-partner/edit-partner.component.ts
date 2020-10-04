@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Bank } from 'src/app/classes/bank';
+import { Country } from 'src/app/classes/country';
 import { AppService } from 'src/app/services/app.service';
-import { Bank } from '../../classes/bank';
-import { Country } from '../../classes/country';
+import { DataService } from 'src/app/services/data.service';
 import { Partner } from '../../classes/partner';
 import { UpdatePartnerRequest } from '../../interfaces/update.partner.request';
 import { PartnerService } from '../../services/partner.service';
@@ -45,6 +46,7 @@ export class EditPartnerComponent implements OnInit {
 
   public constructor(
     private appService: AppService,
+    private dataService: DataService,
     private partnerService: PartnerService,
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder,
@@ -55,6 +57,16 @@ export class EditPartnerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.dataService
+      .findBanks()
+      .subscribe(
+        res => this.banks = res.banks
+      );
+    this.dataService
+      .findCountries()
+      .subscribe(
+        res => this.countries = res.countries
+      );
     const formValue = {
       partner: {
         name: this.partner.name,
@@ -65,7 +77,7 @@ export class EditPartnerComponent implements OnInit {
         countryCode: this.partner.country.code,
         address: this.partner.address,
         bankAccount: this.partner.bankAccount,
-        bankId: this.partner.bank.id || null,
+        bankId: this.partner.bank === null ? null : this.partner.bank.id,
         vat: this.partner.vat,
         commercialRegistry: this.partner.commercialRegistry,
         termInDays: this.partner.termInDays

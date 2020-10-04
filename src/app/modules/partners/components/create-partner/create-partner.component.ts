@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Bank } from 'src/app/classes/bank';
+import { Country } from 'src/app/classes/country';
 import { AppService } from 'src/app/services/app.service';
-import { Bank } from '../../classes/bank';
-import { Country } from '../../classes/country';
+import { DataService } from 'src/app/services/data.service';
 import { CreatePartnerRequest } from '../../interfaces/create.partner.request';
 import { PartnerService } from '../../services/partner.service';
 
@@ -43,13 +44,25 @@ export class CreatePartnerComponent implements OnInit {
 
   public constructor(
     private appService: AppService,
+    private dataService: DataService,
     private partnerService: PartnerService,
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreatePartnerComponent>
   ) { }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void { 
+    this.dataService
+      .findBanks()
+      .subscribe(
+        res => this.banks = res.banks
+      );
+    this.dataService
+      .findCountries()
+      .subscribe(
+        res => this.countries = res.countries
+      );
+  }
 
   public create(): void {
     this.loading = true;
