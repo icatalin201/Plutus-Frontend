@@ -9,25 +9,57 @@
       <mat-spinner [diameter]="50" *ngIf="loading"></mat-spinner>
     </div>
   
-    <mat-table [dataSource]="data">
-  
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    <table mat-table [dataSource]="data" multiTemplateDataRows>
+
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="flex p-1" style="width: 100%;">
+              <h3>Name: {{element.name}}</h3>
+              <p>Status: {{element.status}}</p>
+              <p>Subtotal: {{element.currency}} {{element.subtotal.toFixed(2)}}</p>
+              <p>Total: {{element.currency}} {{element.total.toFixed(2)}}</p>
+              <div class="self-align-end">
+                <button mat-button 
+                  color="accent" 
+                  (click)="printInvoice(expandedElement)">
+                  Print
+                </button>
+                <button *ngIf="element.status === 'DRAFT'" 
+                  mat-button color="primary" 
+                  (click)="activateInvoice(expandedElement)">
+                  Activate
+                </button>
+                <button *ngIf="element.status === 'ACTIVE'" 
+                  mat-button color="primary" 
+                  (click)="markInvoiceAsDone(expandedElement)">
+                  Done
+                </button>
+                <button *ngIf="element.status === 'DRAFT'" 
+                  mat-button color="warn" 
+                  (click)="cancelInvoice(expandedElement)">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
       </ng-container>
   
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="total">
-        <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.total.toFixed(2)}} </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+      <tr mat-row 
+        *matRowDef="let element; columns: columnsToDisplay;"
+        class="element-row"
+        [class.element-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row class="element-detail-row" *matRowDef="let row; columns: ['expandedDetail']"></tr>
+
+    </table>
     <mat-paginator [length]="dataSize" [pageSize]="10"></mat-paginator>
   </div>

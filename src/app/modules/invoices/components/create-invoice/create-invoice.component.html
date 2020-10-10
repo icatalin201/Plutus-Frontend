@@ -1,25 +1,29 @@
 <div class="dialog-wrapper">
 
     <div class="inner-wrapper">
-        <h1>Create invoice</h1>
+        <h1>Create invoice 
+            <span *ngIf="serialName"> - {{serialName}}</span>
+        </h1>
 
         <form [formGroup]="requestForm">
             <div formGroupName="invoice" class="flex row wrap">
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Partner</mat-label>
-                    <mat-select formControlName="partner" required>
+                    <mat-label>Client</mat-label>
+                    <mat-select formControlName="partnerId" required>
                         <mat-option [value]="partner.id" *ngFor="let partner of partners">{{partner.name}}</mat-option>
                     </mat-select>
-                    <mat-icon matSuffix>person</mat-icon>
-                    <mat-error>Choose a valid partner</mat-error>
+                    <mat-error>Client is required</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Serial</mat-label>
-                    <mat-select formControlName="serial" required>
-                        <mat-option [value]="serial.id" *ngFor="let serial of serials">{{serial.name}}</mat-option>
+                    <mat-select formControlName="serialId" required>
+                        <mat-option (click)="onSelectSerial(serial)" 
+                                [value]="serial.id" 
+                                *ngFor="let serial of serials">
+                            {{serial.name}}
+                        </mat-option>
                     </mat-select>
-                    <mat-icon matSuffix>text_format</mat-icon>
-                    <mat-error>Choose a valid serial</mat-error>
+                    <mat-error>Serial name is required</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Date</mat-label>
@@ -33,34 +37,24 @@
                     <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                     <mat-datepicker #dueDate></mat-datepicker>
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Type</mat-label>
-                    <mat-select formControlName="type" required>
-                        <mat-option value="INCOME">Income</mat-option>
-                        <mat-option value="EXPENSE">Expense</mat-option>
-                    </mat-select>
-                    <mat-icon matSuffix>amp_stories</mat-icon>
-                    <mat-error>Choose a valid type</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
+                <mat-form-field appearance="fill" class="flex-10">
                     <mat-label>Currency</mat-label>
                     <mat-select formControlName="currency" required>
                         <mat-option value="RON">RON</mat-option>
                         <mat-option value="EUR">EUR</mat-option>
                         <mat-option value="USD">USD</mat-option>
                     </mat-select>
-                    <mat-icon matSuffix>attach_money</mat-icon>
                     <mat-error>Choose a valid type</mat-error>
                 </mat-form-field>
                 <div class="flex-10 pt-1 pb-1 flex row justify-between align-center">
                     Invoice Lines
-                    <button type="button" mat-button color="primary" (click)="addLine()">Add</button>
+                    <button type="button" mat-button color="primary" (click)="addLine()">Add line</button>
                 </div>
                 <div formArrayName="lines" style="width: 100%;">
-                    <div class="flex row wrap" *ngFor="let line of getLines(); index as i" [formGroupName]="i">
+                    <div class="flex row align-center" *ngFor="let line of getLines(); index as i" [formGroupName]="i">
                         <mat-form-field appearance="fill" style="flex: 1">
                             <mat-label>Item</mat-label>
-                            <mat-select formControlName="item" required>
+                            <mat-select formControlName="itemId" required>
                                 <mat-option [value]="item.id"
                                     (click)="onSelectItem(item, line)" 
                                     *ngFor="let item of items">
@@ -75,9 +69,13 @@
                             <mat-error>Enter a valid quantity</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>VAT (percentage)</mat-label>
-                            <input formControlName="vat" required matInput name="vat">
-                            <mat-error>Enter a valid vat</mat-error>
+                            <mat-label>VAT</mat-label>
+                            <mat-select formControlName="vat" required>
+                                <mat-option value="0.00">0 %</mat-option>
+                                <mat-option value="5.00">5.00 %</mat-option>
+                                <mat-option value="9.00">9.00 %</mat-option>
+                                <mat-option value="19.00">19.00 %</mat-option>
+                            </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="fill" style="flex: 1">
                             <mat-label>Unit of measure</mat-label>
@@ -86,10 +84,12 @@
                         </mat-form-field>
                         <mat-form-field appearance="fill" style="flex: 1">
                             <mat-label>Unit price</mat-label>
-                            <input formControlName="price" required matInput name="price">
+                            <input formControlName="unitPrice" required matInput name="price">
                             <mat-error>Enter a valid price</mat-error>
                         </mat-form-field>
-                        <button type="button" mat-button color="warn" (click)="deleteLine(line)">Delete</button>
+                        <button type="button" mat-icon-button color="warn" (click)="deleteLine(line)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -29,6 +29,17 @@ export class HttpService {
       .pipe(catchError(error => this.onError(error)));
   }
 
+  public getBuffer(
+    uri: string, 
+    token?: string
+  ): Observable<ArrayBuffer> {
+    const url = this.API_URL + uri;
+    const headers = this.createHeaders(token);
+    return this.client
+      .get(url, { headers, responseType: 'arraybuffer' })
+      .pipe(catchError(error => this.onError(error)));
+  }
+
   public post<T>(
     uri: string,
     body: any,

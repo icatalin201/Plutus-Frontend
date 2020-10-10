@@ -7,6 +7,8 @@ import { InvoiceService } from './services/invoice.service';
 import { MaterialModule } from '../material/material.module';
 import { CreateInvoiceComponent } from './components/create-invoice/create-invoice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PartnersModule } from '../partners/partners.module';
+import { ItemsModule } from '../items/items.module';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InvoicesRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PartnersModule,
+    ItemsModule
   ],
   providers: [
     InvoiceService

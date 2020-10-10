@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FindBanksResponse } from '../interfaces/find.banks.response';
 import { FindCountriesResponse } from '../interfaces/find.countries.response';
+import { FindSerialsResponse } from '../interfaces/find.serials.response';
 import { HttpService } from './http.service';
 import { UserService } from './user.service';
 
@@ -29,5 +30,10 @@ export class DataService {
   public findCountries(): Observable<FindCountriesResponse> {
     const token = this.userService.getToken();
     return this.httpService.get('/countries', token);
+  }
+
+  public findSerials(): Observable<FindSerialsResponse> {
+    const token = this.userService.getToken();
+    return this.httpService.get('/serials', token);
   }
 }

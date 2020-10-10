@@ -8,6 +8,7 @@ import { ItemService } from 'src/app/modules/items/services/item.service';
 import { Partner } from 'src/app/modules/partners/classes/partner';
 import { PartnerService } from 'src/app/modules/partners/services/partner.service';
 import { AppService } from 'src/app/services/app.service';
+import { DataService } from 'src/app/services/data.service';
 import { CreateInvoiceDto } from '../../classes/create.invoice';
 import { CreateInvoiceRequest } from '../../interfaces/create.invoice.request';
 import { InvoiceService } from '../../services/invoice.service';
@@ -23,21 +24,21 @@ export class CreateInvoiceComponent implements OnInit {
   public serials: Serial[] = [];
   public items: Item[] = [];
   public loading: boolean = false;
+  public serialName: string | undefined;
   public request: CreateInvoiceDto = new CreateInvoiceDto();
   public requestForm = this.formBuilder.group({
     invoice: this.formBuilder.group({
-      partner: ['', Validators.required],
-      serial: ['', Validators.required],
+      partnerId: ['', Validators.required],
+      serialId: ['', Validators.required],
       date: [new Date(), Validators.required],
       dueDate: [new Date(), Validators.required],
       currency: ['RON', Validators.required],
-      type: ['INCOME', Validators.required],
       lines: this.formBuilder.array([
         this.formBuilder.group({
-          item: [''],
-          quantity: [0],
-          vat: [0],
-          price: [0],
+          itemId: ['', Validators.required],
+          quantity: [1, Validators.required],
+          vat: ['0.00', Validators.required],
+          unitPrice: [1.00, Validators.required],
           uom: ['']
         })
       ])
@@ -47,6 +48,7 @@ export class CreateInvoiceComponent implements OnInit {
   public constructor(
     private invoiceService: InvoiceService,
     private appService: AppService,
+    private dataService: DataService,
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder,
     private partnerService: PartnerService,
@@ -58,16 +60,17 @@ export class CreateInvoiceComponent implements OnInit {
     this.partnerService
       .findAll({ size: 100, number: 0 })
       .subscribe(
-        res => {
-          this.partners = res.partners;
-        }
+        res => this.partners = res.partners
       )
     this.itemService
       .findAll({ size: 100, number: 0 })
       .subscribe(
-        res => {
-          this.items = res.items
-        }
+        res => this.items = res.items
+      )
+    this.dataService
+      .findSerials()
+      .subscribe(
+        res => this.serials = res.serials
       )
   }
 
@@ -75,10 +78,10 @@ export class CreateInvoiceComponent implements OnInit {
     const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
     const lines: FormArray = invoiceGroup.controls.lines as FormArray;
     lines.push(this.formBuilder.group({
-      item: [''],
-      quantity: [0],
-      vat: [0],
-      price: [0],
+      itemId: ['', Validators.required],
+      quantity: [1, Validators.required],
+      vat: ['0.00', Validators.required],
+      unitPrice: [1.00, Validators.required],
       uom: ['']
     }));
   }
@@ -86,6 +89,7 @@ export class CreateInvoiceComponent implements OnInit {
   public deleteLine(line: FormGroup): void {
     const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
     const lines: FormArray = invoiceGroup.controls.lines as FormArray;
+    if (lines.length === 1) return;
     lines.removeAt(lines.value.findIndex((l: any) => l === line.value));
   }
 
@@ -99,7 +103,7 @@ export class CreateInvoiceComponent implements OnInit {
       .subscribe(
         r => {
           this.loading = false;
-          this.dismiss();
+          this.dismiss(true);
           this.snackbar.open('Invoice created', 'OK', { duration: 3000 })
         },
         e => {
@@ -111,13 +115,20 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   public onSelectItem(item: Item, line: FormGroup): void {
-    line.controls.vat.setValue(item.vat);
-    line.controls.price.setValue(item.unitPrice);
+    line.controls.vat.setValue(item.vat.toFixed(2));
+    line.controls.unitPrice.setValue(item.unitPrice);
     line.controls.uom.setValue(item.uom);
   }
 
-  public dismiss(): void {
-    this.appService.reloadData(AppService.RELOAD_INVOICES);
+  public onSelectSerial(serial: Serial): void {
+    const name = ("000" + serial.nextNumber).slice(-4);
+    this.serialName = `${serial.name}${name}`
+  }
+
+  public dismiss(reload?: boolean): void {
+    if (reload) {
+      this.appService.reloadData(AppService.RELOAD_INVOICES);
+    }
     this.dialogRef.close();
   }
 

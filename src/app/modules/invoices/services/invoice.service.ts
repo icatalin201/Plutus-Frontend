@@ -24,4 +24,24 @@ export class InvoiceService {
     const token = this.userService.getToken();
     return this.httpService.post(`/invoices`, request, token);
   }
+
+  public activate(id: string): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.post(`/invoices/${id}/command/ACTIVATE`, null, token);
+  }
+
+  public markAsDone(id: string): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.post(`/invoices/${id}/command/COMPLETE`, null, token);
+  }
+
+  public cancel(id: string): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.post(`/invoices/${id}/command/CANCEL`, null, token);
+  }
+
+  public print(id: string): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.getBuffer(`/invoices/pdf/${id}`, token);
+  }
 }
