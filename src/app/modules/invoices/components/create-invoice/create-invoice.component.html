@@ -1,7 +1,7 @@
 <div class="dialog-wrapper">
 
     <div class="inner-wrapper">
-        <h1>Create invoice 
+        <h1>Create invoice
             <span *ngIf="serialName"> - {{serialName}}</span>
         </h1>
 
@@ -17,8 +17,8 @@
                 <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Serial</mat-label>
                     <mat-select formControlName="serialId" required>
-                        <mat-option (click)="onSelectSerial(serial)" 
-                                [value]="serial.id" 
+                        <mat-option (click)="onSelectSerial(serial)"
+                                [value]="serial.id"
                                 *ngFor="let serial of serials">
                             {{serial.name}}
                         </mat-option>
@@ -50,58 +50,41 @@
                     Invoice Lines
                     <button type="button" mat-button color="primary" (click)="addLine()">Add line</button>
                 </div>
-                <div formArrayName="lines" style="width: 100%;">
-                    <div class="flex row align-center" *ngFor="let line of getLines(); index as i" [formGroupName]="i">
-                        <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>Item</mat-label>
-                            <mat-select formControlName="itemId" required>
-                                <mat-option [value]="item.id"
-                                    (click)="onSelectItem(item, line)" 
-                                    *ngFor="let item of items">
-                                    {{item.name}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error>Choose a valid item</mat-error>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>Quantity</mat-label>
-                            <input formControlName="quantity" required matInput name="quantity">
-                            <mat-error>Enter a valid quantity</mat-error>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>VAT</mat-label>
-                            <mat-select formControlName="vat" required>
-                                <mat-option value="0.00">0 %</mat-option>
-                                <mat-option value="5.00">5.00 %</mat-option>
-                                <mat-option value="9.00">9.00 %</mat-option>
-                                <mat-option value="19.00">19.00 %</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>Unit of measure</mat-label>
-                            <input formControlName="uom" matInput name="uom">
-                            <mat-error>Enter a valid uom</mat-error>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" style="flex: 1">
-                            <mat-label>Unit price</mat-label>
-                            <input formControlName="unitPrice" required matInput name="price">
-                            <mat-error>Enter a valid price</mat-error>
-                        </mat-form-field>
-                        <button type="button" mat-icon-button color="warn" (click)="deleteLine(line)">
-                            <mat-icon>remove</mat-icon>
-                        </button>
-                    </div>
+                <div class="invoice-line-wrapper pb-2">
+                  <table mat-table [dataSource]="lines">
+                    <ng-container matColumnDef="item">
+                      <th mat-header-cell *matHeaderCellDef> Item </th>
+                      <td mat-cell *matCellDef="let element"> {{element.item.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                      <th mat-header-cell *matHeaderCellDef> Price </th>
+                      <td mat-cell *matCellDef="let element"> {{element.price.toFixed(2)}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="uom">
+                      <th mat-header-cell *matHeaderCellDef> UoM </th>
+                      <td mat-cell *matCellDef="let element"> {{element.uom}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="vat">
+                      <th mat-header-cell *matHeaderCellDef> VAT </th>
+                      <td mat-cell *matCellDef="let element"> {{element.vat}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnLinesToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnLinesToDisplay;"></tr>
+                  </table>
                 </div>
             </div>
         </form>
 
         <div class="flex row justify-end">
-            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
-            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+          <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
+          <button mat-button color="warn" (click)="dismiss()">Cancel</button>
         </div>
     </div>
 
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
 </div>
-  

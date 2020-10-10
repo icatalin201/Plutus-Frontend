@@ -9,10 +9,11 @@ import { CreateInvoiceComponent } from './components/create-invoice/create-invoi
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PartnersModule } from '../partners/partners.module';
 import { ItemsModule } from '../items/items.module';
+import { CreateInvoiceLineComponent } from './components/create-invoice-line/create-invoice-line.component';
 
 
 @NgModule({
-  declarations: [InvoicesComponent, CreateInvoiceComponent],
+  declarations: [InvoicesComponent, CreateInvoiceComponent, CreateInvoiceLineComponent],
   imports: [
     CommonModule,
     InvoicesRoutingModule,

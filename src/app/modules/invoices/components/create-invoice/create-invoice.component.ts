@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Serial } from 'src/app/classes/serial';
 import { Item } from 'src/app/modules/items/classes/item';
@@ -10,8 +10,11 @@ import { PartnerService } from 'src/app/modules/partners/services/partner.servic
 import { AppService } from 'src/app/services/app.service';
 import { DataService } from 'src/app/services/data.service';
 import { CreateInvoiceDto } from '../../classes/create.invoice';
+import { CreateInvoiceLineDto } from '../../classes/create.invoice.line';
+import { InvoiceLine } from '../../classes/invoice.line';
 import { CreateInvoiceRequest } from '../../interfaces/create.invoice.request';
 import { InvoiceService } from '../../services/invoice.service';
+import { CreateInvoiceLineComponent } from '../create-invoice-line/create-invoice-line.component';
 
 @Component({
   selector: 'app-create-invoice',
@@ -22,7 +25,6 @@ export class CreateInvoiceComponent implements OnInit {
 
   public partners: Partner[] = [];
   public serials: Serial[] = [];
-  public items: Item[] = [];
   public loading: boolean = false;
   public serialName: string | undefined;
   public request: CreateInvoiceDto = new CreateInvoiceDto();
@@ -33,17 +35,10 @@ export class CreateInvoiceComponent implements OnInit {
       date: [new Date(), Validators.required],
       dueDate: [new Date(), Validators.required],
       currency: ['RON', Validators.required],
-      lines: this.formBuilder.array([
-        this.formBuilder.group({
-          itemId: ['', Validators.required],
-          quantity: [1, Validators.required],
-          vat: ['0.00', Validators.required],
-          unitPrice: [1.00, Validators.required],
-          uom: ['']
-        })
-      ])
     })
   });
+  public lines = [];
+  public columnLinesToDisplay: string[] = ['item', 'price', 'quantity', 'uom', 'vat'];
 
   public constructor(
     private invoiceService: InvoiceService,
@@ -52,7 +47,7 @@ export class CreateInvoiceComponent implements OnInit {
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder,
     private partnerService: PartnerService,
-    private itemService: ItemService,
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<CreateInvoiceComponent>
   ) { }
 
@@ -62,11 +57,6 @@ export class CreateInvoiceComponent implements OnInit {
       .subscribe(
         res => this.partners = res.partners
       )
-    this.itemService
-      .findAll({ size: 100, number: 0 })
-      .subscribe(
-        res => this.items = res.items
-      )
     this.dataService
       .findSerials()
       .subscribe(
@@ -75,27 +65,33 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   public addLine(): void {
-    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
-    const lines: FormArray = invoiceGroup.controls.lines as FormArray;
-    lines.push(this.formBuilder.group({
-      itemId: ['', Validators.required],
-      quantity: [1, Validators.required],
-      vat: ['0.00', Validators.required],
-      unitPrice: [1.00, Validators.required],
-      uom: ['']
-    }));
+    const ref = this.dialog.open(CreateInvoiceLineComponent);
+    ref.afterClosed()
+      .subscribe(data => {
+        if (data) {
+          this.lines.push(data);
+          this.lines = [...this.lines];
+        }
+      })
   }
 
-  public deleteLine(line: FormGroup): void {
-    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
-    const lines: FormArray = invoiceGroup.controls.lines as FormArray;
-    if (lines.length === 1) return;
-    lines.removeAt(lines.value.findIndex((l: any) => l === line.value));
+  public deleteLine(line: any): void {
+    this.lines.splice(this.lines.indexOf(line), 1);
   }
 
   public create(): void {
     this.loading = true;
     const request: CreateInvoiceRequest = this.requestForm.value;
+    const lines: CreateInvoiceLineDto[] = [];
+    this.lines.forEach(line => {
+      const element = new CreateInvoiceLineDto();
+      element.itemId = line.item.id;
+      element.price = line.price;
+      element.quantity = line.quantity;
+      element.uom = line.uom;
+      element.vat = line.vat;
+    })
+    request.invoice.lines = lines;
     request.invoice.date = new Date(request.invoice.date).toISOString().split("T")[0];
     request.invoice.dueDate = new Date(request.invoice.dueDate).toISOString().split("T")[0];
     this.invoiceService
@@ -114,12 +110,6 @@ export class CreateInvoiceComponent implements OnInit {
       );
   }
 
-  public onSelectItem(item: Item, line: FormGroup): void {
-    line.controls.vat.setValue(item.vat.toFixed(2));
-    line.controls.unitPrice.setValue(item.unitPrice);
-    line.controls.uom.setValue(item.uom);
-  }
-
   public onSelectSerial(serial: Serial): void {
     const name = ("000" + serial.nextNumber).slice(-4);
     this.serialName = `${serial.name}${name}`
@@ -130,12 +120,6 @@ export class CreateInvoiceComponent implements OnInit {
       this.appService.reloadData(AppService.RELOAD_INVOICES);
     }
     this.dialogRef.close();
-  }
-
-  public getLines(): any[] {
-    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
-    const lines: FormArray = invoiceGroup.controls.lines as FormArray;
-    return lines.controls;
   }
 
 }
