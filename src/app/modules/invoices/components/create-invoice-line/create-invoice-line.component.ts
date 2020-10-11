@@ -16,7 +16,7 @@ export class CreateInvoiceLineComponent implements OnInit {
     item: ['', Validators.required],
     quantity: [1, Validators.required],
     vat: ['0.00', Validators.required],
-    price: [1.00, Validators.required],
+    price: ['1.00', Validators.required],
     uom: ['']
   });
 
@@ -44,7 +44,7 @@ export class CreateInvoiceLineComponent implements OnInit {
 
   public onSelectItem(item: Item): void {
     this.lineForm.controls.vat.setValue(item.vat.toFixed(2));
-    this.lineForm.controls.price.setValue(item.unitPrice);
+    this.lineForm.controls.price.setValue(item.unitPrice.toFixed(2));
     this.lineForm.controls.uom.setValue(item.uom);
   }
 

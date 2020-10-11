@@ -1,15 +1,31 @@
 .table-container {
     position: relative;
-    margin: 10px;
+    margin: 12px;
 
     table {
       width: 100%;
     }
 
     .table-header {
+      background: #ffffff;
       h3 {
-          margin: 0;
-          padding: 10px;
+        margin: 0;
+        padding: 12px 12px 12px 24px;
+        font-weight: 500;
+      }
+
+      button {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    .table-footer {
+      background: #ffffff;
+
+      button {
+        padding-left: 24px;
+        padding-right: 24px;
       }
     }
 

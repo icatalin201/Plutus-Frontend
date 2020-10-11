@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Serial } from 'src/app/classes/serial';
-import { Item } from 'src/app/modules/items/classes/item';
-import { ItemService } from 'src/app/modules/items/services/item.service';
 import { Partner } from 'src/app/modules/partners/classes/partner';
 import { PartnerService } from 'src/app/modules/partners/services/partner.service';
 import { AppService } from 'src/app/services/app.service';
 import { DataService } from 'src/app/services/data.service';
 import { CreateInvoiceDto } from '../../classes/create.invoice';
 import { CreateInvoiceLineDto } from '../../classes/create.invoice.line';
-import { InvoiceLine } from '../../classes/invoice.line';
 import { CreateInvoiceRequest } from '../../interfaces/create.invoice.request';
 import { InvoiceService } from '../../services/invoice.service';
 import { CreateInvoiceLineComponent } from '../create-invoice-line/create-invoice-line.component';
@@ -38,7 +35,7 @@ export class CreateInvoiceComponent implements OnInit {
     })
   });
   public lines = [];
-  public columnLinesToDisplay: string[] = ['item', 'price', 'quantity', 'uom', 'vat'];
+  public columnLinesToDisplay: string[] = ['item', 'price', 'quantity', 'uom', 'vat', 'actions'];
 
   public constructor(
     private invoiceService: InvoiceService,
@@ -64,6 +61,16 @@ export class CreateInvoiceComponent implements OnInit {
       )
   }
 
+  public getTotalPrice(): string {
+    return this.lines
+      .map(line => {
+        const subtotal = line.price * line.quantity;
+        return line.vat * subtotal + subtotal;
+      })
+      .reduce((acc, value) => acc + value, 0)
+      .toFixed(2);
+  }
+
   public addLine(): void {
     const ref = this.dialog.open(CreateInvoiceLineComponent);
     ref.afterClosed()
@@ -77,6 +84,7 @@ export class CreateInvoiceComponent implements OnInit {
 
   public deleteLine(line: any): void {
     this.lines.splice(this.lines.indexOf(line), 1);
+    this.lines = [...this.lines];
   }
 
   public create(): void {
@@ -86,10 +94,11 @@ export class CreateInvoiceComponent implements OnInit {
     this.lines.forEach(line => {
       const element = new CreateInvoiceLineDto();
       element.itemId = line.item.id;
-      element.price = line.price;
+      element.unitPrice = line.price;
       element.quantity = line.quantity;
       element.uom = line.uom;
       element.vat = line.vat;
+      lines.push(element);
     })
     request.invoice.lines = lines;
     request.invoice.date = new Date(request.invoice.date).toISOString().split("T")[0];
@@ -108,6 +117,14 @@ export class CreateInvoiceComponent implements OnInit {
           this.snackbar.open(message, 'Dismiss', { duration: 3000 })
         }
       );
+  }
+
+  public onSelectPartner(partner: Partner): void {
+    const days = partner.termInDays || 0;
+    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
+    const date = invoiceGroup.controls.date.value;
+    date.setDate(date.getDate() + days)
+    invoiceGroup.controls.dueDate.setValue(date);
   }
 
   public onSelectSerial(serial: Serial): void {
