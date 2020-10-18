@@ -29,7 +29,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['select', 'id', 'name', 'date', 'total', 'currency'];
+  public columnsToDisplay: string[] = ['select', 'name', 'date', 'total', 'client', 'currencyTotal', 'currency'];
   public dataSource = new MatTableDataSource<Invoice>([]);
   public dataSize: number = 100;
   public loading: boolean = true;
@@ -75,7 +75,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res: FindInvoicesResponse) => {
         this.dataSource.data = res.invoices;
-        this.dataSize = res.size;
+        this.dataSize = res.total;
       });
   }
 

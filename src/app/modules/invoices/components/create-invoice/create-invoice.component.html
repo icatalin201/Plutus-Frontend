@@ -31,7 +31,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Date</mat-label>
-                    <input matInput required formControlName="date" [matDatepicker]="date">
+                    <input matInput required formControlName="date" [matDatepicker]="date" (dateChange)="onSelectDate($event)">
                     <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
                     <mat-datepicker #date></mat-datepicker>
                 </mat-form-field>

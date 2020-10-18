@@ -18,14 +18,14 @@ export class CreateBusinessComponent implements OnInit {
   public requestForm = this.formBuilder.group({
     business: this.formBuilder.group({
       name: ['', Validators.compose([
-        Validators.pattern("^[a-zA-Z ]{2,30}$"),
+        Validators.pattern("^[a-zA-Z ]{2,50}$"),
         Validators.required
       ])],
       email: ['', Validators.compose([
         Validators.email,
         Validators.required
       ])],
-      phone: ['', Validators.pattern("^[0-9]{10}$")],
+      phone: [''],
       bankId: ['', Validators.required],
       address: ['', Validators.required],
       vat: ['', Validators.required],

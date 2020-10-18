@@ -1,41 +1,41 @@
 <div class="dialog-wrapper">
 
     <div class="inner-wrapper">
-        <h1>Create partner</h1>
+        <h1>Creare partener</h1>
 
         <form [formGroup]="requestForm">
             <div class="flex row wrap pt-1" formGroupName="partner">
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Nume</mat-label>
                     <input formControlName="name" required matInput type="text" name="name">
-                    <mat-error>Enter a valid name</mat-error>
+                    <mat-error>Introdu un nume valid</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Email</mat-label>
-                    <input formControlName="email" required matInput type="email" name="email">
-                    <mat-error>Enter a valid email</mat-error>
+                    <input formControlName="email" matInput type="email" name="email">
+                    <mat-error>Introdu un email valid</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Type</mat-label>
+                    <mat-label>Tip</mat-label>
                     <mat-select formControlName="type" required>
                         <mat-option value="CLIENT">Client</mat-option>
-                        <mat-option value="VENDOR">Vendor</mat-option>
+                        <mat-option value="VENDOR">Furnizor</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                  <mat-label>Business type</mat-label>
+                  <mat-label>Forma organizare</mat-label>
                   <mat-select formControlName="businessType" required>
-                      <mat-option value="INDIVIDUAL">Individual</mat-option>
-                      <mat-option value="LEGAL">Legal</mat-option>
+                      <mat-option value="INDIVIDUAL">Persoana fizica</mat-option>
+                      <mat-option value="LEGAL">Persoana juridica</mat-option>
                   </mat-select>
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                  <mat-label>Phone</mat-label>
+                  <mat-label>Telefon</mat-label>
                   <input formControlName="phone" matInput type="text" name="phone">
-                  <mat-error>Enter a valid phone</mat-error>
+                  <mat-error>Numarul de telefon este invalid</mat-error>
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Country</mat-label>
+                <mat-label>Tara</mat-label>
                 <mat-select formControlName="countryCode" required>
                   <mat-option *ngFor="let country of countries"
                     [value]="country.code">
@@ -44,15 +44,15 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Address</mat-label>
+                <mat-label>Adresa</mat-label>
                 <input formControlName="address" matInput name="address">
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>VAT</mat-label>
+                <mat-label>CUI / CNP</mat-label>
                 <input formControlName="vat" matInput name="vat">
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Bank</mat-label>
+                <mat-label>Banca</mat-label>
                 <mat-select formControlName="bankId">
                   <mat-option *ngFor="let bank of banks"
                     [value]="bank.id">
@@ -61,23 +61,23 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Bank Account</mat-label>
+                <mat-label>Cont bancar</mat-label>
                 <input formControlName="bankAccount" matInput name="bankAccount">
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Commercial Registry</mat-label>
+                <mat-label>Registru comert / CI</mat-label>
                 <input formControlName="commercialRegistry" matInput name="commercialRegistry">
               </mat-form-field>
               <mat-form-field appearance="fill" class="flex-5">
-                <mat-label>Term (in days)</mat-label>
+                <mat-label>Scadenta (in zile)</mat-label>
                 <input formControlName="termInDays" matInput name="termInDays">
               </mat-form-field>
             </div>
         </form>
 
         <div class="flex row justify-end">
-            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
-            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Salveaza</button>
+            <button mat-button color="warn" (click)="dismiss()">Anuleaza</button>
         </div>
     </div>
 

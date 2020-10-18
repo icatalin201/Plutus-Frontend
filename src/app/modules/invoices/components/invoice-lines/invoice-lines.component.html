@@ -1,21 +1,21 @@
 <table mat-table [dataSource]="invoice.lines">
     <ng-container matColumnDef="item">
-      <th mat-header-cell *matHeaderCellDef> item </th>
+      <th mat-header-cell *matHeaderCellDef> Produs / Serviciu </th>
       <td mat-cell *matCellDef="let line"> {{line.item.name}} </td>
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
     <ng-container matColumnDef="unitPrice">
-      <th mat-header-cell *matHeaderCellDef> price </th>
+      <th mat-header-cell *matHeaderCellDef> Pret </th>
       <td mat-cell *matCellDef="let line"> {{line.unitPrice.toFixed(2)}} </td>
       <td mat-footer-cell *matFooterCellDef> Subtotal: {{getSubtotal()}} </td>
     </ng-container>
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef> quantity </th>
+      <th mat-header-cell *matHeaderCellDef> Cantitate </th>
       <td mat-cell *matCellDef="let line"> {{line.quantity}} </td>
-      <td mat-footer-cell *matFooterCellDef> Taxes: {{getTaxes()}} </td>
+      <td mat-footer-cell *matFooterCellDef> Taxe: {{getTaxes()}} </td>
     </ng-container>
     <ng-container matColumnDef="vat">
-      <th mat-header-cell *matHeaderCellDef> vat </th>
+      <th mat-header-cell *matHeaderCellDef> TVA </th>
       <td mat-cell *matCellDef="let line"> {{line.vat.toFixed(2)}} % </td>
       <td mat-footer-cell *matFooterCellDef> Total: {{getTotal()}} </td>
     </ng-container>

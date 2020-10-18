@@ -1,26 +1,26 @@
 <div class="dialog-wrapper">
 
     <div class="inner-wrapper">
-        <h1>Create item</h1>
+        <h1>Creare item</h1>
 
         <form [formGroup]="requestForm">
             <div formGroupName="item" class="flex row wrap">
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Nume</mat-label>
                     <input formControlName="name" required matInput name="name">
-                    <mat-error>Enter a valid name</mat-error>
+                    <mat-error>Nume invalid</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Code</mat-label>
+                    <mat-label>Cod</mat-label>
                     <input formControlName="code" matInput name="code">
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Unit price</mat-label>
+                    <mat-label>Pret</mat-label>
                     <input formControlName="unitPrice" required matInput type="number" name="unitPrice">
-                    <mat-error>Enter a valid price</mat-error>
+                    <mat-error>Introdu un pret valid</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>VAT</mat-label>
+                    <mat-label>TVA</mat-label>
                     <mat-select formControlName="vat" required>
                         <mat-option value="0.00">0 %</mat-option>
                         <mat-option value="5.00">5.00 %</mat-option>
@@ -29,26 +29,26 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Unit of measure</mat-label>
+                    <mat-label>Unitate de masura</mat-label>
                     <input formControlName="uom" matInput name="uom">
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Type</mat-label>
+                    <mat-label>Tip</mat-label>
                     <mat-select formControlName="type" required>
-                        <mat-option value="PRODUCT">Product</mat-option>
-                        <mat-option value="SERVICE">Service</mat-option>
+                        <mat-option value="PRODUCT">Produs</mat-option>
+                        <mat-option value="SERVICE">Serviciu</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-10">
-                    <mat-label>Description</mat-label>
+                    <mat-label>Descriere</mat-label>
                     <textarea matInput formControlName="description"></textarea>
                 </mat-form-field>
             </div>
         </form>
 
         <div class="flex row justify-end">
-            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Save</button>
-            <button mat-button color="warn" (click)="dismiss()">Cancel</button>
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Salveaza</button>
+            <button mat-button color="warn" (click)="dismiss()">Anuleaza</button>
         </div>
     </div>
 

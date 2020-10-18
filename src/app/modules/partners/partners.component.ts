@@ -76,7 +76,7 @@ export class PartnersComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res: FindPartnersResponse) => {
         this.data = res.partners;
-        this.dataSize = res.size;
+        this.dataSize = res.total;
       });
   }
 

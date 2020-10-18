@@ -2,7 +2,7 @@
 
     <div class="table-header flex row justify-between">
       <h3>Items</h3>
-      <button mat-button (click)="add()">Add item</button>
+      <button mat-button (click)="add()">Adauga item</button>
     </div>
   
     <div class="loading-shade" *ngIf="loading">
@@ -21,13 +21,13 @@
           <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="flex p-1" style="width: 100%;">
               <h3>{{element.name}}</h3>
-              <p>VAT: {{element.vat}} %</p>
-              <p>Unit price: RON {{element.unitPrice.toFixed(2)}}</p>
-              <p>Total price: RON {{element.totalPrice.toFixed(2)}}</p>
+              <p>TVA: {{element.vat}} %</p>
+              <p>Pret: RON {{element.unitPrice.toFixed(2)}}</p>
+              <p>Valoare: RON {{element.totalPrice.toFixed(2)}}</p>
               <p>{{element.description}}</p>
               <div class="self-align-end">
-                <button color="primary" mat-button (click)="edit(expandedElement)">Edit</button>
-                <button color="warn" mat-button (click)="delete(expandedElement)">Delete</button>
+                <button color="primary" mat-button (click)="edit(expandedElement)">Editeaza</button>
+                <button color="warn" mat-button (click)="delete(expandedElement)">Sterge</button>
               </div>
             </div>
           </div>

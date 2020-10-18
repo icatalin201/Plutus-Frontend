@@ -16,5 +16,8 @@ export class Invoice {
     subtotal: number;
     total: number;
     taxes: number;
+    currencySubtotal: number;
+    currencyTotal: number;
+    currencyTaxes: number;
     lines: InvoiceLine[];
 }

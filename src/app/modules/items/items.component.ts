@@ -76,7 +76,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res: FindItemsResponse) => {
         this.data = res.items;
-        this.dataSize = res.size;
+        this.dataSize = res.total;
       });
   }
 

@@ -24,15 +24,15 @@ export class InvoiceLinesComponent implements OnInit {
   }
 
   public getTotal(): string {
-    return `${this.invoice.currency} ${this.invoice.total.toFixed(2)}`;
+    return `RON ${this.invoice.total.toFixed(3)}`;
   }
 
   public getSubtotal(): string {
-    return `${this.invoice.currency} ${this.invoice.subtotal.toFixed(2)}`;
+    return `RON ${this.invoice.subtotal.toFixed(3)}`;
   }
 
   public getTaxes(): string {
-    return `${this.invoice.currency} ${this.invoice.taxes.toFixed(2)}`;
+    return `RON ${this.invoice.taxes.toFixed(3)}`;
   }
 
 }

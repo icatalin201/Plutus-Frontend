@@ -26,10 +26,7 @@ export class EditPartnerComponent implements OnInit {
         Validators.pattern("^[a-zA-Z ]{2,30}$"),
         Validators.required
       ])],
-      email: ['', Validators.compose([
-        Validators.email,
-        Validators.required
-      ])],
+      email: [null, Validators.email],
       type: ['CLIENT', Validators.required],
       businessType: ['INDIVIDUAL', Validators.required],
       phone: ['', Validators.pattern("^[0-9]{10}$")],

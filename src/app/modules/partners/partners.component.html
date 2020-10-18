@@ -4,8 +4,8 @@
     </div>
 
     <div class="table-header flex row justify-between">
-        <h3>Partners</h3>
-        <button mat-button (click)="add()">Add partner</button>
+        <h3>Clienti</h3>
+        <button mat-button (click)="add()">Adauga client</button>
     </div>
 
     <table mat-table [dataSource]="data" multiTemplateDataRows>
@@ -19,10 +19,9 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
           <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="flex p-1" style="width: 100%;">
-              <h3>{{element.name}}</h3>
               <div class="self-align-end">
-                <button color="primary" mat-button (click)="edit(expandedElement)">Edit</button>
-                <button color="warn" mat-button (click)="delete(expandedElement)">Delete</button>
+                <button color="primary" mat-button (click)="edit(expandedElement)">Editeaza</button>
+                <button color="warn" mat-button (click)="delete(expandedElement)">Sterge</button>
               </div>
             </div>
           </div>

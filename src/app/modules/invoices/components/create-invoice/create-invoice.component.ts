@@ -31,7 +31,7 @@ export class CreateInvoiceComponent implements OnInit {
       serialId: ['', Validators.required],
       date: [new Date(), Validators.required],
       dueDate: [new Date(), Validators.required],
-      currency: ['RON', Validators.required],
+      currency: ['USD', Validators.required],
     })
   });
   public lines = [];
@@ -124,6 +124,13 @@ export class CreateInvoiceComponent implements OnInit {
     const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
     const date = invoiceGroup.controls.date.value;
     date.setDate(date.getDate() + days)
+    invoiceGroup.controls.dueDate.setValue(date);
+  }
+
+  public onSelectDate(event: any): void {
+    const date = event.value;
+    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
+    date.setDate(date.getDate() + 0)
     invoiceGroup.controls.dueDate.setValue(date);
   }
 
