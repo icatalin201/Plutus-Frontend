@@ -1,7 +1,7 @@
 <div class="table-container mat-elevation-z1">
 
     <div class="table-header flex row justify-between">
-      <h3>Items</h3>
+      <h3>Produse si Servicii</h3>
       <button mat-button (click)="add()">Adauga item</button>
     </div>
   
@@ -11,19 +11,45 @@
   
     <table mat-table [dataSource]="data" multiTemplateDataRows>
 
-      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Cod </th>
+        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nume </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="uom">
+        <th mat-header-cell *matHeaderCellDef> Unitate de masura </th>
+        <td mat-cell *matCellDef="let element"> {{element.uom}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unitPrice">
+        <th mat-header-cell *matHeaderCellDef> Pret unitar </th>
+        <td mat-cell *matCellDef="let element"> {{element.unitPrice.toFixed(2)}} RON </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vat">
+        <th mat-header-cell *matHeaderCellDef> TVA </th>
+        <td mat-cell *matCellDef="let element"> {{element.vat.toFixed(2)}} % </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef> Valoare </th>
+        <td mat-cell *matCellDef="let element"> {{element.totalPrice.toFixed(2)}} RON </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Tip </th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
       </ng-container>
       
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
           <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="flex p-1" style="width: 100%;">
-              <h3>{{element.name}}</h3>
-              <p>TVA: {{element.vat}} %</p>
-              <p>Pret: RON {{element.unitPrice.toFixed(2)}}</p>
-              <p>Valoare: RON {{element.totalPrice.toFixed(2)}}</p>
               <p>{{element.description}}</p>
               <div class="self-align-end">
                 <button color="primary" mat-button (click)="edit(expandedElement)">Editeaza</button>

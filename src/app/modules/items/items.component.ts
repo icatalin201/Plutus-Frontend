@@ -29,7 +29,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['id', 'name', 'type'];
+  public columnsToDisplay: string[] = ['code', 'name', 'uom', 'unitPrice', 'vat', 'totalPrice', 'type'];
   public data: Item[] = [];
   public expandedElement: Item | null;
   public dataSize: number = 100;

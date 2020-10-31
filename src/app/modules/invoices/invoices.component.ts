@@ -29,7 +29,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['select', 'name', 'date', 'total', 'client', 'currencyTotal', 'currency'];
+  public columnsToDisplay: string[] = ['select', 'name', 'date', 'client', 'total', 'currencyTotal', 'currency'];
   public dataSource = new MatTableDataSource<Invoice>([]);
   public dataSize: number = 100;
   public loading: boolean = true;

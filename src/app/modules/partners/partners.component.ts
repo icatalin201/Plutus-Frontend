@@ -29,7 +29,7 @@ export class PartnersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['id', 'name', 'email'];
+  public columnsToDisplay: string[] = ['name', 'email', 'country', 'type'];
   public data: Partner[] = [];
   public dataSize: number = 100;
   public loading: boolean = true;

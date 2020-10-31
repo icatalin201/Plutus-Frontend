@@ -89,7 +89,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   public create(): void {
     this.loading = true;
-    const request: CreateInvoiceRequest = this.requestForm.value;
+    const value = this.requestForm.value;
+    const request: CreateInvoiceRequest = value;
     const lines: CreateInvoiceLineDto[] = [];
     this.lines.forEach(line => {
       const element = new CreateInvoiceLineDto();
@@ -101,8 +102,8 @@ export class CreateInvoiceComponent implements OnInit {
       lines.push(element);
     })
     request.invoice.lines = lines;
-    request.invoice.date = new Date(request.invoice.date).toISOString().split("T")[0];
-    request.invoice.dueDate = new Date(request.invoice.dueDate).toISOString().split("T")[0];
+    request.invoice.date = this.formatDate(value.invoice.date);
+    request.invoice.dueDate = this.formatDate(value.invoice.dueDate);
     this.invoiceService
       .create(request)
       .subscribe(
@@ -144,6 +145,13 @@ export class CreateInvoiceComponent implements OnInit {
       this.appService.reloadData(AppService.RELOAD_INVOICES);
     }
     this.dialogRef.close();
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
+    return `${year}-${month}-${day}`
   }
 
 }
