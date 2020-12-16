@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="invoice.lines">
     <ng-container matColumnDef="item">
-      <th mat-header-cell *matHeaderCellDef> Produs / Serviciu </th>
+      <th mat-header-cell *matHeaderCellDef> Serviciu </th>
       <td mat-cell *matCellDef="let line"> {{line.item.name}} </td>
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>

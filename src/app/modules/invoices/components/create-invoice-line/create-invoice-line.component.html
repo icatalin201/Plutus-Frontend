@@ -1,7 +1,7 @@
 <h1>Linie factura</h1>
 <form [formGroup]="lineForm" (ngSubmit)="save()" class="flex row wrap">
   <mat-form-field appearance="fill" class="flex-5">
-    <mat-label>Produs / Serviciu</mat-label>
+    <mat-label>Serviciu</mat-label>
     <mat-select formControlName="item" required>
       <mat-option [value]="item"
           (click)="onSelectItem(item)"

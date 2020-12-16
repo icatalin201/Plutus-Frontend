@@ -16,7 +16,7 @@ export class SerialComponent implements OnInit {
   public requestForm = this.formBuilder.group({
     serial: this.formBuilder.group({
       startNumber: ['', Validators.compose([
-        Validators.pattern("^[0-9]$"),
+        Validators.pattern("^[0-9]{1,}$"),
         Validators.required
       ])],
     }),
