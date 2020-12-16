@@ -1,26 +1,21 @@
-<div class="flex component" *ngIf="isLoggedIn">
-  <mat-toolbar color="primary">
-    <h1>{{name}}</h1>
-    <span class="spacer"></span>
-    <button mat-icon-button routerLink="/dashboard">
-      <mat-icon>dashboard</mat-icon>
-    </button>
-    <button mat-icon-button routerLink="/items">
-      <mat-icon>category</mat-icon>
-    </button>
-    <button mat-icon-button routerLink="/partners">
-      <mat-icon>person</mat-icon>
-    </button>
-    <button mat-icon-button routerLink="/invoices">
-      <mat-icon>receipt</mat-icon>
-    </button>
-    <button mat-icon-button routerLink="/settings">
-      <mat-icon>settings</mat-icon>
-    </button>
+<div class="component" *ngIf="isLoggedIn">
+  <mat-toolbar color="secondary">
+    <mat-toolbar-row>
+      <button mat-button [routerLink]="item.path" *ngFor="let item of menuItems">
+        {{item.text}}
+        <mat-icon>{{item.name}}</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <button mat-button (click)="logout()">
+        Deconectare
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-toolbar-row>
   </mat-toolbar>
-
-  <div class="p-1">
-    <router-outlet></router-outlet>
+  <div class="content">
+    <div class="p-3">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 

@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 import { MaterialModule } from '../material/material.module';
-import { CreateBusinessComponent } from './components/create-business/create-business.component';
-import { CreateSerialComponent } from './components/create-serial/create-serial.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BusinessService } from './services/business.service';
+import { BusinessComponent } from './components/business/business.component';
+import { SerialComponent } from './components/serial/serial.component';
+import { SerialService } from './services/serial.service';
 
 @NgModule({
-  declarations: [SettingsComponent, CreateBusinessComponent, CreateSerialComponent],
+  declarations: [SettingsComponent, BusinessComponent, SerialComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,
@@ -19,7 +20,8 @@ import { BusinessService } from './services/business.service';
     ReactiveFormsModule
   ],
   providers: [
-    BusinessService
+    BusinessService,
+    SerialService
   ]
 })
 export class SettingsModule { }

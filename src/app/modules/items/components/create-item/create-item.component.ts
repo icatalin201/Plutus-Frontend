@@ -19,9 +19,9 @@ export class CreateItemComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       code: [''],
+      uom: [''],
       unitPrice: [0, Validators.required],
       vat: ['0.00', Validators.required],
-      uom: [''],
       type: ['PRODUCT', Validators.required]
     })
   });
@@ -46,14 +46,14 @@ export class CreateItemComponent implements OnInit {
           this.loading = false;
           this.dismiss(true);
           this.snackbar
-            .open('Your item was created.', 
+            .open('Item creat.', 
               'OK', 
               { duration: 3000 })
         },
         e => {
           this.loading = false;
           this.snackbar
-            .open('Item creation failed. Please try again.', 
+            .open('A aparut o eroare.', 
               'OK', 
               { duration: 3000 })
         }

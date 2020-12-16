@@ -1,4 +1,3 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,19 +16,12 @@ import { InvoiceService } from './services/invoice.service';
   selector: 'app-invoices',
   templateUrl: './invoices.component.html',
   styleUrls: ['./invoices.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class InvoicesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['select', 'name', 'date', 'client', 'total', 'currencyTotal', 'currency'];
+  public columnsToDisplay: string[] = ['select', 'name', 'date', 'client', 'total', 'currencyTotal', 'status'];
   public dataSource = new MatTableDataSource<Invoice>([]);
   public dataSize: number = 100;
   public loading: boolean = true;
@@ -79,6 +71,13 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
       });
   }
 
+  public getTotal(): string {
+    const total = this.dataSource
+      .data
+      .reduce((sum: number, invoice: Invoice) => sum + invoice.total, 0)
+    return `RON ${total.toFixed(2)}`
+  }
+
   public isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -118,7 +117,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
         },
         e => {
           console.log(e);
-          const message = e.error.message || 'Something went wrong.';
+          const message = e.error.message || 'A aparut o eroare.';
           this.snackbar.open(message, 'Dismiss', { duration: 3000 })
         }
       )
@@ -130,6 +129,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
       .printMultiple(ids)
       .subscribe(
         res => {
+          this.selection.clear();
           const a = document.createElement('a');
           document.body.appendChild(a);
           const file = new Blob([res], {type: 'application/zip'});
@@ -141,7 +141,27 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
         },
         e => {
           console.log(e);
-          const message = e.error.message || 'Something went wrong.';
+          const message = e.error.message || 'A aparut o eroare.';
+          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+        }
+      )
+  }
+
+  public markAsDoneSelected(): void {
+    const ids = this.selection
+      .selected
+      .map(i => i.id)
+    this.invoiceService
+      .markAsDone(ids)
+      .subscribe(
+        res => {
+          this.selection.clear();
+          this.paginator.page.emit()
+        },
+        e => {
+          console.log(e);
+          this.selection.clear();
+          const message = e.error.message || 'A aparut o eroare.';
           this.snackbar.open(message, 'Dismiss', { duration: 3000 })
         }
       )

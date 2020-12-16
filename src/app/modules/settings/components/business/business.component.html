@@ -1,0 +1,15 @@
+<mat-card *ngIf="business">
+    <mat-card-title>{{business.name}}</mat-card-title>
+    <mat-card-subtitle>{{business.email}}</mat-card-subtitle>
+    <mat-card-content>
+        <p>Adresa: {{business.address}}</p>
+        <p>Telefon: {{business.phone}}</p>
+        <p>VAT: {{business.vat}}</p>
+        <p>VIES: {{business.vies}}</p>
+        <p>Website: {{business.website}}</p>
+        <p>Reg Com: {{business.commercialRegistry}}</p>
+        <p>Banca: {{business.bank.name}}</p>
+        <p>Cont bancar: {{business.bankAccount}}</p>
+    </mat-card-content>
+</mat-card>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>

@@ -1,9 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'src/assets/layout/flexible';
+@import 'src/assets/layout/colors';
 
-@import 'assets/layout/flexible.scss';
+@import '~@angular/material/theming';
+@include mat-core();
+$dark-primary: mat-palette($mat-green);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-yellow);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+@include angular-material-theme($dark-theme);
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $color-bg-primary;
+  color: $color-text-primary;
+}
 
 .dialog-wrapper {
     margin: -24px;
@@ -12,4 +24,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       padding: 24px;
     }
 
+}
+
+table {
+  width: 100%;
 }

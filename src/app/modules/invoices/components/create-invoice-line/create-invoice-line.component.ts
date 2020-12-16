@@ -14,6 +14,7 @@ export class CreateInvoiceLineComponent implements OnInit {
   public items: Item[] = [];
   public lineForm = this.formBuilder.group({
     item: ['', Validators.required],
+    details: [''],
     quantity: [1, Validators.required],
     vat: ['0.00', Validators.required],
     price: ['1.00', Validators.required],

@@ -1,0 +1,68 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Adauga tranzactie</h1>
+
+        <form [formGroup]="requestForm">
+            <div formGroupName="transaction" class="flex row wrap">
+                <mat-form-field appearance="fill" class="flex-10">
+                    <mat-label>Partener</mat-label>
+                    <mat-select formControlName="partnerId" required>
+                        <mat-option [value]="partner.id" 
+                        (click)="onSelectPartner(partner)"    
+                        *ngFor="let partner of partners">
+                          {{partner.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Alege un partener</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Data</mat-label>
+                    <input matInput required formControlName="date" [matDatepicker]="date">
+                    <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                    <mat-datepicker #date></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Document</mat-label>
+                    <input formControlName="document" required matInput name="document">
+                    <mat-error>Introdu numele documentului</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Details</mat-label>
+                    <input formControlName="details" required matInput name="details">
+                    <mat-error>Adauga detalii despre tranzactie</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Valoare</mat-label>
+                    <input formControlName="value" required matInput name="value">
+                    <mat-error>Valoarea este obligatorie</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Tip</mat-label>
+                    <mat-select formControlName="type" required>
+                        <mat-option value="INCOME">Venit</mat-option>
+                        <mat-option value="EXPENSE">Cheltuiala</mat-option>
+                    </mat-select>
+                    <mat-error>Alege tipul</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="flex-5">
+                    <mat-label>Metoda</mat-label>
+                    <mat-select formControlName="method" required>
+                        <mat-option value="CASH">Cash</mat-option>
+                        <mat-option value="BANK">Banca</mat-option>
+                    </mat-select>
+                    <mat-error>Alege o metoda</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="create()" [disabled]="requestForm.invalid || loading">Salveaza</button>
+            <button mat-button color="warn" (click)="dismiss()">Anuleaza</button>
+        </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+</div>
+  

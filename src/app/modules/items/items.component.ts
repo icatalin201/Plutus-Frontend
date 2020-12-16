@@ -1,4 +1,3 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,24 +15,16 @@ import { ItemService } from './services/item.service';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatPaginator)
-  public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['code', 'name', 'uom', 'unitPrice', 'vat', 'totalPrice', 'type'];
-  public data: Item[] = [];
-  public expandedElement: Item | null;
-  public dataSize: number = 100;
+  @ViewChild(MatPaginator) public paginator: MatPaginator;
+  
+  public columnsToDisplay: string[] = ['name', 'code', 'uom', 'actions'];
+  public dataSource = [];
   public loading: boolean = true;
+  public dataSize = 0;
 
   public constructor(
     private itemService: ItemService,
@@ -75,7 +66,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((res: FindItemsResponse) => {
-        this.data = res.items;
+        this.dataSource = res.items;
         this.dataSize = res.total;
       });
   }
@@ -87,7 +78,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   public delete(item: Item): void {
     const ref = this.dialog
       .open(ConfirmationComponent, 
-        { data: 'Are you sure you want to delete this item?' });
+        { data: 'Esti sigur ca vrei sa stergi acest item?' });
     ref.afterClosed()
       .subscribe(
         data => {
@@ -97,7 +88,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
               .subscribe(
                 res => {
                   this.appService.reloadData(AppService.RELOAD_ITEMS);
-                  this.snackbar.open('Item deleted', 'OK', { duration: 3000 })
+                  this.snackbar.open('Item sters', 'OK', { duration: 3000 })
                 }
               );
           }

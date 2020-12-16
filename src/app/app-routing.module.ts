@@ -45,12 +45,7 @@ const routes: Routes = [
       .then(m => m.LoginModule),
     canActivate: [ LoginGuard ]
   },
-  {
-    path: 'register',
-    loadChildren: () => import('./modules/register/register.module')
-      .then(m => m.RegisterModule),
-    canActivate: [ LoginGuard ]
-  },
+  { path: 'transactions', loadChildren: () => import('./modules/transactions/transactions.module').then(m => m.TransactionsModule) },
 ];
 
 @NgModule({

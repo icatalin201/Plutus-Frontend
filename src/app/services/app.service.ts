@@ -9,8 +9,10 @@ export class AppService {
   public static RELOAD_ITEMS: number = 0;
   public static RELOAD_INVOICES: number = 1;
   public static RELOAD_PARTNERS: number = 2;
+  public static RELOAD_TRANSACTIONS: number = 3;
 
   private events = [
+    new EventEmitter<boolean>(),
     new EventEmitter<boolean>(),
     new EventEmitter<boolean>(),
     new EventEmitter<boolean>()

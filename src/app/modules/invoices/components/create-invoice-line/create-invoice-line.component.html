@@ -1,7 +1,7 @@
-<h1>Invoice Line</h1>
+<h1>Linie factura</h1>
 <form [formGroup]="lineForm" (ngSubmit)="save()" class="flex row wrap">
-  <mat-form-field appearance="fill" class="flex-10">
-    <mat-label>Item</mat-label>
+  <mat-form-field appearance="fill" class="flex-5">
+    <mat-label>Produs / Serviciu</mat-label>
     <mat-select formControlName="item" required>
       <mat-option [value]="item"
           (click)="onSelectItem(item)"
@@ -9,15 +9,19 @@
           {{item.name}}
       </mat-option>
     </mat-select>
-    <mat-error>Choose a valid item</mat-error>
+    <mat-error>Alege un item valid</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill" class="flex-5">
-    <mat-label>Quantity</mat-label>
+    <mat-label>Detalii</mat-label>
+    <input formControlName="details" matInput name="details">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="flex-5">
+    <mat-label>Cantitate</mat-label>
     <input formControlName="quantity" required matInput name="quantity">
-    <mat-error>Enter a valid quantity</mat-error>
+    <mat-error>Introdu cantitatea</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill" class="flex-5">
-    <mat-label>VAT</mat-label>
+    <mat-label>TVA</mat-label>
     <mat-select formControlName="vat" required>
         <mat-option value="0.00">0 %</mat-option>
         <mat-option value="5.00">5.00 %</mat-option>
@@ -26,18 +30,17 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill" class="flex-5">
-    <mat-label>Unit of measure</mat-label>
+    <mat-label>Unitate de masura</mat-label>
     <input formControlName="uom" matInput name="uom">
-    <mat-error>Enter a valid uom</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill" class="flex-5">
-    <mat-label>Unit price</mat-label>
-    <input formControlName="price" required matInput name="price">
-    <mat-error>Enter a valid price</mat-error>
+    <mat-label>Pret unitar</mat-label>
+    <input formControlName="price" required matInput name="price" type="number">
+    <mat-error>Introdu pretul unitar</mat-error>
   </mat-form-field>
 
   <div class="flex row justify-end">
-    <button mat-button color="primary" [disabled]="lineForm.invalid">Save</button>
-    <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" [disabled]="lineForm.invalid">Adauga</button>
+    <button mat-button color="warn" type="button" (click)="cancel()">Anuleaza</button>
   </div>
 </form>

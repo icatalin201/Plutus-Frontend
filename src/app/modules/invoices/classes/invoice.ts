@@ -1,5 +1,5 @@
-import { Currency } from 'src/app/classes/currency';
 import { Partner } from '../../partners/classes/partner';
+import { InvoiceCurrency } from './invoice.currency';
 import { InvoiceLine } from './invoice.line';
 import { InvoiceStatus } from './invoice.status';
 
@@ -9,15 +9,12 @@ export class Invoice {
     updatedOn: string;
     date: string;
     dueDate: string;
-    currency: Currency;
     name: string;
     status: InvoiceStatus;
     partner: Partner;
     subtotal: number;
     total: number;
     taxes: number;
-    currencySubtotal: number;
-    currencyTotal: number;
-    currencyTaxes: number;
+    currency: InvoiceCurrency;
     lines: InvoiceLine[];
 }

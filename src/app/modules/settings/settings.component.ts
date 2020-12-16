@@ -14,9 +14,4 @@ export class SettingsComponent implements OnInit {
 
   public ngOnInit(): void { }
 
-  public logout(): void {
-    this.userService.logout();
-    location.reload();
-  }
-
 }

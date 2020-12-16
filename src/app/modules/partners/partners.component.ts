@@ -1,4 +1,3 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,21 +16,15 @@ import { PartnerService } from './services/partner.service';
   selector: 'app-partners',
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class PartnersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['name', 'email', 'country', 'type'];
+
+  public columnsToDisplay: string[] = ['name', 'email', 'country', 'type', 'actions'];
   public data: Partner[] = [];
-  public dataSize: number = 100;
+  public dataSize: number = 0;
   public loading: boolean = true;
   public expandedElement: Partner | null;
 
@@ -87,17 +80,17 @@ export class PartnersComponent implements OnInit, AfterViewInit {
   public delete(partner: Partner): void {
     const ref = this.dialog
       .open(ConfirmationComponent, 
-        { data: 'Are you sure you want to delete this partner?' });
+        { data: 'Esti sigur ca vrei sa stergi acest partner?' });
     ref.afterClosed()
       .subscribe(
         data => {
-          if (data && data.delete) {
+          if (data && data.confirm) {
             this.partnerService
               .delete(partner.id)
               .subscribe(
                 res => {
                   this.appService.reloadData(AppService.RELOAD_PARTNERS);
-                  this.snackbar.open('Partner deleted', 'OK', { duration: 3000 })
+                  this.snackbar.open('Partener sters', 'OK', { duration: 3000 })
                 }
               );
           }

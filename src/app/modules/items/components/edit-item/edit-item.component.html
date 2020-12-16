@@ -1,11 +1,11 @@
 <div class="dialog-wrapper">
 
     <div class="inner-wrapper">
-        <h1>Editare item</h1>
+        <h1>Editeaza produs / serviciu</h1>
 
         <form [formGroup]="requestForm">
             <div formGroupName="item" class="flex row wrap">
-                <mat-form-field appearance="fill" class="flex-5">
+                <mat-form-field appearance="fill" class="flex-10">
                     <mat-label>Nume</mat-label>
                     <input formControlName="name" required matInput name="name">
                     <mat-error>Nume invalid</mat-error>
@@ -15,29 +15,8 @@
                     <input formControlName="code" matInput name="code">
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Pret</mat-label>
-                    <input formControlName="unitPrice" required matInput type="number" name="unitPrice">
-                    <mat-error>Introdu un pret valid</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>TVA</mat-label>
-                    <mat-select formControlName="vat" required>
-                        <mat-option value="0.00">0 %</mat-option>
-                        <mat-option value="5.00">5.00 %</mat-option>
-                        <mat-option value="9.00">9.00 %</mat-option>
-                        <mat-option value="19.00">19.00 %</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
                     <mat-label>Unitate de masura</mat-label>
                     <input formControlName="uom" matInput name="uom">
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="flex-5">
-                    <mat-label>Tip</mat-label>
-                    <mat-select formControlName="type" required>
-                        <mat-option value="PRODUCT">Produs</mat-option>
-                        <mat-option value="SERVICE">Serviciu</mat-option>
-                    </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="flex-10">
                     <mat-label>Descriere</mat-label>

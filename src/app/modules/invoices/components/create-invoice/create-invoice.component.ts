@@ -21,7 +21,6 @@ import { CreateInvoiceLineComponent } from '../create-invoice-line/create-invoic
 export class CreateInvoiceComponent implements OnInit {
 
   public partners: Partner[] = [];
-  public serials: Serial[] = [];
   public loading: boolean = false;
   public serialName: string | undefined;
   public request: CreateInvoiceDto = new CreateInvoiceDto();
@@ -35,7 +34,7 @@ export class CreateInvoiceComponent implements OnInit {
     })
   });
   public lines = [];
-  public columnLinesToDisplay: string[] = ['item', 'price', 'quantity', 'uom', 'vat', 'actions'];
+  public columnLinesToDisplay: string[] = ['item', 'uom', 'price', 'quantity', 'subtotal', 'vat', 'total', 'actions'];
 
   public constructor(
     private invoiceService: InvoiceService,
@@ -55,9 +54,9 @@ export class CreateInvoiceComponent implements OnInit {
         res => this.partners = res.partners
       )
     this.dataService
-      .findSerials()
+      .findSerial()
       .subscribe(
-        res => this.serials = res.serials
+        res => this.onSelectSerial(res.serial)
       )
   }
 
@@ -136,6 +135,8 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   public onSelectSerial(serial: Serial): void {
+    const invoiceGroup: FormGroup = this.requestForm.controls.invoice as FormGroup;
+    invoiceGroup.controls.serialId.setValue(serial.id);
     const name = ("000" + serial.nextNumber).slice(-4);
     this.serialName = `${serial.name}${name}`
   }
@@ -148,6 +149,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   private formatDate(date: Date): string {
+    date = new Date(date);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
     const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;

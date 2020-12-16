@@ -1,0 +1,19 @@
+<mat-card *ngIf="serial">
+    <mat-card-title>
+        <h1>Serie {{serial.name}}</h1>
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="requestForm">
+            <div class="flex row wrap pt-1" formGroupName="serial">
+                <mat-form-field appearance="fill" class="flex-10">
+                    <mat-label>Numar de start</mat-label>
+                    <input formControlName="startNumber" required matInput type="text" name="startNumber">
+                    <mat-error>Introdu un numar corect</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button (click)="save()" mat-button [disabled]="requestForm.invalid">Save</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,57 +1,37 @@
-<div class="table-container mat-elevation-z1">
-    <div class="loading-shade" *ngIf="loading">
-      <mat-spinner [diameter]="50" *ngIf="loading"></mat-spinner>
-    </div>
-
-    <div class="table-header flex row justify-between">
-        <h3>Clienti</h3>
-        <button mat-button (click)="add()">Adauga client</button>
-    </div>
-
-    <table mat-table [dataSource]="data" multiTemplateDataRows>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nume </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef> Tara </th>
-        <td mat-cell *matCellDef="let element"> {{element.country.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Tip </th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-      </ng-container>
-      
-      <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <div class="flex p-1" style="width: 100%;">
-              <div class="self-align-end">
-                <button color="primary" mat-button (click)="edit(expandedElement)">Editeaza</button>
-                <button color="warn" mat-button (click)="delete(expandedElement)">Sterge</button>
-              </div>
-            </div>
-          </div>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
-      <tr mat-row 
-        *matRowDef="let element; columns: columnsToDisplay;"
-        class="element-row"
-        [class.element-expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
-      </tr>
-      <tr mat-row class="element-detail-row" *matRowDef="let row; columns: ['expandedDetail']"></tr>
-
-    </table>
-    <mat-paginator [length]="dataSize" [pageSize]="10"></mat-paginator>
+<div class="mb-1 flex row" style="background-color: #262626;">
+  <span class="spacer"></span>
+  <button mat-button color="primary" (click)="add()">Adauga</button>
 </div>
+
+<table mat-table [dataSource]="data">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nume </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+  <ng-container matColumnDef="country">
+    <th mat-header-cell *matHeaderCellDef> Tara </th>
+    <td mat-cell *matCellDef="let element"> {{element.country.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Tip </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" style="text-align: right;">
+      <button mat-icon-button (click)="edit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="delete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
+</table>
+<mat-paginator [length]="dataSize" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 import { LoginRequest } from './interfaces/login.request';
-import { LoginResponse } from './interfaces/login.response';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -28,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     this.appName = this.dataService.getAppName();
+    this.request.username = this.userService.getEmail();
   }
 
   public login(): void {
@@ -35,17 +35,16 @@ export class LoginComponent implements OnInit {
     this.loginService
       .login(this.request)
       .subscribe(
-        (response: LoginResponse) => {
-          console.log(response);
+        (response: any) => {
           this.loading = false;
-          this.userService.storeLoggedUser(response.user);
+          this.userService.storeLoggedUser(this.request.username, response.access_token);
           location.reload();
         },
         (err: HttpErrorResponse) => {
           console.error(err);
-          const message = 'Please check your credentials';
+          const message = 'Email sau parola gresite';
           this.loading = false;
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 });
+          this.snackbar.open(message, 'Inchide', { duration: 3000 });
         }
       );
   }

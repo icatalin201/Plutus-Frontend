@@ -1,6 +1,8 @@
+@import 'src/assets/layout/colors';
+
 table {
     width: 100%;
-    background: #efefef;
+    background: $color-bg-dark;
 
     .mat-column-item {
         width: 50%;
@@ -8,9 +10,5 @@ table {
 
     tr.mat-footer-row {
         font-weight: 500;
-    }
-    
-    .mat-table-sticky {
-        border-top: 1px solid #e0e0e0;
     }
 }

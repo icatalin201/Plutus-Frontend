@@ -1,0 +1,21 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Incarca CSV</h1>
+
+        <form [formGroup]="requestForm" class="mt-2 mb-2">
+            <div class="flex row wrap">
+                <input required (change)="validateCSV($event)" type="file">
+            </div>
+        </form>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="upload()" [disabled]="requestForm.invalid || loading">Salveaza</button>
+            <button mat-button color="warn" (click)="dismiss()">Anuleaza</button>
+        </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+</div>
+  

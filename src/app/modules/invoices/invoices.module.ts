@@ -14,7 +14,12 @@ import { InvoiceLinesComponent } from './components/invoice-lines/invoice-lines.
 
 
 @NgModule({
-  declarations: [InvoicesComponent, CreateInvoiceComponent, CreateInvoiceLineComponent, InvoiceLinesComponent],
+  declarations: [
+    InvoicesComponent, 
+    CreateInvoiceComponent, 
+    CreateInvoiceLineComponent, 
+    InvoiceLinesComponent
+  ],
   imports: [
     CommonModule,
     InvoicesRoutingModule,

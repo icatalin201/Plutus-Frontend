@@ -19,9 +19,9 @@ export class EditItemComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       code: [''],
+      uom: [''],
       unitPrice: [0, Validators.required],
       vat: ['0.00', Validators.required],
-      uom: [''],
       type: ['PRODUCT', Validators.required]
     })
   });
@@ -60,11 +60,11 @@ export class EditItemComponent implements OnInit {
       r => {
         this.loading = false;
         this.dismiss(true);
-        this.snackbar.open('Item updated', 'OK', { duration: 3000 })
+        this.snackbar.open('Item actualizat', 'OK', { duration: 3000 })
       },
       e => {
         this.loading = false;
-        const message = e.error.message || 'Something went wrong.';
+        const message = e.error.message || 'A aparut o eroare.';
         this.snackbar.open(message, 'Dismiss', { duration: 3000 })
       }
     );

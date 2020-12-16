@@ -76,6 +76,7 @@ export class HttpService {
   }
 
   private onError(error: HttpErrorResponse): Observable<never> {
+    console.error(error)
     if (error.status === 401 || error.status === 403) {
       this.userService.logout();
       location.reload();
