@@ -1,8 +1,8 @@
 <div class="login-wrapper flex justify-center">
     <mat-progress-bar *ngIf="loading" mode="indeterminate" class="login-loading"></mat-progress-bar>
-    
+
     <mat-card class="login-card mat-elevation-z1">
-        <form (submit)="login()">
+        <form (submit)="login()" class="flex">
             <mat-card-title>
                 <h1 class="login-title">{{appName}}</h1>
             </mat-card-title>
@@ -25,7 +25,7 @@
                 </mat-form-field>
             </mat-card-content>
             <button mat-stroked-button type="submit" [disabled]="loading">
-                Login
+                Conectare
                 <mat-icon>login</mat-icon>
             </button>
         </form>
