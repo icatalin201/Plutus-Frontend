@@ -4,6 +4,8 @@ import { EntityCreatedResponse } from 'src/app/interfaces/entity.created.respons
 import { Page } from 'src/app/interfaces/page';
 import { HttpService } from 'src/app/services/http.service';
 import { UserService } from 'src/app/services/user.service';
+import { FilterTransactionDto } from '../classes/filter.transaction';
+import { TransactionType } from '../classes/transaction.type';
 import { CreateTransactionRequest } from '../interfaces/create.transaction.request';
 import { FindTransactionsResponse } from '../interfaces/find.transactions.response';
 import { UpdateTransactionRequest } from '../interfaces/update.transaction.request';
@@ -34,6 +36,11 @@ export class TransactionsService {
   public findAll(page: Page): Observable<FindTransactionsResponse> {
     const token = this.userService.getToken();
     return this.httpService.get(`/transactions?page=${page.number}&size=${page.size}`, token);
+  }
+
+  public findAllFiltered(page: Page, filter: FilterTransactionDto): Observable<FindTransactionsResponse> {
+    const token = this.userService.getToken();
+    return this.httpService.post(`/transactions/filter?page=${page.number}&size=${page.size}`, filter, token);
   }
 
   public delete(id: string): Observable<any> {

@@ -53,6 +53,7 @@ export class CreateTransactionComponent implements OnInit {
   public create(): void {
     this.loading = true;
     const request = this.requestForm.value;
+    request.transaction.date = this.formatDate(this.requestForm.value.transaction.date);
     this.transactionsService
       .create(request)
       .subscribe(
@@ -74,6 +75,14 @@ export class CreateTransactionComponent implements OnInit {
       this.appService.reloadData(AppService.RELOAD_TRANSACTIONS);
     }
     this.dialogRef.close();
+  }
+
+  private formatDate(date: Date): string {
+    date = new Date(date);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
+    return `${year}-${month}-${day}`
   }
 
 }
