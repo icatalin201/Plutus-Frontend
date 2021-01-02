@@ -38,7 +38,7 @@ export class TransactionsService {
       filter: FilterTransactionDto | null
     ): Observable<FindTransactionsResponse> {
     const token = this.userService.getToken();
-    let url = `/transactions/filter?page=${page.number}&size=${page.size}`;
+    let url = `/transactions?page=${page.number}&size=${page.size}`;
     if (filter) {
       if (filter.partnerId) {
         url += `&partnerId=${filter.partnerId}`
