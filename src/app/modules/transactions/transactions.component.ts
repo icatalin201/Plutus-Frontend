@@ -90,7 +90,7 @@ export class TransactionsComponent implements OnInit {
       number: this.paginator.pageIndex,
       size: this.paginator.pageSize
     };
-    return this.transactionsService.findAllFiltered(page, this.filter);
+    return this.transactionsService.findAll(page, this.filter);
   }
 
   public import(): void {
@@ -133,7 +133,7 @@ export class TransactionsComponent implements OnInit {
       .selected
       .map(t => t.id)
     this.transactionsService
-      .markAsDone(ids)
+      .collect(ids)
       .subscribe(
         res => {
           this.selection.clear();

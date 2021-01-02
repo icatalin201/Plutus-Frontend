@@ -30,17 +30,30 @@ export class TransactionsService {
 
   public upload(request: { transactionsFile: string }): Observable<any> {
     const token = this.userService.getToken();
-    return this.httpService.post(`/transactions/import`, request, token);
+    return this.httpService.post(`/transactions/file`, request, token);
   }
 
-  public findAll(page: Page): Observable<FindTransactionsResponse> {
+  public findAll(
+      page: Page,
+      filter: FilterTransactionDto | null
+    ): Observable<FindTransactionsResponse> {
     const token = this.userService.getToken();
-    return this.httpService.get(`/transactions?page=${page.number}&size=${page.size}`, token);
-  }
-
-  public findAllFiltered(page: Page, filter: FilterTransactionDto): Observable<FindTransactionsResponse> {
-    const token = this.userService.getToken();
-    return this.httpService.post(`/transactions/filter?page=${page.number}&size=${page.size}`, filter, token);
+    let url = `/transactions/filter?page=${page.number}&size=${page.size}`;
+    if (filter) {
+      if (filter.partnerId) {
+        url += `&partnerId=${filter.partnerId}`
+      }
+      if (filter.type) {
+        url += `&type=${filter.type}`
+      }
+      if (filter.startDate) {
+        url += `&startDate=${filter.startDate}`
+      }
+      if (filter.endDate) {
+        url += `&endDate=${filter.endDate}`
+      }
+    }
+    return this.httpService.get(url, token);
   }
 
   public delete(id: string): Observable<any> {
@@ -48,9 +61,9 @@ export class TransactionsService {
     return this.httpService.delete(`/transactions/${id}`, token);
   }
 
-  public markAsDone(ids: string[]): Observable<any> {
+  public collect(ids: string[]): Observable<any> {
     const token = this.userService.getToken();
-    let url = '/transactions/done?';
+    let url = '/transactions/cashing?';
     ids.forEach(id => url = url.concat(`ids=${id}&`))
     return this.httpService.post(url, null, token);
   }

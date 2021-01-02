@@ -1,7 +1,7 @@
 
 <div class="mb-1 flex row" style="background-color: #262626;">
-  <button mat-button [disabled]="!selection.hasValue()" (click)="printSelected()">Printeaza</button>
-  <button mat-button [disabled]="!selection.hasValue()" (click)="markAsDoneSelected()">Marcheaza ca incasat</button>
+  <button mat-button [disabled]="!selection.hasValue()" (click)="print()">Printeaza</button>
+  <button mat-button [disabled]="!selection.hasValue()" (click)="collect()">Marcheaza ca incasat</button>
   <span class="spacer"></span>
   <button mat-button color="primary" (click)="addInvoice()">Adauga</button>
 </div>

@@ -101,32 +101,10 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
     this.dialog.open(CreateInvoiceComponent);
   }
 
-  public printInvoice(invoice: Invoice): void {
-    this.invoiceService
-      .print(invoice.id)
-      .subscribe(
-        res => {
-          const a = document.createElement('a');
-          document.body.appendChild(a);
-          const file = new Blob([res], {type: 'application/pdf'});
-          const url = window.URL.createObjectURL(file);
-          a.href = url;
-          a.download = `${invoice.name}.pdf`;
-          a.click();
-          window.URL.revokeObjectURL(url);
-        },
-        e => {
-          console.log(e);
-          const message = e.error.message || 'A aparut o eroare.';
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
-        }
-      )
-  }
-
-  public printSelected(): void {
+  public print(): void {
     const ids = this.selection.selected.map(e => e.id)
     this.invoiceService
-      .printMultiple(ids)
+      .print(ids)
       .subscribe(
         res => {
           this.selection.clear();
@@ -147,12 +125,12 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
       )
   }
 
-  public markAsDoneSelected(): void {
+  public collect(): void {
     const ids = this.selection
       .selected
       .map(i => i.id)
     this.invoiceService
-      .markAsDone(ids)
+      .collect(ids)
       .subscribe(
         res => {
           this.selection.clear();

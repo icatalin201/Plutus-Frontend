@@ -1,8 +1,8 @@
 import { TransactionType } from "./transaction.type";
 
 export class FilterTransactionDto {
-    partnerId: string;
+    partnerId: string | null;
     type: TransactionType | null;
-    startDate: string;
-    endDate: string
+    startDate: string | null;
+    endDate: string | null
 }
