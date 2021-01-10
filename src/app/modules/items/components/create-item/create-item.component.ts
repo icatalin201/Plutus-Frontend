@@ -46,15 +46,15 @@ export class CreateItemComponent implements OnInit {
           this.loading = false;
           this.dismiss(true);
           this.snackbar
-            .open('Item creat.', 
-              'OK', 
+            .open('Item creat.',
+              'OK',
               { duration: 3000 })
         },
         e => {
           this.loading = false;
           this.snackbar
-            .open('A aparut o eroare.', 
-              'OK', 
+            .open('A aparut o eroare.',
+              'Inchide',
               { duration: 3000 })
         }
       );

@@ -5,7 +5,6 @@ import { Page } from 'src/app/interfaces/page';
 import { HttpService } from 'src/app/services/http.service';
 import { UserService } from 'src/app/services/user.service';
 import { FilterTransactionDto } from '../classes/filter.transaction';
-import { TransactionType } from '../classes/transaction.type';
 import { CreateTransactionRequest } from '../interfaces/create.transaction.request';
 import { FindTransactionsResponse } from '../interfaces/find.transactions.response';
 import { UpdateTransactionRequest } from '../interfaces/update.transaction.request';

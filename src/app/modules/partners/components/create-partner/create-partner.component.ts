@@ -48,7 +48,7 @@ export class CreatePartnerComponent implements OnInit {
     private dialogRef: MatDialogRef<CreatePartnerComponent>
   ) { }
 
-  public ngOnInit(): void { 
+  public ngOnInit(): void {
     this.dataService
       .findBanks()
       .subscribe(
@@ -74,8 +74,8 @@ export class CreatePartnerComponent implements OnInit {
         },
         e => {
           this.loading = false;
-          const message = e.error.message || 'Something went wrong.';
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+          const message = e.error.message || 'A aparut o eroare';
+          this.snackbar.open(message, 'Inchide', { duration: 3000 })
         }
       );
   }

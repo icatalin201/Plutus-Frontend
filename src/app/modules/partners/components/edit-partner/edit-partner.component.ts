@@ -92,12 +92,12 @@ export class EditPartnerComponent implements OnInit {
         r => {
           this.loading = false;
           this.dismiss(true);
-          this.snackbar.open('Partner updated', 'OK', { duration: 3000 })
+          this.snackbar.open('Partenerul a fost actualizat', 'OK', { duration: 3000 })
         },
         e => {
           this.loading = false;
-          const message = e.error.message || 'Something went wrong.';
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+          const message = e.error.message || 'A aparut o eroare';
+          this.snackbar.open(message, 'Inchide', { duration: 3000 })
         }
       );
   }

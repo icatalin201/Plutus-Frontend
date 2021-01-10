@@ -34,7 +34,7 @@ export class EditItemComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<EditItemComponent>,
     @Inject(MAT_DIALOG_DATA) data: Item,
-  ) { 
+  ) {
     this.item = data;
   }
 
@@ -65,7 +65,7 @@ export class EditItemComponent implements OnInit {
       e => {
         this.loading = false;
         const message = e.error.message || 'A aparut o eroare.';
-        this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+        this.snackbar.open(message, 'Inchide', { duration: 3000 })
       }
     );
   }

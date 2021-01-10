@@ -26,7 +26,11 @@ export class TransactionsComponent implements OnInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['select', 'date', 'document', 'details', 'partner', 'income', 'expense', 'status', 'actions'];
+  public columnsToDisplay: string[] = [
+    'select', 'date', 'document',
+    'details', 'partner', 'income',
+    'expense', 'status', 'actions'
+  ];
   public dataSource = new MatTableDataSource<Transaction>([]);
   public dataSize: number = 100;
   public loading: boolean = true;
@@ -78,9 +82,8 @@ export class TransactionsComponent implements OnInit {
     ref.afterClosed().subscribe(result => {
       if (result) {
         this.filter = result
-        const event = new PageEvent();
-        event.pageIndex = 0;
-        this.paginator.page.emit(event)
+        this.paginator.pageIndex = 0
+        this.paginator.page.emit()
       }
     });
   }
@@ -154,7 +157,7 @@ export class TransactionsComponent implements OnInit {
 
   public delete(transaction: Transaction): void {
     const ref = this.dialog
-      .open(ConfirmationComponent, 
+      .open(ConfirmationComponent,
         { data: 'Esti sigur ca vrei sa stergi tranzactia?' });
     ref.afterClosed()
       .subscribe(
@@ -165,7 +168,7 @@ export class TransactionsComponent implements OnInit {
               .subscribe(
                 res => {
                   this.appService.reloadData(AppService.RELOAD_TRANSACTIONS);
-                  this.snackbar.open('Tranzactie stearsa', 'OK', { duration: 3000 })
+                  this.snackbar.open('Tranzactia a fost stearsa', 'OK', { duration: 3000 })
                 }
               );
           }

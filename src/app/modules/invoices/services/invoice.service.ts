@@ -38,4 +38,9 @@ export class InvoiceService {
     ids.forEach(id => url = url.concat(`ids=${id}&`))
     return this.httpService.post(url, null, token);
   }
+
+  public delete(id: string): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.delete(`/invoices/${id}`, token);
+  }
 }

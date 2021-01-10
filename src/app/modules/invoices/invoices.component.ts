@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { AppService } from 'src/app/services/app.service';
 import { Invoice } from './classes/invoice';
 import { CreateInvoiceComponent } from './components/create-invoice/create-invoice.component';
@@ -21,7 +22,11 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
-  public columnsToDisplay: string[] = ['select', 'name', 'date', 'client', 'total', 'currencyTotal', 'status'];
+  public columnsToDisplay: string[] = [
+    'select', 'name', 'date',
+    'client', 'total', 'currencyTotal',
+    'status', 'actions'
+  ];
   public dataSource = new MatTableDataSource<Invoice>([]);
   public dataSize: number = 100;
   public loading: boolean = true;
@@ -120,7 +125,28 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
         e => {
           console.log(e);
           const message = e.error.message || 'A aparut o eroare.';
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+          this.snackbar.open(message, 'Inchide', { duration: 3000 })
+        }
+      )
+  }
+
+  public delete(invoice: Invoice): void {
+    const ref = this.dialog
+      .open(ConfirmationComponent,
+        { data: 'Esti sigur ca vrei sa stergi factura?' });
+    ref.afterClosed()
+      .subscribe(
+        data => {
+          if (data && data.confirm) {
+            this.invoiceService
+              .delete(invoice.id)
+              .subscribe(
+                res => {
+                  this.appService.reloadData(AppService.RELOAD_INVOICES);
+                  this.snackbar.open('Factura a fost stearsa', 'OK', { duration: 3000 })
+                }
+              );
+          }
         }
       )
   }
@@ -140,7 +166,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
           console.log(e);
           this.selection.clear();
           const message = e.error.message || 'A aparut o eroare.';
-          this.snackbar.open(message, 'Dismiss', { duration: 3000 })
+          this.snackbar.open(message, 'Inchide', { duration: 3000 })
         }
       )
   }

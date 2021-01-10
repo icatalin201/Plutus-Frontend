@@ -36,10 +36,10 @@ export class SerialComponent implements OnInit {
         res => {
           this.serial = res.serial;
           this.requestForm.setValue(
-            { 
-              serial: { 
-                startNumber: res.serial.startNumber 
-              } 
+            {
+              serial: {
+                startNumber: res.serial.currentNumber
+              }
             })
         }
       )
