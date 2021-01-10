@@ -1,0 +1,19 @@
+@import 'src/assets/layout/colors';
+
+.dashboard-container {
+    width: 100%;
+
+    .dashboard-card {
+        width: 200px;
+        height: 200px;
+        background-color: $color-bg-dark;
+        padding: 24px;
+        margin: 12px;
+        border-radius: 10px;
+        text-align: center;
+
+        h1, h3 {
+            margin: 0;
+        }
+    }
+}

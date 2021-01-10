@@ -10,9 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PartnersModule } from '../partners/partners.module';
 import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
 import { UploadTransactionsComponent } from './components/upload-transactions/upload-transactions.component';
+import { FilterTransactionsComponent } from './components/filter-transactions/filter-transactions.component';
 
 @NgModule({
-  declarations: [TransactionsComponent, CreateTransactionComponent, EditTransactionComponent, UploadTransactionsComponent],
+  declarations: [TransactionsComponent, CreateTransactionComponent, EditTransactionComponent, UploadTransactionsComponent, FilterTransactionsComponent],
   imports: [
     CommonModule,
     MaterialModule,

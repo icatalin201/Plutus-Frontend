@@ -25,21 +25,16 @@ export class InvoiceService {
     return this.httpService.post(`/invoices`, request, token);
   }
 
-  public print(id: string): Observable<any> {
-    const token = this.userService.getToken();
-    return this.httpService.getBuffer(`/invoices/pdf/${id}`, token);
-  }
-
-  public printMultiple(ids: string[]): Observable<any> {
+  public print(ids: string[]): Observable<any> {
     const token = this.userService.getToken();
     let url = '/invoices/pdf?';
     ids.forEach(id => url = url.concat(`ids=${id}&`))
     return this.httpService.getBuffer(url, token);
   }
 
-  public markAsDone(ids: string[]): Observable<any> {
+  public collect(ids: string[]): Observable<any> {
     const token = this.userService.getToken();
-    let url = '/invoices/done?';
+    let url = '/invoices/cashing?';
     ids.forEach(id => url = url.concat(`ids=${id}&`))
     return this.httpService.post(url, null, token);
   }

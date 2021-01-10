@@ -71,7 +71,7 @@ export class EditTransactionComponent implements OnInit {
     this.loading = true;
     const request = this.requestForm.value;
     this.transactionsService
-      .create(request)
+      .update(request)
       .subscribe(
         r => {
           this.loading = false;

@@ -1,17 +1,19 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { AppService } from 'src/app/services/app.service';
+import { FilterTransactionDto } from './classes/filter.transaction';
 import { Transaction } from './classes/transaction';
 import { TransactionType } from './classes/transaction.type';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
 import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
+import { FilterTransactionsComponent } from './components/filter-transactions/filter-transactions.component';
 import { UploadTransactionsComponent } from './components/upload-transactions/upload-transactions.component';
 import { TransactionsService } from './services/transactions.service';
 
@@ -30,6 +32,7 @@ export class TransactionsComponent implements OnInit {
   public loading: boolean = true;
   public expandedElement: Transaction | null;
   public selection = new SelectionModel<Transaction>(true, []);
+  public filter: FilterTransactionDto = new FilterTransactionDto();
 
   public constructor(
     private transactionsService: TransactionsService,
@@ -52,11 +55,7 @@ export class TransactionsComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.loading = true;
-          const page = {
-            number: this.paginator.pageIndex,
-            size: this.paginator.pageSize
-          };
-          return this.transactionsService.findAll(page);
+          return this.getTransactions();
         }),
         map((data) => {
           this.loading = false;
@@ -72,6 +71,26 @@ export class TransactionsComponent implements OnInit {
         this.dataSource.data = res.transactions;
         this.dataSize = res.total;
       });
+  }
+
+  public onFilter() {
+    const ref = this.dialog.open(FilterTransactionsComponent);
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        this.filter = result
+        const event = new PageEvent();
+        event.pageIndex = 0;
+        this.paginator.page.emit(event)
+      }
+    });
+  }
+
+  public getTransactions() {
+    const page = {
+      number: this.paginator.pageIndex,
+      size: this.paginator.pageSize
+    };
+    return this.transactionsService.findAll(page, this.filter);
   }
 
   public import(): void {
@@ -114,7 +133,7 @@ export class TransactionsComponent implements OnInit {
       .selected
       .map(t => t.id)
     this.transactionsService
-      .markAsDone(ids)
+      .collect(ids)
       .subscribe(
         res => {
           this.selection.clear();

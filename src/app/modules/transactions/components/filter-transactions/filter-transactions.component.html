@@ -1,0 +1,37 @@
+<div class="dialog-wrapper">
+
+    <div class="inner-wrapper">
+        <h1>Filtreaza tranzactii</h1>
+
+        <div class="flex row">
+            <mat-form-field appearance="fill" class="flex-3">
+                <mat-label>Data de start</mat-label>
+                <input [(ngModel)]="startDate" matInput [matDatepicker]="startDatePicker">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="flex-3">
+                <mat-label>Data de sfarsit</mat-label>
+                <input [(ngModel)]="endDate" matInput [matDatepicker]="endDatePicker">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="flex-3">
+                <mat-label>Tip</mat-label>
+                <mat-select [(ngModel)]="type">
+                    <mat-option>Ambele</mat-option>
+                    <mat-option value="INCOME">Incasari</mat-option>
+                    <mat-option value="EXPENSE">Venituri</mat-option>
+                </mat-select>
+                <mat-error>Alege o metoda</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="flex row justify-end">
+            <button mat-button color="primary" (click)="filter()">Aplica</button>
+            <button mat-button color="warn" (click)="dismiss()">Anuleaza</button>
+        </div>
+    </div>
+
+</div>
+  
