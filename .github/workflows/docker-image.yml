@@ -17,6 +17,15 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v2
     
+    - name: Prepare Node 
+      uses: actions/setup-node@v1 #this will install Node and npm on Ubuntu
+      with:
+        node-version: '12.x'
+    
+    - run: npm install
+    - run: npm install -g @angular/cli > /dev/null
+    - run: ng build --prod --output-path=dist
+    
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     
@@ -34,9 +43,9 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        platforms: linux/amd64,linux/arm/v7
+        platforms: linux/arm/v7
         push: true
-        tags: icatalin201/plutus-frontend:v.0.0.1
+        tags: icatalin201/plutus-frontend:latest
 #           build-args: |
 #             arg1=value1
 #             arg2=value2
