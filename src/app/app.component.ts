@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
     { name: 'money', text: 'Tranzactii', path: '/transactions' },
     { name: 'settings', text: 'Setari', path: '/settings' },
   ];
-  public isLoggedIn: boolean = false;
   public name: string;
+  private isLoggedIn: boolean = false;
 
   public constructor(
     private userService: UserService,
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    const ref = this.dialog.open(ConfirmationComponent, 
+    const ref = this.dialog.open(ConfirmationComponent,
       { data: 'Esti sigur ca vrei sa te deconectezi?' })
     ref.afterClosed().subscribe(data => {
       if (data && data.confirm) {
