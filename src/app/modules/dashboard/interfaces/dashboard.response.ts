@@ -1,9 +1,5 @@
-import { BestPartnerDto } from "../classes/best.partner.dto";
-import { ExpenseDto } from "../classes/expense.dto";
-import { IncomeDto } from "../classes/income.dto";
+import { Stat } from "../classes/stat";
 
 export interface DashboardResponse {
-    incomes: IncomeDto
-    expenses: ExpenseDto
-    bestPartner: BestPartnerDto
+    statistics: Stat[]
 }

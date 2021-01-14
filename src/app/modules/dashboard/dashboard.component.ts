@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BestPartnerDto } from './classes/best.partner.dto';
-import { ExpenseDto } from './classes/expense.dto';
-import { IncomeDto } from './classes/income.dto';
+import { Stat } from './classes/stat';
 import { DashboardService } from './services/dashboard.service';
 
 @Component({
@@ -11,9 +9,7 @@ import { DashboardService } from './services/dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  public incomes: IncomeDto
-  public expenses: ExpenseDto
-  public bestPartner: BestPartnerDto
+  private statistics: Stat[] = []
 
   public constructor(
     private dashboardService: DashboardService
@@ -23,12 +19,12 @@ export class DashboardComponent implements OnInit {
     this.dashboardService
       .fetchStatistics()
       .subscribe(
-        res => {
-          this.incomes = res.incomes;
-          this.expenses = res.expenses;
-          this.bestPartner = res.bestPartner;
-        }
+        res => this.statistics = res.statistics
       )
+  }
+
+  public get stats(): Stat[] {
+    return this.statistics
   }
 
 }

@@ -22,9 +22,9 @@ export class TransactionsService {
     return this.httpService.post(`/transactions`, request, token);
   }
 
-  public update(request: UpdateTransactionRequest): Observable<any> {
+  public update(request: UpdateTransactionRequest, id: string): Observable<any> {
     const token = this.userService.getToken();
-    return this.httpService.put(`/transactions`, request, token);
+    return this.httpService.put(`/transactions/${id}`, request, token);
   }
 
   public upload(request: { transactionsFile: string }): Observable<any> {

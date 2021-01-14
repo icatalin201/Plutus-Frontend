@@ -1,22 +1,6 @@
-<div class="dashboard-container flex row wrap" *ngIf="incomes && expenses && bestPartner">
-    <div class="dashboard-card flex justify-center align-center">
-        <h3>Venituri</h3>
-        <h1>{{incomes.total.toLocaleString()}} RON</h1>
-    </div>
-    <div class="dashboard-card flex justify-center align-center">
-        <h3>Cheltuieli</h3>
-        <h1>{{expenses.total.toLocaleString()}} RON</h1>
-    </div>
-    <div class="dashboard-card flex justify-center align-center">
-        <h3>Top client - {{bestPartner.name}}</h3>
-        <h1>{{bestPartner.total.toLocaleString()}} RON</h1>
-    </div>
-    <div class="dashboard-card flex justify-center align-center">
-        <h3>Numar venituri</h3>
-        <h1>{{incomes.count}}</h1>
-    </div>
-    <div class="dashboard-card flex justify-center align-center">
-        <h3>Numar cheltuieli</h3>
-        <h1>{{expenses.count}}</h1>
+<div class="dashboard-container flex row wrap" *ngIf="stats">
+    <div class="dashboard-card flex justify-center align-center" *ngFor="let stat of stats">
+        <h3>{{stat.text}}</h3>
+        <h1>{{stat.value.toLocaleString()}} RON</h1>
     </div>
 </div>

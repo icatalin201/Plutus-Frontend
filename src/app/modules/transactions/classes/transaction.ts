@@ -15,4 +15,5 @@ export class Transaction {
     createdOn: string;
     updatedOn: string;
     status: TransactionStatus;
+    deductible: boolean
 }

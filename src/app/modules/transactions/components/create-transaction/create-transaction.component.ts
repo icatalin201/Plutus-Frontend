@@ -23,6 +23,7 @@ export class CreateTransactionComponent implements OnInit {
       details: ['', Validators.required],
       value: ['', Validators.required],
       date: [new Date(), Validators.required],
+      deductible: [false, Validators.required],
       type: ['INCOME', Validators.required],
       method: ['BANK', Validators.required],
     })

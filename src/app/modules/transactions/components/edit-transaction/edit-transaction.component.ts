@@ -24,6 +24,7 @@ export class EditTransactionComponent implements OnInit {
       details: ['', Validators.required],
       value: ['', Validators.required],
       date: [new Date(), Validators.required],
+      deductible: [false, Validators.required],
       type: ['INCOME', Validators.required],
       method: ['BANK', Validators.required],
     })
@@ -57,6 +58,7 @@ export class EditTransactionComponent implements OnInit {
         date: this.transaction.date,
         type: this.transaction.type,
         method: this.transaction.method,
+        deductible: this.transaction.deductible
       },
     }
     this.requestForm.setValue(formValue);
@@ -71,7 +73,7 @@ export class EditTransactionComponent implements OnInit {
     this.loading = true;
     const request = this.requestForm.value;
     this.transactionsService
-      .update(request)
+      .update(request, this.transaction.id)
       .subscribe(
         r => {
           this.loading = false;
