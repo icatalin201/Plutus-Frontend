@@ -1,5 +1,5 @@
 
-<div class="mb-1 flex row" style="background-color: #262626;">
+<div class="flex row">
   <button mat-button [disabled]="!selection.hasValue()" (click)="print()">Printeaza</button>
   <button mat-button [disabled]="!selection.hasValue()" (click)="collect()">Marcheaza ca incasat</button>
   <span class="spacer"></span>
@@ -65,6 +65,6 @@
 </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
-  <tr style="background-color: #262626;" mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+  <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
 </table>
 <mat-paginator [length]="dataSize" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

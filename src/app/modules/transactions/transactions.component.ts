@@ -38,9 +38,6 @@ export class TransactionsComponent implements OnInit {
   public selection = new SelectionModel<Transaction>(true, []);
   public filter: FilterTransactionDto = new FilterTransactionDto();
 
-  private totalIncome = 0
-  private totalExpense = 0;
-
   public constructor(
     private transactionsService: TransactionsService,
     private dialog: MatDialog,
@@ -78,14 +75,6 @@ export class TransactionsComponent implements OnInit {
         this.dataSource.data = res.transactions;
         this.dataSize = res.total;
       });
-  }
-
-  public get getTotalIncome(): number {
-    return this.totalIncome
-  }
-
-  public get getTotalExpense(): number {
-    return this.totalExpense
   }
 
   public onFilter() {

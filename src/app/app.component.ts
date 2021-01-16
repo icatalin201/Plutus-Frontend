@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     { name: 'settings', text: 'Setari', path: '/settings' },
   ];
   public name: string;
-  private isLoggedIn: boolean = false;
+  public isLoggedIn: boolean = false;
 
   public constructor(
     private userService: UserService,

@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-  <div class="main-side-nav-wrapper">
+  <div class="main-side-nav-wrapper" *ngIf="isLoggedIn">
     <div class="main-side-nav-inner">
       <div class="main-side-nav-inner-header">
         <h1>{{name}}</h1>
@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div class="main-content-wrapper">
+  <div class="main-content-wrapper" [class.main-content-wrapper-margin]="isLoggedIn">
     <div class="p-3">
       <router-outlet></router-outlet>
     </div>

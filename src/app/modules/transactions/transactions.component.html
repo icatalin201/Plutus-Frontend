@@ -1,5 +1,5 @@
-<!--
-<div class="mb-1 flex row align-center" style="background-color: #262626;">
+
+<div class="flex row align-center">
     <button mat-button [disabled]="!selection.hasValue()" (click)="markAsDoneSelected()">Finalizeaza</button>
     <span class="spacer"></span>
     <button mat-button (click)="onFilter()">Filtreaza</button>
@@ -74,11 +74,6 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
-<tr style="background-color: #262626;" mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
 </table>
-<mat-paginator [length]="dataSize" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator> -->
-
-<div class="transactions-total flex">
-  <p>Total incasari {{getTotalIncome.toFixed(2)}} RON</p>
-  <p>Total plati {{getTotalExpense.toFixed(2)}} RON</p>
-</div>
+<mat-paginator [length]="dataSize" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

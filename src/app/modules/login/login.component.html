@@ -1,7 +1,7 @@
 <div class="login-wrapper flex justify-center">
     <mat-progress-bar *ngIf="loading" mode="indeterminate" class="login-loading"></mat-progress-bar>
 
-    <mat-card class="login-card mat-elevation-z1">
+    <mat-card class="login-card mat-elevation-z1" cdkDrag>
         <form (submit)="login()" class="flex">
             <mat-card-title>
                 <h1 class="login-title">{{appName}}</h1>

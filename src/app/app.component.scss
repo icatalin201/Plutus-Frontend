@@ -68,14 +68,15 @@ $side-size: 250px;
 
   .main-content-wrapper {
     height: 100%;
-    margin-left: $side-size;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
+
+    &-margin {
+      margin-left: $side-size;
+    }
 
     div {
       position: relative;
-      height: 100%;
-      overflow-y: auto;
     }
   }
 }

@@ -1,10 +1,5 @@
 @import 'src/assets/layout/colors';
 
-.transactions-total {
+div, .mat-footer-row {
   background-color: $color-primary;
-  padding: 20px;
-
-  p {
-    margin: 0
-  }
 }
