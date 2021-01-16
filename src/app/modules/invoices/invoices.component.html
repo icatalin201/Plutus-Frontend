@@ -36,7 +36,7 @@
   </ng-container>
   <ng-container matColumnDef="total">
     <th mat-header-cell *matHeaderCellDef> Total </th>
-    <td mat-cell *matCellDef="let element"> RON {{element.total.toFixed(2)}} </td>
+    <td mat-cell *matCellDef="let element"> {{formatCurrency(element.total, 'RON')}} </td>
     <td mat-footer-cell *matFooterCellDef> {{getTotal()}} </td>
   </ng-container>
   <ng-container matColumnDef="client">
@@ -46,7 +46,7 @@
   </ng-container>
   <ng-container matColumnDef="currencyTotal">
     <th mat-header-cell *matHeaderCellDef> Total in valuta </th>
-    <td mat-cell *matCellDef="let element"> {{element.currency.currency}} {{element.currency.total.toFixed(2)}} </td>
+    <td mat-cell *matCellDef="let element"> {{formatCurrency(element.currency.total, element.currency.currency)}} </td>
     <td mat-footer-cell *matFooterCellDef> </td>
   </ng-container>
   <ng-container matColumnDef="status">

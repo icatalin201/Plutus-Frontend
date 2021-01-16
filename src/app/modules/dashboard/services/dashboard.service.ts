@@ -16,4 +16,14 @@ export class DashboardService {
     const token = this.userService.getToken();
     return this.httpService.get('/dashboard', token);
   }
+
+  public downloadTransactionsReport(): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.getBuffer('/reports/transactions', token);
+  }
+
+  public downloadInvoicesZip(): Observable<any> {
+    const token = this.userService.getToken();
+    return this.httpService.getBuffer('/reports/invoices', token);
+  }
 }

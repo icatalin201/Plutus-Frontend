@@ -105,7 +105,11 @@ export class TransactionsComponent implements OnInit {
       .data
       .filter(transaction => transaction.type === type)
       .reduce((sum: number, transaction: Transaction) => sum + transaction.value, 0)
-    return `RON ${total.toFixed(2)}`
+    return this.formatCurrency(total, 'RON')
+  }
+
+  public formatCurrency(value: number, currency: string): string {
+    return new Intl.NumberFormat('RO', { style: 'currency', currency }).format(value)
   }
 
   public isAllSelected(): boolean {

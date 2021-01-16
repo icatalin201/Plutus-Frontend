@@ -1,6 +1,12 @@
-<div class="dashboard-container flex row wrap" *ngIf="stats">
-    <div class="dashboard-card flex justify-center align-center" *ngFor="let stat of stats">
-        <h3>{{stat.text}}</h3>
-        <h1>{{stat.value.toLocaleString()}} RON</h1>
+<div class="dashboard-container">
+    <div class="flex row p-1">
+        <button mat-stroked-button (click)="downloadTransactionsReport()">Descarca registru incasari/plati</button>
+        <button mat-stroked-button (click)="downloadInvoicesZip()">Descarca arhiva facturi</button>
+    </div>
+    <div class="flex row wrap" *ngIf="stats">
+        <div class="dashboard-card flex justify-center align-center" *ngFor="let stat of stats">
+            <h3>{{stat.text}}</h3>
+            <h1>{{formatCurrency(stat.value)}}</h1>
+        </div>
     </div>
 </div>

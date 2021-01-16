@@ -80,7 +80,7 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
     const total = this.dataSource
       .data
       .reduce((sum: number, invoice: Invoice) => sum + invoice.total, 0)
-    return `RON ${total.toFixed(2)}`
+    return this.formatCurrency(total, 'RON')
   }
 
   public isAllSelected(): boolean {
@@ -93,6 +93,10 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
     this.isAllSelected() ?
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  public formatCurrency(value: number, currency: string): string {
+    return new Intl.NumberFormat('RO', { style: 'currency', currency }).format(value)
   }
 
   public checkboxLabel(row?: Invoice): string {
