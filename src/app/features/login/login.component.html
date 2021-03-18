@@ -1,0 +1,16 @@
+<div class="p-d-flex p-jc-center" style="height: 100vh;">
+    <p-card header="Conectare" class="p-as-center">
+        <div class="p-fluid">
+            <span class="p-input-icon-right p-input-filled">
+                <i class="pi pi-envelope"></i>
+                <input type="email" pInputText placeholder="Email" [(ngModel)]="username" />
+            </span>
+            <span class="p-mt-3 p-input-icon-right p-input-filled">
+                <i class="pi pi-lock"></i>
+                <input type="password" pInputText placeholder="Parola" [(ngModel)]="password" />
+            </span>
+            <button class="p-mt-5" pButton pRipple type="button" label="Conectare" (click)="login()"></button>
+        </div>
+    </p-card>
+    <p-toast position="bottom-right" key="info"></p-toast>
+</div>
