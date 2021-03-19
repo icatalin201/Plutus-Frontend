@@ -18,7 +18,7 @@ export class HttpService {
 
   public get<T>(
     uri: string,
-    token?: string
+    token?: string | null
   ): Observable<T> {
     const url = this.API_URL + uri;
     const headers = this.createHeaders(token);
@@ -29,7 +29,7 @@ export class HttpService {
 
   public getBuffer(
     uri: string, 
-    token?: string
+    token?: string | null
   ): Observable<ArrayBuffer> {
     const url = this.API_URL + uri;
     const headers = this.createHeaders(token);
@@ -41,7 +41,7 @@ export class HttpService {
   public post<T>(
     uri: string,
     body: any,
-    token?: string
+    token?: string | null
   ): Observable<T> {
     const url = this.API_URL + uri;
     const headers = this.createHeaders(token);
@@ -53,7 +53,7 @@ export class HttpService {
   public put<T>(
     uri: string,
     body: any,
-    token?: string
+    token?: string | null
   ): Observable<T> {
     const url = this.API_URL + uri;
     const headers = this.createHeaders(token);
@@ -64,7 +64,7 @@ export class HttpService {
 
   public delete<T>(
     uri: string,
-    token?: string
+    token?: string | null
   ): Observable<T> {
     const url = this.API_URL + uri;
     const headers = this.createHeaders(token);
@@ -81,7 +81,7 @@ export class HttpService {
     return throwError(error);
   }
 
-  private createHeaders(token?: string): {[header: string]: string | string[]} {
+  private createHeaders(token?: string | null): {[header: string]: string | string[]} {
     const headers = {
       'Content-Type': this.APP_CONTENT_TYPE,
       'Accept': this.APP_CONTENT_TYPE,

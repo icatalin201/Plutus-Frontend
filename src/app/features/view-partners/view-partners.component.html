@@ -1,1 +1,28 @@
 <app-menu></app-menu>
+
+<div class="p-d-flex p-p-2">
+  <p-card>
+    <p-table [value]="partners" 
+        styleClass="p-datatable-striped"
+        [loading]="loading"
+        [scrollable]="true" scrollHeight="400px"
+        [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nume</th>
+          <th>Email</th>
+          <th>Tip</th>
+          <th>Tara</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-partner>
+        <tr>
+          <td>{{partner.name}}</td>
+          <td>{{partner.email}}</td>
+          <td>{{partner.type}}</td>
+          <td>{{partner.country.name}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

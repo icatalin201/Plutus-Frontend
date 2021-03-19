@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from 'src/app/core/services/app.service';
+import { tap } from 'rxjs/operators';
+import { Partner } from './models/partner';
+import { PartnerService } from './services/partner.service';
 
 @Component({
   selector: 'app-view-partners',
@@ -8,11 +10,20 @@ import { AppService } from 'src/app/core/services/app.service';
 })
 export class ViewPartnersComponent implements OnInit {
 
+  public partners: Partner[] = [];
+  public loading: boolean = true;
+  public first: number = 0;
+  public rows: number = 50;
+
   constructor(
-    private appService: AppService
+    private partnerService: PartnerService
   ) { }
 
   ngOnInit(): void {
+    this.partnerService
+      .getPartners(this.first, this.rows)
+      .pipe(tap(() => this.loading = false))
+      .subscribe(res => this.partners = res)
   }
 
 }

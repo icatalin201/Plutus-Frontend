@@ -14,7 +14,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ChartModule } from 'primeng/chart';
-
+import { TableModule } from 'primeng/table';
 
 import { MenuComponent } from './components/menu/menu.component';
 
@@ -34,7 +34,8 @@ const primeModules = [
   RippleModule,
   ProgressBarModule,
   ConfirmDialogModule,
-  ChartModule
+  ChartModule,
+  TableModule
 ];
 
 @NgModule({
