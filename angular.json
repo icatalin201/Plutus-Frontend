@@ -31,11 +31,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/chart.js/dist/Chart.js",
               "./node_modules/primeng/resources/themes/saga-green/theme.css",
               "./node_modules/primeng/resources/primeng.min.css",
               "./node_modules/primeicons/primeicons.css",
               "src/styles.sass",
-              "./node_modules/primeflex/primeflex.css"
+              "./node_modules/primeflex/primeflex.scss"
             ],
             "scripts": []
           },

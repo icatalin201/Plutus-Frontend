@@ -1,5 +1,5 @@
 <div class="p-d-flex p-jc-center" style="height: 100vh;">
-    <p-card header="Conectare" class="p-as-center">
+    <p-card header="Conectare" class="p-as-center custom-card">
         <div class="p-fluid">
             <span class="p-input-icon-right p-input-filled">
                 <i class="pi pi-envelope"></i>
@@ -9,8 +9,10 @@
                 <i class="pi pi-lock"></i>
                 <input type="password" pInputText placeholder="Parola" [(ngModel)]="password" />
             </span>
-            <button class="p-mt-5" pButton pRipple type="button" label="Conectare" (click)="login()"></button>
+            <button class="p-mt-5" pButton pRipple type="button" 
+                label="Conectare" (click)="login()"></button>
+            <p-progressBar *ngIf="loading" mode="indeterminate" 
+                [style]="{ 'height': '3px' }" class="custom-progress"></p-progressBar>
         </div>
     </p-card>
-    <p-toast position="bottom-right" key="info"></p-toast>
 </div>

@@ -14,6 +14,10 @@ export class AppService {
     return this.getToken() !== null;
   }
 
+  public getAppName(): string {
+    return "Plutus Finance"
+  }
+
   public storeLoggedUser(email: string, token: string): void {
     localStorage.setItem(this.USER_EMAIL_FLAG, email);
     localStorage.setItem(this.USER_TOKEN_FLAG, token);
