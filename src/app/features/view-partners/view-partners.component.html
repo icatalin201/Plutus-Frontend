@@ -1,28 +1,53 @@
-<app-menu></app-menu>
-
-<div class="p-d-flex p-p-2">
-  <p-card>
-    <p-table [value]="partners" 
-        styleClass="p-datatable-striped"
-        [loading]="loading"
-        [scrollable]="true" scrollHeight="400px"
-        [rows]="10">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Nume</th>
-          <th>Email</th>
-          <th>Tip</th>
-          <th>Tara</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-partner>
-        <tr>
-          <td>{{partner.name}}</td>
-          <td>{{partner.email}}</td>
-          <td>{{partner.type}}</td>
-          <td>{{partner.country.name}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-card>
+<div class="p-d-flex p-flex-column partners-wrapper">
+  <app-menu></app-menu>
+  <div class="p-d-flex p-p-2 partners-content">
+    <p-card class="main-card" header="Parteneri">
+      <p-table [value]="partners" 
+          [(contextMenuSelection)]="selectedPartner" [contextMenu]="cm"
+          styleClass="p-datatable-striped"
+          [loading]="loading"
+          [scrollable]="true" scrollHeight="400px"
+          [rows]="10">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nume</th>
+            <th>Email</th>
+            <th>Tara</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-partner>
+          <tr [pContextMenuRow]="partner">
+            <td>{{partner.name}}</td>
+            <td>{{partner.email}}</td>
+            <td>{{partner.country.name}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center">
+            <span>Actualizat la {{now}}</span>
+            <p-button class="p-ml-2" type="button" icon="pi pi-refresh" 
+              (click)="loadPartners()" styleClass="p-button-text"></p-button>
+            <span style="flex: 1"></span>
+            <p-button label="Adauga partener" (click)="showCreatePartner = true"></p-button>
+          </div>
+        </ng-template>
+      </p-table>
+    </p-card>
+    <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
+      <p-card header="Incasari">
+        <p-chart type="pie" [data]="data"></p-chart>
+      </p-card>
+      <p-card class="p-mt-2" header="Cheltuieli">
+        <p-chart type="pie" [data]="data"></p-chart>
+      </p-card>
+    </div>
+  </div>
 </div>
+<p-dialog header="Creeaza partener" 
+  [style]="{width: '50vw'}"
+  [modal]="true"
+  [draggable]="false" [resizable]="false" 
+  [(visible)]="showCreatePartner">
+  <app-partner-form></app-partner-form>
+</p-dialog>
+<p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>

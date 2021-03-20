@@ -15,11 +15,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
-
-import { MenuComponent } from './components/menu/menu.component';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
 
 import * as shared from './components';
 import { ConfirmationService } from 'primeng/api';
+import { PartnerFormComponent } from './components/partner-form/partner-form.component';
 
 const primeModules = [
   CardModule,
@@ -35,12 +36,15 @@ const primeModules = [
   ProgressBarModule,
   ConfirmDialogModule,
   ChartModule,
-  TableModule
+  TableModule,
+  ContextMenuModule,
+  DialogModule
 ];
 
 @NgModule({
   declarations: [
-    MenuComponent
+    ...shared.components,
+    PartnerFormComponent
   ],
   imports: [
     CommonModule,

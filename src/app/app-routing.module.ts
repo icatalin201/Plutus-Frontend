@@ -19,26 +19,31 @@ const routes: Routes = [
     children: [
       { 
         path: 'dashboard', 
+        canActivate: [AppGuard],
         loadChildren: () => import('./features/dashboard/dashboard.module')
           .then(m => m.DashboardModule) 
       },
       { 
         path: 'partners', 
+        canActivate: [AppGuard],
         loadChildren: () => import('./features/view-partners/view-partners.module')
           .then(m => m.ViewPartnersModule) 
       },
       { 
         path: 'items', 
+        canActivate: [AppGuard],
         loadChildren: () => import('./features/view-items/view-items.module')
           .then(m => m.ViewItemsModule) 
       },
       { 
         path: 'invoices', 
+        canActivate: [AppGuard],
         loadChildren: () => import('./features/view-invoices/view-invoices.module')
           .then(m => m.ViewInvoicesModule) 
       },
       { 
         path: 'transactions', 
+        canActivate: [AppGuard],
         loadChildren: () => import('./features/view-transactions/view-transactions.module')
           .then(m => m.ViewTransactionsModule) 
       },

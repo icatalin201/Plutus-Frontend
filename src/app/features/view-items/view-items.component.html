@@ -1,1 +1,37 @@
-<app-menu></app-menu>
+<div class="p-d-flex p-flex-column items-wrapper">
+  <app-menu></app-menu>
+  <div class="p-d-flex p-p-2 items-content">
+    <p-card class="main-card" header="Iteme">
+      <p-table [value]="items" 
+          styleClass="p-datatable-striped"
+          [loading]="loading"
+          [scrollable]="true" scrollHeight="400px"
+          [rows]="10">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nume</th>
+            <th>Cod</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.code}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center">
+            <span>Actualizat la {{now}}</span>
+            <p-button class="p-ml-2" type="button" icon="pi pi-refresh" 
+              (click)="loadItems()" styleClass="p-button-text"></p-button>
+            <span style="flex: 1"></span>
+            <p-button label="Adauga item"></p-button>
+          </div>
+        </ng-template>
+      </p-table>
+    </p-card>
+    <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
+      
+    </div>
+  </div>
+</div>

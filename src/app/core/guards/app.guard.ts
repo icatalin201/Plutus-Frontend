@@ -19,7 +19,7 @@ export class AppGuard implements CanActivate {
       const isLogged = this.appService.isLoggedIn();
       const canActivate = isLogged;
       if (!canActivate) {
-        this.router.navigate(['/login'], { replaceUrl: true });
+        this.router.navigate(['/portal/login'], { replaceUrl: true });
       }
       return canActivate;
   }
