@@ -52,7 +52,7 @@ export class MessagingService {
   ): void {
     this.messageService.add({
       key: 'info', 
-      severity: 'error', 
+      severity: 'success', 
       summary: title, 
       detail: message
     });

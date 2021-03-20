@@ -3,6 +3,7 @@
   <div class="p-d-flex p-p-2 items-content">
     <p-card class="main-card" header="Iteme">
       <p-table [value]="items" 
+          [(contextMenuSelection)]="selectedItem" [contextMenu]="cm"
           styleClass="p-datatable-striped"
           [loading]="loading"
           [scrollable]="true" scrollHeight="400px"
@@ -14,7 +15,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
-          <tr>
+          <tr [pContextMenuRow]="item">
             <td>{{item.name}}</td>
             <td>{{item.code}}</td>
           </tr>
@@ -25,7 +26,7 @@
             <p-button class="p-ml-2" type="button" icon="pi pi-refresh" 
               (click)="loadItems()" styleClass="p-button-text"></p-button>
             <span style="flex: 1"></span>
-            <p-button label="Adauga item"></p-button>
+            <p-button (click)="showCreateItem = true" label="Adauga item"></p-button>
           </div>
         </ng-template>
       </p-table>
@@ -35,3 +36,13 @@
     </div>
   </div>
 </div>
+<p-dialog header="Item" 
+  [style]="{width: '50vw'}"
+  [modal]="true"
+  [draggable]="false" [resizable]="false" 
+  [(visible)]="showCreateItem">
+  <app-item-form *ngIf="selectedItem || showCreateItem" 
+    (closed)="onCloseItemDialog($event)"
+    [existingItem]="selectedItem"></app-item-form>
+</p-dialog>
+<p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>

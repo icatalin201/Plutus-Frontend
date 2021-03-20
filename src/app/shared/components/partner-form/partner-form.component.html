@@ -1,1 +1,82 @@
-<p>partner-form works!</p>
+<div class="p-fluid p-formgrid p-grid">
+  <div class="p-field p-col-12 p-md-4">
+    <label for="name">Nume</label>
+    <input [(ngModel)]="partner.name" id="name" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="email">Email</label>
+    <input [(ngModel)]="partner.email" id="email" type="email" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="phone">Telefon</label>
+    <input [(ngModel)]="partner.phone" id="phone" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="vat">CUI</label>
+    <input [(ngModel)]="partner.vat" id="vat" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="commercialRegistry">Registrul comertului</label>
+    <input [(ngModel)]="partner.commercialRegistry" 
+      id="commercialRegistry" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="bankAccount">Cont Bancar</label>
+    <input [(ngModel)]="partner.bankAccount" 
+      id="bankAccount" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="type">Tip partener</label>
+    <p-dropdown inputId="type" 
+      [options]="types" 
+      [(ngModel)]="partner.type"
+      optionLabel="name"
+      optionValue="value"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="businessType">Forma juridica</label>
+    <p-dropdown inputId="businessType" 
+      [options]="businessTypes" 
+      [(ngModel)]="partner.businessType"
+      optionLabel="name"
+      optionValue="value"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="bank">Banca</label>
+    <p-dropdown inputId="bank" 
+      [options]="banks" 
+      [(ngModel)]="partner.bankId"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="country">Tara</label>
+    <p-dropdown inputId="country" 
+      [options]="countries" 
+      [(ngModel)]="partner.countryCode"
+      optionLabel="name"
+      optionValue="code"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12">
+    <label for="address">Adresa</label>
+    <textarea [(ngModel)]="partner.address" id="address" 
+      type="text" rows="4" pInputTextarea></textarea>
+  </div>
+  <div class="p-col-12 p-d-flex p-ai-center">
+    <p-progressSpinner *ngIf="loading" 
+      [style]="{width: '30px', height: '30px'}"></p-progressSpinner>
+    <span style="flex: 1"></span>
+    <p-button icon="pi pi-times" label="Anuleaza" 
+      [disabled]="loading"
+      styleClass="p-button-danger p-button-text" 
+      (click)="cancel()"></p-button>
+    <p-button icon="pi pi-check" label="Salveaza" 
+      [disabled]="loading"
+      styleClass="p-button-text"
+      (click)="save()"></p-button>
+  </div>
+</div>

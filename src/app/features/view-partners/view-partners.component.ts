@@ -43,7 +43,7 @@ export class ViewPartnersComponent implements OnInit {
   };
 
   constructor(
-    private partnersService: PartnerService,
+    private partnerService: PartnerService,
     private confirmationService: ConfirmationService,
     private messagingService: MessagingService
   ) { }
@@ -54,7 +54,7 @@ export class ViewPartnersComponent implements OnInit {
 
   public loadPartners(): void {
     this.loading = true
-    this.partnersService
+    this.partnerService
       .getPartners(this.first, this.rows)
       .pipe(tap(() => this.loading = false))
       .subscribe(res => {
@@ -63,8 +63,17 @@ export class ViewPartnersComponent implements OnInit {
       })
   }
 
-  public editPartner(partner: Partner): void {
+  public onClosePartnerDialog(result: boolean): void {
+    if (result) {
+      this.loadPartners();
+    }
+    this.selectedPartner = null;
+    this.showCreatePartner = false;
+  }
 
+  public editPartner(partner: Partner): void {
+    this.selectedPartner = partner;
+    this.showCreatePartner = true;
   }
 
   public deletePartner(partner: Partner): void {
@@ -73,9 +82,21 @@ export class ViewPartnersComponent implements OnInit {
       header: 'Confirmare',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.partners = this.partners.filter((p) => p.id !== partner.id);
-        this.messagingService.sendSuccess('Partener sters', `${partner.name}`);
-        this.selectedPartner = null;
+        this.partnerService
+          .delete(partner.id)
+          .subscribe(
+            res => {
+              this.partners = this.partners.filter((p) => p.id !== partner.id);
+              this.messagingService
+                .sendSuccess('Partener sters', `${partner.name}`);
+              this.selectedPartner = null;
+            },
+            err => {
+              this.messagingService
+                .sendError('Eroare', `${partner.name} nu a fost sters`);
+              this.selectedPartner = null;
+            }
+          )
       }
     })
   }

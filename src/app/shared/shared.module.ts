@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,10 +18,12 @@ import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import * as shared from './components';
 import { ConfirmationService } from 'primeng/api';
-import { PartnerFormComponent } from './components/partner-form/partner-form.component';
 
 const primeModules = [
   CardModule,
@@ -38,16 +41,19 @@ const primeModules = [
   ChartModule,
   TableModule,
   ContextMenuModule,
-  DialogModule
+  DialogModule,
+  DropdownModule,
+  InputTextareaModule,
+  ProgressSpinnerModule
 ];
 
 @NgModule({
   declarations: [
     ...shared.components,
-    PartnerFormComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ...primeModules
   ],
   exports: [

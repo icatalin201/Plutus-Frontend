@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { tap } from 'rxjs/operators';
+import { ItemService } from 'src/app/core/services/item.service';
+import { MessagingService } from 'src/app/core/services/messaging.service';
 import { Item } from 'src/app/shared/models/item';
-import { GetItemsService } from './services/get-items.service';
 
 @Component({
   selector: 'app-view-items',
@@ -15,9 +17,17 @@ export class ViewItemsComponent implements OnInit {
   public first: number = 0;
   public rows: number = 50;
   public now: string = new Date().toLocaleString();
+  public selectedItem: Item = null;
+  public showCreateItem: boolean = false;
+  public contextMenuItems: MenuItem[] = [
+    {label: 'Edit', icon: 'pi pi-fw pi-pencil', command: () => this.editItem(this.selectedItem)},
+    {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => this.deleteItem(this.selectedItem)}
+  ];
 
   constructor(
-    private getItemsService: GetItemsService
+    private itemService: ItemService,
+    private confirmationService: ConfirmationService,
+    private messagingService: MessagingService
   ) { }
 
   ngOnInit(): void {
@@ -26,13 +36,51 @@ export class ViewItemsComponent implements OnInit {
 
   public loadItems(): void {
     this.loading = true
-    this.getItemsService
+    this.itemService
       .getItems(this.first, this.rows)
       .pipe(tap(() => this.loading = false))
       .subscribe(res => {
         this.items = res
         this.now = new Date().toLocaleString();
       })
+  }
+
+  public editItem(item: Item): void {
+    this.selectedItem = item;
+    this.showCreateItem = true;
+  }
+
+  public deleteItem(item: Item): void {
+    this.confirmationService.confirm({
+      message: `Esti sigur ca vrei sa stergi item-ul ${item.name}?`,
+      header: 'Confirmare',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.itemService
+          .delete(item.id)
+          .subscribe(
+            res => {
+              this.items = this.items.filter((i) => i.id !== item.id);
+              this.messagingService
+                .sendSuccess('Item sters', `${item.name}`);
+              this.selectedItem = null;
+            },
+            err => {
+              this.messagingService
+                .sendError('Eroare', `${item.name} nu a fost sters`);
+              this.selectedItem = null;
+            }
+          )
+      }
+    })
+  }
+
+  public onCloseItemDialog(result: boolean): void {
+    if (result) {
+      this.loadItems();
+    }
+    this.selectedItem = null;
+    this.showCreateItem = false;
   }
 
 }

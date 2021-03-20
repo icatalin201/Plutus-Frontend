@@ -2,40 +2,40 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppService } from 'src/app/core/services/app.service';
 import { HttpService } from 'src/app/core/services/http.service';
-import { Partner } from 'src/app/shared/models/partner';
-import { PartnerForm } from 'src/app/shared/models/partner.form';
+import { Item } from 'src/app/shared/models/item';
+import { ItemForm } from 'src/app/shared/models/item.form';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PartnerService {
+export class ItemService {
 
   constructor(
     private httpService: HttpService,
     private appService: AppService
   ) { }
 
-  public getPartners(page: number, size: number): Observable<Partner[]> {
+  public getItems(page: number, size: number): Observable<Item[]> {
     const token = this.appService.getToken()
-    const url = `/partners?page=${page}&size=${size}`
+    const url = `/items?page=${page}&size=${size}`
     return this.httpService.get(url, token)
   }
 
-  public create(partner: PartnerForm): Observable<any> {
+  public create(item: ItemForm): Observable<any> {
     const token = this.appService.getToken()
-    const url = `/partners`
-    return this.httpService.post(url, partner, token)
+    const url = `/items`
+    return this.httpService.post(url, item, token)
   }
 
-  public update(id: string, partner: PartnerForm): Observable<any> {
+  public update(id: string, item: ItemForm): Observable<any> {
     const token = this.appService.getToken()
-    const url = `/partners/${id}`
-    return this.httpService.put(url, partner, token)
+    const url = `/items/${id}`
+    return this.httpService.put(url, item, token)
   }
 
   public delete(id: string): Observable<any> {
     const token = this.appService.getToken()
-    const url = `/partners/${id}`
+    const url = `/items/${id}`
     return this.httpService.delete(url, token)
   }
 }
