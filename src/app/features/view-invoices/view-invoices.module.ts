@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ViewInvoicesRoutingModule } from './view-invoices-routing.module';
 import { ViewInvoicesComponent } from './view-invoices.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { GetInvoicesService } from './services/get-invoices.service';
 
 
 @NgModule({
@@ -14,8 +13,5 @@ import { GetInvoicesService } from './services/get-invoices.service';
     ViewInvoicesRoutingModule,
     SharedModule
   ],
-  providers: [
-    GetInvoicesService
-  ]
 })
 export class ViewInvoicesModule { }

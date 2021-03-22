@@ -5,6 +5,7 @@ export interface InvoiceLine {
   id: string;
   item: Item;
   uom: string;
+  details: string;
   quantity: number;
   unitPrice: number;
   subtotal: number;

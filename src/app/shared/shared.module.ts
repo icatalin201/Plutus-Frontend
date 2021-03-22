@@ -21,9 +21,11 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CalendarModule } from 'primeng/calendar';
 
 import * as shared from './components';
 import { ConfirmationService } from 'primeng/api';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 const primeModules = [
   CardModule,
@@ -44,7 +46,9 @@ const primeModules = [
   DialogModule,
   DropdownModule,
   InputTextareaModule,
-  ProgressSpinnerModule
+  ProgressSpinnerModule,
+  CalendarModule,
+  SelectButtonModule
 ];
 
 @NgModule({

@@ -7,8 +7,8 @@ export interface Invoice {
   id: string;
   name: string;
   customer: Partner;
-  date: string;
-  dueDate: string;
+  date: Date;
+  dueDate: Date;
   subtotal: number;
   taxes: number;
   total: number;

@@ -1,0 +1,74 @@
+<div class="p-fluid p-formgrid p-grid">
+  <div class="p-col-12">
+    <h4>Serie {{serial}}</h4>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="currency">Moneda</label>
+    <p-dropdown inputId="currency" 
+      [options]="currencies" 
+      [(ngModel)]="invoice.currency"
+      optionLabel="label" optionValue="value"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="partner">Client</label>
+    <p-dropdown inputId="partner" 
+      [options]="partners"
+      optionLabel="name"
+      optionValue="id" 
+      [(ngModel)]="invoice.partnerId"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="date">Data</label>
+    <p-calendar inputId="date" 
+      [(ngModel)]="invoice.date"></p-calendar>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="dueDate">Data scadenta</label>
+    <p-calendar inputId="dueDate" 
+      [(ngModel)]="invoice.dueDate"></p-calendar>
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="item">Item</label>
+    <p-dropdown inputId="item" 
+      [options]="items"
+      optionLabel="name"
+      optionValue="id" 
+      [(ngModel)]="invoiceLine.itemId"
+      placeholder="Selecteaza"></p-dropdown>
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="quantity">Cantitate</label>
+    <input [(ngModel)]="invoiceLine.quantity" id="quantity" type="number" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="unitPrice">Pret</label>
+    <input [(ngModel)]="invoiceLine.unitPrice" id="unitPrice" type="number" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="vat">VAT</label>
+    <input [(ngModel)]="invoiceLine.vat" id="vat" type="number" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="uom">Unitate de masura</label>
+    <input [(ngModel)]="invoiceLine.uom" id="uom" type="text" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+    <label for="details">Detalii</label>
+    <input [(ngModel)]="invoiceLine.details" id="details" type="text" pInputText> 
+  </div>
+  <div class="p-col-12 p-d-flex p-ai-center">
+    <p-progressSpinner *ngIf="loading" 
+      [style]="{width: '30px', height: '30px'}"></p-progressSpinner>
+    <span style="flex: 1"></span>
+    <p-button icon="pi pi-times" label="Anuleaza" 
+      [disabled]="loading"
+      styleClass="p-button-danger p-button-text" 
+      (click)="cancel()"></p-button>
+    <p-button icon="pi pi-check" label="Salveaza" 
+      [disabled]="loading"
+      styleClass="p-button-text"
+      (click)="save()"></p-button>
+  </div>
+</div>

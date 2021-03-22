@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetInvoicesService } from './get-invoices.service';
+import { SerialService } from './serial.service';
 
-describe('GetInvoicesService', () => {
-  let service: GetInvoicesService;
+describe('SerialService', () => {
+  let service: SerialService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GetInvoicesService);
+    service = TestBed.inject(SerialService);
   });
 
   it('should be created', () => {

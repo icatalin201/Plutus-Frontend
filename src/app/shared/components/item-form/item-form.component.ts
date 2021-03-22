@@ -62,7 +62,7 @@ export class ItemFormComponent implements OnInit {
       err => {
         this.loading = false
         this.messagingService.sendError('Eroare', 
-          `A aparut o eroare la salvare!`);
+          `A aparut o eroare!`);
       }
     )
   }
