@@ -6,6 +6,6 @@ export class ItemForm {
   description: string;
   unitPrice: number = 0.00;
   vat: number = 0.00;
-  type: ItemType;
+  type: ItemType = ItemType.SERVICE;
   uom: string;
 }

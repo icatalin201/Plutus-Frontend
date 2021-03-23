@@ -1,7 +1,14 @@
 <app-menu></app-menu>
 
 <div class="p-d-flex p-p-2">
-    <p-card header="2021" [style]="{'width': '50rem'}">
-        <p-chart type="line" [data]="basicData"></p-chart>
-    </p-card>
+    <div style="flex: 1">
+        <p-card header="2021">
+            <p-chart type="line" [data]="basicData"></p-chart>
+        </p-card>
+    </div>
+    <div style="flex: 1" class="p-ml-2">
+        <p-card header="2020">
+            <p-chart type="line" [data]="basicData"></p-chart>
+        </p-card>
+    </div>
 </div>

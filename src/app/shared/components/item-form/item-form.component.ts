@@ -17,8 +17,8 @@ export class ItemFormComponent implements OnInit {
   public loading: boolean = false;
 
   public types: any[] = [
-    { 'name': 'Produs', 'value': ItemType.PRODUCT },
-    { 'name': 'Serviciu', 'value': ItemType.SERVICE }
+    { 'name': 'Produs', 'value': 0 },
+    { 'name': 'Serviciu', 'value': 1 }
   ];
 
   @Input()
@@ -73,7 +73,11 @@ export class ItemFormComponent implements OnInit {
     this.item.uom = item.uom;
     this.item.vat = item.vat;
     this.item.unitPrice = item.unitPrice;
-    this.item.type = item.type;
+    if (item.type === 'PRODUCT') {
+      this.item.type = ItemType.PRODUCT;
+    } else {
+      this.item.type = ItemType.SERVICE;
+    }
     this.item.description = item.description;
   }
 

@@ -8,7 +8,7 @@ export interface Item {
   unitPrice: number;
   vat: number;
   totalPrice: number;
-  type: ItemType;
+  type: string;
   uom: string;
   createdOn: string;
   updatedOn: string;

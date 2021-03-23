@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { tap } from 'rxjs/operators';
 import { MessagingService } from 'src/app/core/services/messaging.service';
 import { PartnerService } from 'src/app/core/services/partner.service';
@@ -14,14 +14,29 @@ export class ViewPartnersComponent implements OnInit {
 
   public partners: Partner[] = [];
   public loading: boolean = true;
-  public first: number = 0;
-  public rows: number = 50;
-  public now: string = new Date().toLocaleString();
   public selectedPartner: Partner = null;
   public showCreatePartner: boolean = false;
+  public totalRecords: number = 300;
+  public currentPage: number = 0;
+  public pageSize: number = 50;
+  public menuItems: MenuItem[] = [
+    { 
+      label: 'Creeaza partener', 
+      icon: 'pi pi-fw pi-plus', 
+      command: () => this.showCreatePartner = true
+    },
+  ];
   public contextMenuItems: MenuItem[] = [
-    {label: 'Edit', icon: 'pi pi-fw pi-pencil', command: () => this.editPartner(this.selectedPartner)},
-    {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => this.deletePartner(this.selectedPartner)}
+    {
+      label: 'Editeaza', 
+      icon: 'pi pi-fw pi-pencil', 
+      command: () => this.editPartner(this.selectedPartner)
+    },
+    {
+      label: 'Sterge', 
+      icon: 'pi pi-fw pi-times', 
+      command: () => this.deletePartner(this.selectedPartner)
+    }
   ];
   public data = {
     labels: ['A','B','C'],
@@ -48,19 +63,19 @@ export class ViewPartnersComponent implements OnInit {
     private messagingService: MessagingService
   ) { }
 
-  ngOnInit(): void {
-    this.loadPartners()
+  ngOnInit(): void { }
+
+  public fetchData(event: LazyLoadEvent): void {
+    this.currentPage = event.first / this.pageSize;
+    this.loadPartners();
   }
 
   public loadPartners(): void {
     this.loading = true
     this.partnerService
-      .getPartners(this.first, this.rows)
+      .getPartners(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => {
-        this.partners = res
-        this.now = new Date().toLocaleString();
-      })
+      .subscribe(res => this.partners = res)
   }
 
   public onClosePartnerDialog(result: boolean): void {

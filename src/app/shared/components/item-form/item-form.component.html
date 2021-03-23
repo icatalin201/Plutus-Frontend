@@ -1,17 +1,13 @@
 <div class="p-fluid p-formgrid p-grid">
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="name">Nume</label>
     <input [(ngModel)]="item.name" id="name" type="text" pInputText> 
   </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="code">Cod</label>
     <input [(ngModel)]="item.code" id="code" type="text" pInputText> 
   </div>
-  <div class="p-field p-col-12 p-md-4">
-    <label for="uom">Unitate de masura</label>
-    <input [(ngModel)]="item.uom" id="uom" type="text" pInputText> 
-  </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="type">Tip item</label>
     <p-dropdown inputId="type" 
       [options]="types" 
@@ -20,13 +16,17 @@
       optionValue="value"
       placeholder="Selecteaza"></p-dropdown>
   </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="vat">VAT</label>
     <input [(ngModel)]="item.vat" id="vat" type="number" pInputText> 
   </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="unitPrice">Pret</label>
     <input [(ngModel)]="item.unitPrice" id="unitPrice" type="number" pInputText> 
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="uom">Unitate de masura</label>
+    <input [(ngModel)]="item.uom" id="uom" type="text" pInputText> 
   </div>
   <div class="p-field p-col-12">
     <label for="description">Descriere</label>

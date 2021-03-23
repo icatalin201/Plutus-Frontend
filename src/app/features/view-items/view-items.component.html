@@ -6,8 +6,12 @@
           [(contextMenuSelection)]="selectedItem" [contextMenu]="cm"
           styleClass="p-datatable-striped"
           [loading]="loading"
-          [scrollable]="true" scrollHeight="400px"
-          [rows]="10">
+          [scrollable]="true" scrollHeight="420px"
+          [paginator]="true"
+          [totalRecords]="totalRecords"
+          [lazy]="true"
+          (onLazyLoad)="fetchData($event)"
+          [rows]="pageSize">
         <ng-template pTemplate="header">
           <tr>
             <th>Nume</th>
@@ -20,19 +24,10 @@
             <td>{{item.code}}</td>
           </tr>
         </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="p-d-flex p-ai-center">
-            <span>Actualizat la {{now}}</span>
-            <p-button class="p-ml-2" type="button" icon="pi pi-refresh" 
-              (click)="loadItems()" styleClass="p-button-text"></p-button>
-            <span style="flex: 1"></span>
-            <p-button (click)="showCreateItem = true" label="Adauga item"></p-button>
-          </div>
-        </ng-template>
       </p-table>
     </p-card>
     <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
-      
+      <p-menubar [model]="menuItems"></p-menubar>
     </div>
   </div>
 </div>

@@ -49,7 +49,6 @@ export class InvoiceFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.invoice.currency = Currency.USD;
     if (this.existingInvoice) {
       this.useExistingInvoice(this.existingInvoice)
     } else {

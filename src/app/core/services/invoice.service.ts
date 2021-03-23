@@ -33,6 +33,12 @@ export class InvoiceService {
     return this.httpService.put(url, invoice, token)
   }
 
+  public download(): Observable<any> {
+    const token = this.appService.getToken()
+    const url = `/invoices/archive`
+    return this.httpService.getBuffer(url, token)
+  }
+
   public delete(id: string): Observable<any> {
     const token = this.appService.getToken()
     const url = `/invoices/${id}`

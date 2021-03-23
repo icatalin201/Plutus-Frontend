@@ -1,1 +1,57 @@
-<app-menu></app-menu>
+<div class="p-d-flex p-flex-column transactions-wrapper">
+  <app-menu></app-menu>
+  <div class="p-d-flex p-p-2 transactions-content">
+    <p-card class="main-card" header="Tranzactii">
+      <p-table #dt [value]="transactions" 
+          [(contextMenuSelection)]="selectedTransaction" [contextMenu]="cm"
+          styleClass="p-datatable-striped"
+          dataKey="id"
+          [loading]="loading"
+          [totalRecords]="totalRecords"
+          [scrollable]="true" scrollHeight="420px"
+          [paginator]="true"
+          [lazy]="true"
+          (onLazyLoad)="fetchData($event)"
+          [rows]="pageSize">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Data</th>
+            <th>Document</th>
+            <th>Details</th>
+            <th>Partener</th>
+            <th>Total</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-transaction>
+          <tr [pContextMenuRow]="transaction">
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.document}}</td>
+            <td>{{transaction.details}}</td>
+            <td>{{transaction.partner.name}}</td>
+            <td>{{formatValue(transaction.value)}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+    <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
+      <p-menubar [model]="menuItems"></p-menubar>
+      <p-card class="p-mt-2" header="Incasari 2021">
+        <p-chart type="pie" [data]="data"></p-chart>
+      </p-card>
+      <p-card class="p-mt-2" header="Cheltuieli 2021">
+        <p-chart type="pie" [data]="data"></p-chart>
+      </p-card>
+    </div>
+  </div>
+</div>
+<p-dialog header="Tranzactie" 
+  [style]="{width: '50vw'}"
+  [modal]="true"
+  [maximizable]="true"
+  [draggable]="false" [resizable]="false" 
+  [(visible)]="showCreateTransaction">
+  <app-transaction-form *ngIf="selectedTransaction || showCreateTransaction" 
+    (closed)="onCloseTransactionDialog($event)"
+    [existingTransaction]="selectedTransaction"></app-transaction-form>
+</p-dialog>
+<p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>

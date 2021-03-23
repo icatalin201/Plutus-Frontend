@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { tap } from 'rxjs/operators';
 import { ItemService } from 'src/app/core/services/item.service';
 import { MessagingService } from 'src/app/core/services/messaging.service';
@@ -14,14 +14,29 @@ export class ViewItemsComponent implements OnInit {
 
   public items: Item[] = [];
   public loading: boolean = true;
-  public first: number = 0;
-  public rows: number = 50;
-  public now: string = new Date().toLocaleString();
   public selectedItem: Item = null;
   public showCreateItem: boolean = false;
+  public totalRecords: number = 300;
+  public currentPage: number = 0;
+  public pageSize: number = 50;
+  public menuItems: MenuItem[] = [
+    { 
+      label: 'Creeaza item', 
+      icon: 'pi pi-fw pi-plus', 
+      command: () => this.showCreateItem = true
+    },
+  ];
   public contextMenuItems: MenuItem[] = [
-    {label: 'Edit', icon: 'pi pi-fw pi-pencil', command: () => this.editItem(this.selectedItem)},
-    {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => this.deleteItem(this.selectedItem)}
+    {
+      label: 'Editeaza', 
+      icon: 'pi pi-fw pi-pencil', 
+      command: () => this.editItem(this.selectedItem)
+    },
+    {
+      label: 'Sterge', 
+      icon: 'pi pi-fw pi-times', 
+      command: () => this.deleteItem(this.selectedItem)
+    }
   ];
 
   constructor(
@@ -30,19 +45,19 @@ export class ViewItemsComponent implements OnInit {
     private messagingService: MessagingService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  public fetchData(event: LazyLoadEvent): void {
+    this.currentPage = event.first / this.pageSize;
     this.loadItems()
   }
 
   public loadItems(): void {
     this.loading = true
     this.itemService
-      .getItems(this.first, this.rows)
+      .getItems(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => {
-        this.items = res
-        this.now = new Date().toLocaleString();
-      })
+      .subscribe(res => this.items = res)
   }
 
   public editItem(item: Item): void {

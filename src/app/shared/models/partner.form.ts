@@ -4,7 +4,7 @@ import { PartnerType } from "./partner.type";
 export class PartnerForm {
   name: string;
   email: string;
-  type: PartnerType;
+  type: PartnerType = PartnerType.CLIENT;
   phone: string;
   vat: string;
   commercialRegistry: string;
@@ -13,5 +13,5 @@ export class PartnerForm {
   bankAccount: string;
   bankId: string;
   countryCode: string;
-  businessType: BusinessType;
+  businessType: BusinessType = BusinessType.INDIVIDUAL;
 }

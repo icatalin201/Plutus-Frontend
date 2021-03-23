@@ -22,12 +22,12 @@ export class PartnerFormComponent implements OnInit {
   public loading: boolean = false;
 
   public types: any[] = [
-    { 'name': 'Client', 'value': PartnerType.CLIENT },
-    { 'name': 'Furnizor', 'value': PartnerType.VENDOR }
+    { 'name': 'Client', 'value': 1 },
+    { 'name': 'Furnizor', 'value': 0 }
   ];
   public businessTypes: any[] = [
-    { 'name': 'Persoana Fizica', 'value': BusinessType.INDIVIDUAL },
-    { 'name': 'Persoana Juridica', 'value': BusinessType.LEGAL }
+    { 'name': 'Persoana Fizica', 'value': 0 },
+    { 'name': 'Persoana Juridica', 'value': 1 }
   ];
 
   public banks: Bank[] = [];
@@ -92,9 +92,17 @@ export class PartnerFormComponent implements OnInit {
     this.partner.email = partner.email;
     this.partner.phone = partner.phone;
     this.partner.address = partner.address;
-    this.partner.commercialRegistry = partner.name;
-    this.partner.businessType = partner.businessType;
-    this.partner.type = partner.type;
+    this.partner.commercialRegistry = partner.commercialRegistry;
+    if (partner.businessType === 'LEGAL') {
+      this.partner.businessType = BusinessType.LEGAL;
+    } else {
+      this.partner.businessType = BusinessType.INDIVIDUAL;
+    }
+    if (partner.type === 'CLIENT') {
+      this.partner.type = PartnerType.CLIENT;
+    } else {
+      this.partner.type = PartnerType.VENDOR;
+    }
     this.partner.vat = partner.vat;
     this.partner.bankAccount = partner.bankAccount;
     if (partner.bank) {
