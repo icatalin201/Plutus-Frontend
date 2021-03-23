@@ -29,7 +29,7 @@
     <p-calendar inputId="dueDate" 
       [(ngModel)]="invoice.dueDate"></p-calendar>
   </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12 p-md-6">
     <label for="item">Item</label>
     <p-dropdown inputId="item" 
       [options]="items"
@@ -38,13 +38,13 @@
       [(ngModel)]="invoiceLine.itemId"
       placeholder="Selecteaza"></p-dropdown>
   </div>
+  <div class="p-field p-col-12 p-md-6">
+    <label for="unitPrice">Pret</label>
+    <input [(ngModel)]="invoiceLine.unitPrice" id="unitPrice" type="number" pInputText> 
+  </div>
   <div class="p-field p-col-12 p-md-4">
     <label for="quantity">Cantitate</label>
     <input [(ngModel)]="invoiceLine.quantity" id="quantity" type="number" pInputText> 
-  </div>
-  <div class="p-field p-col-12 p-md-4">
-    <label for="unitPrice">Pret</label>
-    <input [(ngModel)]="invoiceLine.unitPrice" id="unitPrice" type="number" pInputText> 
   </div>
   <div class="p-field p-col-12 p-md-4">
     <label for="vat">VAT</label>
@@ -54,9 +54,10 @@
     <label for="uom">Unitate de masura</label>
     <input [(ngModel)]="invoiceLine.uom" id="uom" type="text" pInputText> 
   </div>
-  <div class="p-field p-col-12 p-md-4">
+  <div class="p-field p-col-12">
     <label for="details">Detalii</label>
-    <input [(ngModel)]="invoiceLine.details" id="details" type="text" pInputText> 
+    <textarea [(ngModel)]="invoiceLine.details" id="details" 
+      type="text" rows="4" pInputTextarea></textarea> 
   </div>
   <div class="p-col-12 p-d-flex p-ai-center">
     <p-progressSpinner *ngIf="loading" 

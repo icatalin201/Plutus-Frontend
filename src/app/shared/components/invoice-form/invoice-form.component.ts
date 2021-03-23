@@ -96,7 +96,13 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   private useExistingInvoice(invoice: Invoice): void {
-    this.invoice.currency = invoice.currency.value;
+    if (invoice.currency.value === this.currencyService.USD) {
+      this.invoice.currency = Currency.USD;
+    } else if (invoice.currency.value === this.currencyService.EUR) {
+      this.invoice.currency = Currency.EUR;
+    } else {
+      this.invoice.currency = Currency.RON;
+    }
     this.invoice.date = new Date(invoice.date);
     if (invoice.dueDate) {
       this.invoice.dueDate = new Date(invoice.dueDate);

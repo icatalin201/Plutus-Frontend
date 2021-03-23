@@ -1,7 +1,5 @@
-import { Currency } from "./currency";
-
 export interface InvoiceCurrency {
-  value: Currency;
+  value: string;
   rate: number;
   subtotal: number;
   total: number
