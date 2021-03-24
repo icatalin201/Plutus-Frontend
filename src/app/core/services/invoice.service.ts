@@ -33,10 +33,22 @@ export class InvoiceService {
     return this.httpService.put(url, invoice, token)
   }
 
-  public download(): Observable<any> {
+  public downloadArchive(): Observable<any> {
     const token = this.appService.getToken()
     const url = `/invoices/archive`
     return this.httpService.getBuffer(url, token)
+  }
+
+  public downloadInvoice(id: string): Observable<any> {
+    const token = this.appService.getToken()
+    const url = `/invoices/${id}/pdf`
+    return this.httpService.getBuffer(url, token)
+  }
+
+  public collect(id: string): Observable<any> {
+    const token = this.appService.getToken()
+    const url = `/invoices/cashing?ids=${id}`
+    return this.httpService.post(url, null, token)
   }
 
   public delete(id: string): Observable<any> {

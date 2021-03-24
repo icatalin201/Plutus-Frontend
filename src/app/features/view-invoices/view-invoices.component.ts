@@ -34,6 +34,11 @@ export class ViewInvoicesComponent implements OnInit {
   ];
   public contextMenuItems: MenuItem[] = [
     { 
+      label: 'Descarca', 
+      icon: 'pi pi-fw pi-file', 
+      command: () => this.downloadInvoice(this.selectedInvoice)
+    },
+    { 
       label: 'Colecteaza', 
       icon: 'pi pi-fw pi-dollar', 
       command: () => this.collectInvoice(this.selectedInvoice)
@@ -98,7 +103,7 @@ export class ViewInvoicesComponent implements OnInit {
   public downloadArchive(): void {
     this.messagingService.sendInfo('Descarcare arhiva', 'Se descarca...')
     this.invoiceService
-      .download()
+      .downloadArchive()
       .subscribe(res => {
         const a = document.createElement('a');
         document.body.appendChild(a);
@@ -115,8 +120,37 @@ export class ViewInvoicesComponent implements OnInit {
       })
   }
 
-  public collectInvoice(invoice: Invoice): void {
+  public downloadInvoice(invoice: Invoice): void {
+    this.messagingService.sendInfo('Descarcare factura', 'Se descarca...')
+    this.invoiceService
+      .downloadInvoice(invoice.id)
+      .subscribe(res => {
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        const file = new Blob([res], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(file);
+        a.href = url;
+        a.download = `${invoice.name}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.messagingService.sendSuccess('Descarcare factura', 'Descarcarea a luat sfarsit')
+      }, 
+      err => {
+        this.messagingService.sendError('Descarcare factura', 'A aparut o eroare');
+      })
+  }
 
+  public collectInvoice(invoice: Invoice): void {
+    this.invoiceService
+      .collect(invoice.id)
+      .subscribe(
+        res => {
+          this.messagingService.sendSuccess('Colectare factura', 'Factura a fost colectata cu succes');
+        },
+        err => {
+          this.messagingService.sendError('Colectare factura', 'A aparut o eroare');
+        }
+      )
   }
 
   public editInvoice(invoice: Invoice): void {
