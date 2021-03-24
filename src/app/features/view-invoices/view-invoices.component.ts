@@ -96,6 +96,7 @@ export class ViewInvoicesComponent implements OnInit {
   }
 
   public downloadArchive(): void {
+    this.messagingService.sendInfo('Descarcare arhiva', 'Se descarca...')
     this.invoiceService
       .download()
       .subscribe(res => {
@@ -107,9 +108,10 @@ export class ViewInvoicesComponent implements OnInit {
         a.download = `arhiva.zip`;
         a.click();
         window.URL.revokeObjectURL(url);
+        this.messagingService.sendSuccess('Descarcare arhiva', 'Descarcarea a luat sfarsit')
       }, 
       err => {
-        this.messagingService.sendError('Eroare', `A aparut o eroare!`);
+        this.messagingService.sendError('Descarcare arhiva', 'A aparut o eroare');
       })
   }
 

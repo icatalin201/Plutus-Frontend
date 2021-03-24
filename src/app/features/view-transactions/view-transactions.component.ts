@@ -105,6 +105,7 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   public downloadReport(year: string): void {
+    this.messagingService.sendInfo('Descarcare raport', 'Se descarca...')
     this.transactionService
       .download(year)
       .subscribe(res => {
@@ -116,9 +117,10 @@ export class ViewTransactionsComponent implements OnInit {
         a.download = `raport-${year}.pdf`;
         a.click();
         window.URL.revokeObjectURL(url);
+        this.messagingService.sendSuccess('Descarcare raport', 'Descarcarea a luat sfarsit')
       }, 
       err => {
-        this.messagingService.sendError('Eroare', `A aparut o eroare!`);
+        this.messagingService.sendError('Descarcare raport', 'A aparut o eroare');
       })
   }
 
