@@ -5,6 +5,7 @@ import { CurrencyService } from 'src/app/core/services/currency.service';
 import { Invoice } from 'src/app/shared/models/invoice';
 import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { MessagingService } from 'src/app/core/services/messaging.service';
+import { InvoiceChartService } from './services/invoice-chart.service';
 
 @Component({
   selector: 'app-view-invoices',
@@ -54,33 +55,21 @@ export class ViewInvoicesComponent implements OnInit {
       command: () => this.deleteInvoice(this.selectedInvoice)
     }
   ];
-  public data = {
-    labels: ['A','B','C'],
-    datasets: [
-      {
-        data: [300, 50, 100],
-        backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-        ],
-        hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-        ]
-      }
-    ]    
-  };
+  public data = {};
 
   constructor(
     private invoiceService: InvoiceService,
     private currencyService: CurrencyService,
     private confirmationService: ConfirmationService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private invoiceChartService: InvoiceChartService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.invoiceChartService
+      .getIncomesChartData()
+      .subscribe(res => this.data = res)
+  }
 
   public fetchData(event: LazyLoadEvent): void {
     this.currentPage = event.first / this.pageSize;

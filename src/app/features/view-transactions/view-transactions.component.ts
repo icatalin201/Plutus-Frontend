@@ -6,6 +6,7 @@ import { MessagingService } from 'src/app/core/services/messaging.service';
 import { TransactionService } from 'src/app/core/services/transaction.service';
 import { Transaction } from 'src/app/shared/models/transaction';
 import { TransactionFilterParams } from 'src/app/shared/models/transaction.filter.params';
+import { TransactionChartService } from './services/transaction-chart.service';
 
 @Component({
   selector: 'app-view-transactions',
@@ -58,33 +59,25 @@ export class ViewTransactionsComponent implements OnInit {
       command: () => this.deleteTransaction(this.selectedTransaction)
     }
   ];
-  public data = {
-    labels: ['A','B','C'],
-    datasets: [
-      {
-        data: [300, 50, 100],
-        backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-        ],
-        hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-        ]
-      }
-    ]    
-  };
+  public incomesData = {}
+  public expensesData = {}
 
   constructor(
     private transactionService: TransactionService,
     private currencyService: CurrencyService,
     private confirmationService: ConfirmationService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private transactionChartService: TransactionChartService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.transactionChartService
+      .getIncomes2021ChartData()
+      .subscribe(res => this.incomesData = res)
+    this.transactionChartService
+      .getExpenses2021ChartData()
+      .subscribe(res => this.expensesData = res)
+  }
 
   public fetchData(event: LazyLoadEvent): void {
     this.currentPage = event.first / this.pageSize;
