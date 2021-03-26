@@ -19,11 +19,10 @@ export class PartnerChartService {
       .getTotalIncomesByPartner()
       .pipe(
         map((res: { label: string, data: any[] }) => {
-          const set = res.data.sort((o1, o2) => (o1.value > o2.value) ? 1 : -1)
-          console.log(res)
-          data.labels = [...res.data.map(e => e.label)]
+          const set = res.data.sort((o1, o2) => (o1.value < o2.value) ? 1 : -1).slice(0, 3)
+          data.labels = [...set.map(e => e.label)]
           data.datasets.push({
-            data: [...res.data.map(e => e.value).map(e => e.toFixed(2))],
+            data: [...set.map(e => e.value).map(e => e.toFixed(2))],
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
@@ -49,9 +48,10 @@ export class PartnerChartService {
       .getTotalExpensesByPartner()
       .pipe(
         map((res: { label: string, data: any[] }) => {
-          data.labels = [...res.data.map(e => e.label)]
+          const set = res.data.sort((o1, o2) => (o1.value < o2.value) ? 1 : -1).slice(0, 3)
+          data.labels = [...set.map(e => e.label)]
           data.datasets.push({
-            data: [...res.data.map(e => e.value).map(e => e.toFixed(2))],
+            data: [...set.map(e => e.value).map(e => e.toFixed(2))],
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
