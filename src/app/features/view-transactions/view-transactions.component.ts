@@ -19,7 +19,7 @@ export class ViewTransactionsComponent implements OnInit {
   public loading: boolean = true;
   public selectedTransaction: Transaction = null;
   public showCreateTransaction: boolean = false;
-  public totalRecords: number = 300;
+  public totalRecords: number = 0;
   public currentPage: number = 0;
   public pageSize: number = 50;
   public menuItems: MenuItem[] = [
@@ -89,7 +89,10 @@ export class ViewTransactionsComponent implements OnInit {
     this.transactionService
       .getTransactions(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => this.transactions = res)
+      .subscribe(res => {
+        this.transactions = res.transactions;
+        this.totalRecords = res.totalRecords;
+      })
   }
 
   public formatValue(value: number): string {

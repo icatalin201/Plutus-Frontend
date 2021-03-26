@@ -21,7 +21,7 @@ export class InvoiceChartService {
         map((res: { label: string, data: any[] }) => {
           data.labels = [...res.data.map(e => e.label)]
           data.datasets.push({
-            data: [...res.data.map(e => e.value)],
+            data: [...res.data.map(e => e.value).map(e => e.toFixed(2))],
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB",
@@ -33,6 +33,7 @@ export class InvoiceChartService {
                 "#FFCE56"
             ]
           })
+          return data;
         })
       )
   }

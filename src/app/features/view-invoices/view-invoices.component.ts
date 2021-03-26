@@ -18,7 +18,7 @@ export class ViewInvoicesComponent implements OnInit {
   public loading: boolean = true;
   public selectedInvoice: Invoice = null;
   public showCreateInvoice: boolean = false;
-  public totalRecords: number = 300;
+  public totalRecords: number = 0;
   public currentPage: number = 0;
   public pageSize: number = 50;
   public menuItems: MenuItem[] = [
@@ -81,7 +81,10 @@ export class ViewInvoicesComponent implements OnInit {
     this.invoiceService
       .getInvoices(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => this.invoices = res)
+      .subscribe(res => {
+        this.invoices = res.invoices
+        this.totalRecords = res.totalRecords;
+      })
   }
 
   public formatValue(value: number): string {

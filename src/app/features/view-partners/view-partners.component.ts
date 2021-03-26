@@ -17,7 +17,7 @@ export class ViewPartnersComponent implements OnInit {
   public loading: boolean = true;
   public selectedPartner: Partner = null;
   public showCreatePartner: boolean = false;
-  public totalRecords: number = 300;
+  public totalRecords: number = 0;
   public currentPage: number = 0;
   public pageSize: number = 50;
   public menuItems: MenuItem[] = [
@@ -68,7 +68,10 @@ export class ViewPartnersComponent implements OnInit {
     this.partnerService
       .getPartners(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => this.partners = res)
+      .subscribe(res => {
+        this.partners = res.partners;
+        this.totalRecords = res.totalRecords;
+      })
   }
 
   public onClosePartnerDialog(result: boolean): void {

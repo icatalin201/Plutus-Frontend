@@ -30,8 +30,8 @@ export class DashboardService {
       map((responses: { label: string, data: any[] }[]) => {
         const incomes = responses[0]
         const expenses = responses[1]
-        const incomeData = incomes.data.map(e => e.value)
-        const expenseData = expenses.data.map(e => e.value)
+        const incomeData = incomes.data.map(e => e.value).map(e => e.toFixed(2))
+        const expenseData = expenses.data.map(e => e.value).map(e => e.toFixed(2))
         data.labels = [...incomes.data.map(e => e.label)]
         data.datasets.push({
           label: incomes.label,
@@ -45,6 +45,7 @@ export class DashboardService {
           fill: false,
           data: [...expenseData]
         })
+        return data;
       })
     )
   }

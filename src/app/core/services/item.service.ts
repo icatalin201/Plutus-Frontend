@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppService } from 'src/app/core/services/app.service';
 import { HttpService } from 'src/app/core/services/http.service';
-import { Item } from 'src/app/shared/models/item';
 import { ItemForm } from 'src/app/shared/models/item.form';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class ItemService {
     private appService: AppService
   ) { }
 
-  public getItems(page: number, size: number): Observable<Item[]> {
+  public getItems(page: number, size: number): Observable<any> {
     const token = this.appService.getToken()
     const url = `/items?page=${page}&size=${size}`
     return this.httpService.get(url, token)

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ViewTransactionsRoutingModule } from './view-transactions-routing.module';
 import { ViewTransactionsComponent } from './view-transactions.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TransactionChartService } from './services/transaction-chart.service';
 
 
 @NgModule({
@@ -12,6 +13,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     ViewTransactionsRoutingModule,
     SharedModule
+  ],
+  providers: [
+    TransactionChartService
   ]
 })
 export class ViewTransactionsModule { }

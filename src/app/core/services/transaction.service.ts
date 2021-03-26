@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transaction } from 'src/app/shared/models/transaction';
 import { TransactionForm } from 'src/app/shared/models/transaction.form';
 import { AppService } from './app.service';
 import { HttpService } from './http.service';
@@ -15,7 +14,7 @@ export class TransactionService {
     private appService: AppService
   ) { }
 
-  public getTransactions(page: number, size: number): Observable<Transaction[]> {
+  public getTransactions(page: number, size: number): Observable<any> {
     const token = this.appService.getToken()
     const url = `/transactions?page=${page}&size=${size}`
     return this.httpService.get(url, token)

@@ -16,7 +16,7 @@ export class ViewItemsComponent implements OnInit {
   public loading: boolean = true;
   public selectedItem: Item = null;
   public showCreateItem: boolean = false;
-  public totalRecords: number = 300;
+  public totalRecords: number = 0;
   public currentPage: number = 0;
   public pageSize: number = 50;
   public menuItems: MenuItem[] = [
@@ -57,7 +57,10 @@ export class ViewItemsComponent implements OnInit {
     this.itemService
       .getItems(this.currentPage, this.pageSize)
       .pipe(tap(() => this.loading = false))
-      .subscribe(res => this.items = res)
+      .subscribe(res => {
+        this.items = res.items;
+        this.totalRecords = res.totalRecords;
+      })
   }
 
   public editItem(item: Item): void {

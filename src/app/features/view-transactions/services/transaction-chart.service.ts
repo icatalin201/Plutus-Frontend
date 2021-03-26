@@ -27,7 +27,7 @@ export class TransactionChartService {
       labels: [...res.data.map(e => e.label)],
       datasets: [
         {
-          data: [...res.data.map(e => e.value)],
+          data: [...res.data.map(e => e.value).map(e => e.toFixed(2))],
           backgroundColor: [
               "#FF6384",
               "#36A2EB",
