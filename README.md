@@ -7,7 +7,7 @@
 
 ## Overview
 
-This is an angular web client [Plutus Finance](https://github.com/icatalin201/plutus-backend). It consumes the api data and display it using the dashboard charts and a few tables.
+This is an angular web client for [Plutus Finance](https://github.com/icatalin201/plutus-backend) backend api service. It consumes the api data and display it using the dashboard charts and a few tables.
 
 ### Contents
 
