@@ -91,7 +91,6 @@ export class TransactionFormComponent implements OnInit {
     this.transaction.deductible = transaction.deductible;
     this.transaction.details = transaction.details;
     this.transaction.document = transaction.document;
-    this.transaction.value = transaction.value;
     this.transaction.partnerId = transaction.partner.id;
     if (transaction.type === 'INCOME') {
       this.transaction.type = TransactionType.INCOME
@@ -111,8 +110,10 @@ export class TransactionFormComponent implements OnInit {
       } else {
         this.transaction.currency = Currency.RON;
       }
+      this.transaction.value = transaction.currency.value;
     } else {
       this.transaction.currency = Currency.RON;
+      this.transaction.value = transaction.value;
     }
   }
 
