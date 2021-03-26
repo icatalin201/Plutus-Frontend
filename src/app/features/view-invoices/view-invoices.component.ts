@@ -6,6 +6,7 @@ import { Invoice } from 'src/app/shared/models/invoice';
 import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { MessagingService } from 'src/app/core/services/messaging.service';
 import { InvoiceChartService } from './services/invoice-chart.service';
+import { InvoiceStatus } from 'src/app/shared/models/invoice.status';
 
 @Component({
   selector: 'app-view-invoices',
@@ -25,7 +26,7 @@ export class ViewInvoicesComponent implements OnInit {
     { 
       label: 'Creeaza factura', 
       icon: 'pi pi-fw pi-plus', 
-      command: () => this.showCreateInvoice = true
+      command: () => this.createInvoice()
     },
     { 
       label: 'Descarca arhiva', 
@@ -137,42 +138,61 @@ export class ViewInvoicesComponent implements OnInit {
       .collect(invoice.id)
       .subscribe(
         res => {
-          this.messagingService.sendSuccess('Colectare factura', 'Factura a fost colectata cu succes');
+          this.messagingService.sendSuccess('Colectare factura', 
+            'Factura a fost colectata cu succes');
         },
         err => {
-          this.messagingService.sendError('Colectare factura', 'A aparut o eroare');
+          this.messagingService.sendError('Colectare factura', 
+            'A aparut o eroare');
         }
       )
   }
 
+  public createInvoice(): void {
+    this.selectedInvoice = null;
+    this.showCreateInvoice = true
+  }
+
   public editInvoice(invoice: Invoice): void {
-    this.selectedInvoice = invoice
-    this.showCreateInvoice = true;
+    if (invoice.status === InvoiceStatus.DONE) {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Factura ${invoice.name} nu poate fi schimbata!`)
+    } else {
+      this.selectedInvoice = invoice
+      this.showCreateInvoice = true
+    }
   }
 
   public deleteInvoice(invoice: Invoice): void {
-    this.confirmationService.confirm({
-      message: `Esti sigur ca vrei sa stergi factura ${invoice.name}?`,
-      header: 'Confirmare',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.invoiceService
-          .delete(invoice.id)
-          .subscribe(
-            res => {
-              this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
-              this.messagingService
-                .sendSuccess('Factura stearsa', `${invoice.name}`);
-              this.selectedInvoice = null;
-            },
-            err => {
-              this.messagingService
-                .sendError('Eroare', `Factura ${invoice.name} nu a fost stearsa`);
-              this.selectedInvoice = null;
-            }
-          )
-      }
-    })
+    if (invoice.status === InvoiceStatus.DONE) {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Factura ${invoice.name} nu poate fi schimbata!`)
+    } else {
+      this.confirmationService.confirm({
+        message: `Esti sigur ca vrei sa stergi factura ${invoice.name}?`,
+        header: 'Confirmare',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.invoiceService
+            .delete(invoice.id)
+            .subscribe(
+              res => {
+                this.invoices = this.invoices.filter((i) => i.id !== invoice.id);
+                this.messagingService
+                  .sendSuccess('Factura stearsa', `${invoice.name}`);
+                this.selectedInvoice = null;
+              },
+              err => {
+                this.messagingService
+                  .sendError('Eroare', `Factura ${invoice.name} nu a fost stearsa`);
+                this.selectedInvoice = null;
+              }
+            )
+        }
+      })
+    }
   }
 
   public onCloseInvoiceDialog(result: boolean): void {

@@ -1,5 +1,6 @@
 import { Partner } from "./partner";
 import { TransactionCurrency } from "./transaction.currency";
+import { TransactionStatus } from "./transaction.status";
 
 export interface Transaction {
   id: string;
@@ -10,7 +11,7 @@ export interface Transaction {
   type: string;
   method: string;
   value: number;
-  status: string;
+  status: TransactionStatus;
   deductible: boolean;
   currency: TransactionCurrency;
   createdOn: Date;

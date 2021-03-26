@@ -23,7 +23,7 @@ export class ViewItemsComponent implements OnInit {
     { 
       label: 'Creeaza item', 
       icon: 'pi pi-fw pi-plus', 
-      command: () => this.showCreateItem = true
+      command: () => this.createItem()
     },
   ];
   public contextMenuItems: MenuItem[] = [
@@ -61,6 +61,11 @@ export class ViewItemsComponent implements OnInit {
         this.items = res.items;
         this.totalRecords = res.totalRecords;
       })
+  }
+
+  public createItem(): void {
+    this.selectedItem = null
+    this.showCreateItem = true
   }
 
   public editItem(item: Item): void {

@@ -47,7 +47,7 @@
   [maximizable]="true"
   [draggable]="false" [resizable]="false" 
   [(visible)]="showCreateInvoice">
-  <app-invoice-form *ngIf="selectedInvoice || showCreateInvoice" 
+  <app-invoice-form *ngIf="showCreateInvoice" 
     (closed)="onCloseInvoiceDialog($event)"
     [existingInvoice]="selectedInvoice"></app-invoice-form>
 </p-dialog>

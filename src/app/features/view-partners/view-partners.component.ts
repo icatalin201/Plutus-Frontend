@@ -24,7 +24,7 @@ export class ViewPartnersComponent implements OnInit {
     { 
       label: 'Creeaza partener', 
       icon: 'pi pi-fw pi-plus', 
-      command: () => this.showCreatePartner = true
+      command: () => this.createPartner()
     },
   ];
   public contextMenuItems: MenuItem[] = [
@@ -80,6 +80,11 @@ export class ViewPartnersComponent implements OnInit {
     }
     this.selectedPartner = null;
     this.showCreatePartner = false;
+  }
+
+  public createPartner(): void {
+    this.selectedPartner = null
+    this.showCreatePartner = true
   }
 
   public editPartner(partner: Partner): void {

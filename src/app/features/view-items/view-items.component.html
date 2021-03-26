@@ -36,7 +36,7 @@
   [modal]="true"
   [draggable]="false" [resizable]="false" 
   [(visible)]="showCreateItem">
-  <app-item-form *ngIf="selectedItem || showCreateItem" 
+  <app-item-form *ngIf="showCreateItem" 
     (closed)="onCloseItemDialog($event)"
     [existingItem]="selectedItem"></app-item-form>
 </p-dialog>

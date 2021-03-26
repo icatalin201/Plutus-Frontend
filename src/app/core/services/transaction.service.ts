@@ -38,6 +38,12 @@ export class TransactionService {
     return this.httpService.getBuffer(url, token)
   }
 
+  public collect(id: string): Observable<any> {
+    const token = this.appService.getToken()
+    const url = `/transactions/cashing?ids=${id}`
+    return this.httpService.post(url, null, token)
+  }
+
   public delete(id: string): Observable<any> {
     const token = this.appService.getToken()
     const url = `/transactions/${id}`

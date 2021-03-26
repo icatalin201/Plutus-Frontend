@@ -6,6 +6,7 @@ import { MessagingService } from 'src/app/core/services/messaging.service';
 import { TransactionService } from 'src/app/core/services/transaction.service';
 import { Transaction } from 'src/app/shared/models/transaction';
 import { TransactionFilterParams } from 'src/app/shared/models/transaction.filter.params';
+import { TransactionStatus } from 'src/app/shared/models/transaction.status';
 import { TransactionChartService } from './services/transaction-chart.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class ViewTransactionsComponent implements OnInit {
     { 
       label: 'Creeaza tranzactie', 
       icon: 'pi pi-fw pi-plus', 
-      command: () => this.showCreateTransaction = true
+      command: () => this.createTransaction()
     },
     { 
       label: 'Descarca raport', 
@@ -48,6 +49,11 @@ export class ViewTransactionsComponent implements OnInit {
     },
   ];
   public contextMenuItems: MenuItem[] = [
+    { 
+      label: 'Colecteaza', 
+      icon: 'pi pi-fw pi-dollar', 
+      command: () => this.collectTransaction(this.selectedTransaction)
+    },
     { 
       label: 'Editeaza', 
       icon: 'pi pi-fw pi-pencil', 
@@ -120,34 +126,66 @@ export class ViewTransactionsComponent implements OnInit {
       })
   }
 
+  public collectTransaction(transaction: Transaction): void {
+    this.transactionService
+      .collect(transaction.id)
+      .subscribe(
+        res => {
+          this.messagingService.sendSuccess('Colectare tranzactia', 
+            'Tranzactia a fost colectata cu succes');
+        },
+        err => {
+          this.messagingService.sendError('Colectare tranzactia', 
+            'A aparut o eroare');
+        }
+      )
+  }
+
+  public createTransaction(): void {
+    this.selectedTransaction = null
+    this.showCreateTransaction = true
+  }
+
   public editTransaction(transaction: Transaction): void {
-    this.selectedTransaction = transaction;
-    this.showCreateTransaction = true;
+    if (transaction.status === TransactionStatus.DONE) {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Tranzactia nu poate fi schimbata!`)
+    } else {
+      this.selectedTransaction = transaction;
+      this.showCreateTransaction = true;
+    }
   }
 
   public deleteTransaction(transaction: Transaction): void {
-    this.confirmationService.confirm({
-      message: `Esti sigur ca vrei sa stergi transactia?`,
-      header: 'Confirmare',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.transactionService
-          .delete(transaction.id)
-          .subscribe(
-            res => {
-              this.transactions = this.transactions.filter((t) => t.id !== transaction.id);
-              this.messagingService
-                .sendSuccess('Succes', `Transactie stearsa`);
-              this.selectedTransaction = null;
-            },
-            err => {
-              this.messagingService
-                .sendError('Eroare', `Tranzactia nu a fost stearsa`);
-              this.selectedTransaction = null;
-            }
-          )
-      }
-    })
+    if (transaction.status === TransactionStatus.DONE) {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Tranzactia nu poate fi schimbata!`)
+    } else {
+      this.confirmationService.confirm({
+        message: `Esti sigur ca vrei sa stergi transactia?`,
+        header: 'Confirmare',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.transactionService
+            .delete(transaction.id)
+            .subscribe(
+              res => {
+                this.transactions = this.transactions.filter((t) => t.id !== transaction.id);
+                this.messagingService
+                  .sendSuccess('Succes', `Transactie stearsa`);
+                this.selectedTransaction = null;
+              },
+              err => {
+                this.messagingService
+                  .sendError('Eroare', `Tranzactia nu a fost stearsa`);
+                this.selectedTransaction = null;
+              }
+            )
+        }
+      })
+    }
   }
 
   public onCloseTransactionDialog(result: boolean): void {

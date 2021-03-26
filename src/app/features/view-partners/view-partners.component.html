@@ -44,7 +44,7 @@
   [modal]="true"
   [draggable]="false" [resizable]="false" 
   [(visible)]="showCreatePartner">
-  <app-partner-form *ngIf="selectedPartner || showCreatePartner" 
+  <app-partner-form *ngIf="showCreatePartner" 
     (closed)="onClosePartnerDialog($event)"
     [existingPartner]="selectedPartner"></app-partner-form>
 </p-dialog>

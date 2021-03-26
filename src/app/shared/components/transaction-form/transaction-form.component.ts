@@ -54,7 +54,7 @@ export class TransactionFormComponent implements OnInit {
     }
     this.partnerService
       .getPartners(0, 50)
-      .subscribe(res => this.partners = res);
+      .subscribe(res => this.partners = res.partners);
   }
 
   public cancel(): void {

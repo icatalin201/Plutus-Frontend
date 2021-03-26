@@ -58,10 +58,11 @@ export class InvoiceFormComponent implements OnInit {
     }
     this.partnerService
       .getPartners(0, 50)
-      .subscribe(res => this.partners = res);
+      .subscribe(res => this.partners = res.partners
+        .filter((p: Partner) => p.type === 'CLIENT'));
     this.itemService
       .getItems(0, 50)
-      .subscribe(res => this.items = res);
+      .subscribe(res => this.items = res.items);
   }
 
   public cancel(): void {
