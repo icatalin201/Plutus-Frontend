@@ -23,8 +23,10 @@ jobs:
         node-version: 14
         
     - run: npm install
-    - run: npm instlal -g @angular/cli > /dev/null
-    - run: ng build --prod --outputh-path=dist
+    - run: npm install -g @angular/cli
+    
+    - name: Create artefacts
+      run: ng build --prod --outputh-path=dist
     
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
