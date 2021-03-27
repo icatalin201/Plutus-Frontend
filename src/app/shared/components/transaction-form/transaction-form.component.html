@@ -2,7 +2,7 @@
   <div class="p-field p-col-12 p-md-6">
     <label for="date">Data</label>
     <p-calendar inputId="date" 
-      [(ngModel)]="transaction.date"></p-calendar>
+      [(ngModel)]="date"></p-calendar>
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label for="document">Document</label>
@@ -46,7 +46,7 @@
     <input [(ngModel)]="transaction.value" id="value" type="number" pInputText> 
   </div>
   <div class="p-field p-col-12 p-md-6">
-    <label for="details">Cantitate</label>
+    <label for="details">Detalii</label>
     <input [(ngModel)]="transaction.details" id="details" type="text" pInputText> 
   </div>
   <div class="p-field p-col-12 p-d-flex p-jc-end p-ai-center">

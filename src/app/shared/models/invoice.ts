@@ -1,6 +1,5 @@
 import { InvoiceCurrency } from "./invoice.currency";
 import { InvoiceLine } from "./invoice.line";
-import { InvoiceStatus } from "./invoice.status";
 import { Partner } from "./partner";
 
 export interface Invoice {
@@ -12,7 +11,7 @@ export interface Invoice {
   subtotal: number;
   taxes: number;
   total: number;
-  status: InvoiceStatus;
+  status: string;
   lines: InvoiceLine[];
   currency: InvoiceCurrency;
   createdOn: string;

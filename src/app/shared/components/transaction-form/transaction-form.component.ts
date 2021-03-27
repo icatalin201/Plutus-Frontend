@@ -34,6 +34,7 @@ export class TransactionFormComponent implements OnInit {
     { label: "Banca", value: 1 },
     { label: "Cash", value: 0 },
   ];
+  public date: Date = new Date();
 
   @Input()
   public existingTransaction: Transaction;
@@ -63,6 +64,7 @@ export class TransactionFormComponent implements OnInit {
 
   public save(): void {
     this.loading = true;
+    this.transaction.date = this.date.toLocaleDateString("sv-SE")
     var observable: Observable<any>;
     if (this.existingTransaction) {
       observable = this.transactionService
@@ -75,7 +77,7 @@ export class TransactionFormComponent implements OnInit {
       res => {
         this.loading = false
         this.messagingService.sendSuccess('Succes', 
-          `Factura a fost salvata!`);
+          `Tranzactia a fost salvata!`);
         this.closed.emit(true);
       },
       err => {
@@ -87,7 +89,7 @@ export class TransactionFormComponent implements OnInit {
   }
 
   private useExistingTransaction(transaction: Transaction): void {
-    this.transaction.date = new Date(transaction.date);
+    this.date = new Date(transaction.date);
     this.transaction.deductible = transaction.deductible;
     this.transaction.details = transaction.details;
     this.transaction.document = transaction.document;

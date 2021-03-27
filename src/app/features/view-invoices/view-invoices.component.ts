@@ -6,7 +6,6 @@ import { Invoice } from 'src/app/shared/models/invoice';
 import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { MessagingService } from 'src/app/core/services/messaging.service';
 import { InvoiceChartService } from './services/invoice-chart.service';
-import { InvoiceStatus } from 'src/app/shared/models/invoice.status';
 
 @Component({
   selector: 'app-view-invoices',
@@ -134,18 +133,25 @@ export class ViewInvoicesComponent implements OnInit {
   }
 
   public collectInvoice(invoice: Invoice): void {
-    this.invoiceService
-      .collect(invoice.id)
-      .subscribe(
-        res => {
-          this.messagingService.sendSuccess('Colectare factura', 
-            'Factura a fost colectata cu succes');
-        },
-        err => {
-          this.messagingService.sendError('Colectare factura', 
-            'A aparut o eroare');
-        }
-      )
+    if (invoice.status === "DONE") {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Factura ${invoice.name} nu poate fi schimbata!`)
+    } else {
+      this.invoiceService
+        .collect(invoice.id)
+        .subscribe(
+          res => {
+            this.loadInvoices()
+            this.messagingService.sendSuccess('Colectare factura', 
+              'Factura a fost colectata cu succes');
+          },
+          err => {
+            this.messagingService.sendError('Colectare factura', 
+              'A aparut o eroare');
+          }
+        )
+    }
   }
 
   public createInvoice(): void {
@@ -154,7 +160,7 @@ export class ViewInvoicesComponent implements OnInit {
   }
 
   public editInvoice(invoice: Invoice): void {
-    if (invoice.status === InvoiceStatus.DONE) {
+    if (invoice.status === "DONE") {
       this.messagingService
         .sendInfo('Operatie interzisa', 
           `Factura ${invoice.name} nu poate fi schimbata!`)
@@ -165,7 +171,7 @@ export class ViewInvoicesComponent implements OnInit {
   }
 
   public deleteInvoice(invoice: Invoice): void {
-    if (invoice.status === InvoiceStatus.DONE) {
+    if (invoice.status === "DONE") {
       this.messagingService
         .sendInfo('Operatie interzisa', 
           `Factura ${invoice.name} nu poate fi schimbata!`)

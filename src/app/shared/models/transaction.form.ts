@@ -3,7 +3,7 @@ import { TransactionMethod } from "./transaction.method";
 import { TransactionType } from "./transaction.type";
 
 export class TransactionForm {
-  date: Date = new Date();
+  date: string;
   document: string;
   details: string;
   partnerId: string;

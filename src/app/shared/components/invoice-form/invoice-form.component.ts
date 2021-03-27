@@ -32,6 +32,8 @@ export class InvoiceFormComponent implements OnInit {
     { label: this.currencyService.EUR, value: 1 },
     { label: this.currencyService.RON, value: 0 },
   ];
+  public date: Date = new Date();
+  public dueDate: Date = new Date();
 
   @Input()
   public existingInvoice: Invoice;
@@ -71,6 +73,8 @@ export class InvoiceFormComponent implements OnInit {
 
   public save(): void {
     this.loading = true;
+    this.invoice.date = this.date.toLocaleDateString("sv-SE");
+    this.invoice.dueDate = this.dueDate.toLocaleDateString("sv-SE");
     var observable: Observable<any>;
     this.invoice.lines = [this.invoiceLine];
     if (this.existingInvoice) {
@@ -103,9 +107,9 @@ export class InvoiceFormComponent implements OnInit {
     } else {
       this.invoice.currency = Currency.RON;
     }
-    this.invoice.date = new Date(invoice.date);
+    this.date = new Date(invoice.date);
     if (invoice.dueDate) {
-      this.invoice.dueDate = new Date(invoice.dueDate);
+      this.dueDate = new Date(invoice.dueDate);
     }
     this.invoice.partnerId = invoice.customer.id;
     this.serial = invoice.name;

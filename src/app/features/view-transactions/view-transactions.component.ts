@@ -5,7 +5,6 @@ import { CurrencyService } from 'src/app/core/services/currency.service';
 import { MessagingService } from 'src/app/core/services/messaging.service';
 import { TransactionService } from 'src/app/core/services/transaction.service';
 import { Transaction } from 'src/app/shared/models/transaction';
-import { TransactionFilterParams } from 'src/app/shared/models/transaction.filter.params';
 import { TransactionStatus } from 'src/app/shared/models/transaction.status';
 import { TransactionChartService } from './services/transaction-chart.service';
 
@@ -127,18 +126,25 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   public collectTransaction(transaction: Transaction): void {
-    this.transactionService
-      .collect(transaction.id)
-      .subscribe(
-        res => {
-          this.messagingService.sendSuccess('Colectare tranzactia', 
-            'Tranzactia a fost colectata cu succes');
-        },
-        err => {
-          this.messagingService.sendError('Colectare tranzactia', 
-            'A aparut o eroare');
-        }
-      )
+    if (transaction.status === "DONE") {
+      this.messagingService
+        .sendInfo('Operatie interzisa', 
+          `Tranzactia nu poate fi schimbata!`)
+    } else {
+      this.transactionService
+        .collect(transaction.id)
+        .subscribe(
+          res => {
+            this.loadTransactions()
+            this.messagingService.sendSuccess('Colectare tranzactia', 
+              'Tranzactia a fost colectata cu succes');
+          },
+          err => {
+            this.messagingService.sendError('Colectare tranzactia', 
+              'A aparut o eroare');
+          }
+        )
+    }
   }
 
   public createTransaction(): void {
@@ -147,7 +153,7 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   public editTransaction(transaction: Transaction): void {
-    if (transaction.status === TransactionStatus.DONE) {
+    if (transaction.status === "DONE") {
       this.messagingService
         .sendInfo('Operatie interzisa', 
           `Tranzactia nu poate fi schimbata!`)
@@ -158,7 +164,7 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   public deleteTransaction(transaction: Transaction): void {
-    if (transaction.status === TransactionStatus.DONE) {
+    if (transaction.status === "DONE") {
       this.messagingService
         .sendInfo('Operatie interzisa', 
           `Tranzactia nu poate fi schimbata!`)
