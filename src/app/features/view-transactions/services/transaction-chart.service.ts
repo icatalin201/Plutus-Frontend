@@ -31,12 +31,14 @@ export class TransactionChartService {
           backgroundColor: [
               "#FF6384",
               "#36A2EB",
-              "#FFCE56"
+              "#FFCE56",
+              "#4BC0C0",
           ],
           hoverBackgroundColor: [
               "#FF6384",
               "#36A2EB",
-              "#FFCE56"
+              "#FFCE56",
+              "#4BC0C0",
           ]
         }
       ]
