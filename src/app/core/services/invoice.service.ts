@@ -55,4 +55,10 @@ export class InvoiceService {
     const url = `/invoices/${id}`
     return this.httpService.delete(url, token)
   }
+
+  public upload(file: any): Observable<any> {
+    const token = this.appService.getToken()
+    const url = `/invoices/file`;
+    return this.httpService.post(url, { file }, token)
+  }
 }

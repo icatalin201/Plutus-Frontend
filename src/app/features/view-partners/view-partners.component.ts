@@ -39,6 +39,11 @@ export class ViewPartnersComponent implements OnInit {
       command: () => this.deletePartner(this.selectedPartner)
     }
   ];
+  public options: any = {
+    legend: {
+      display: false
+    }
+  };
   public incomeData = {}
   public expenseData = {}
 

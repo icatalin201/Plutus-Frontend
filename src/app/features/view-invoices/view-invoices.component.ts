@@ -29,7 +29,7 @@ export class ViewInvoicesComponent implements OnInit {
     },
     { 
       label: 'Descarca arhiva', 
-      icon: 'pi pi-fw pi-file', 
+      icon: 'pi pi-fw pi-cloud-download', 
       command: () => this.downloadArchive()
     },
   ];
@@ -56,6 +56,11 @@ export class ViewInvoicesComponent implements OnInit {
     }
   ];
   public data = {};
+  public options: any = {
+    legend: {
+      display: false
+    }
+  };
 
   constructor(
     private invoiceService: InvoiceService,
@@ -90,6 +95,30 @@ export class ViewInvoicesComponent implements OnInit {
   public formatValue(value: number): string {
     return this.currencyService
       .formatWithDefaultCurrency(value);
+  }
+
+  public uploadInvoices(event: any): void {
+    const file = event.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.invoiceService
+        .upload(reader.result)
+        .subscribe(
+          res => {
+            this.messagingService
+              .sendSuccess('Incarcare CSV', 'Fisierul a fost incarcat cu succes')
+          },
+          err => {
+            this.messagingService
+              .sendError('Incarcare CSV', 'A aparut o eroare')      
+          }
+        )
+    };
+    reader.onerror = error => {
+      this.messagingService
+        .sendError('Incarcare CSV', 'A aparut o eroare')
+    };
   }
 
   public downloadArchive(): void {

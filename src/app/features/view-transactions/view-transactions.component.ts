@@ -22,6 +22,11 @@ export class ViewTransactionsComponent implements OnInit {
   public totalRecords: number = 0;
   public currentPage: number = 0;
   public pageSize: number = 50;
+  public options: any = {
+    legend: {
+      display: false
+    }
+  };
   public menuItems: MenuItem[] = [
     { 
       label: 'Creeaza tranzactie', 
@@ -30,7 +35,7 @@ export class ViewTransactionsComponent implements OnInit {
     },
     { 
       label: 'Descarca raport', 
-      icon: 'pi pi-fw pi-file',
+      icon: 'pi pi-fw pi-cloud-download',
       items: [
         { 
           label: '2021',

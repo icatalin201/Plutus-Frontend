@@ -20,7 +20,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { InputSwitchModule } from 'primeng/inputswitch'
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { FileUploadModule } from 'primeng/fileupload';
 
 export const modules = [
   CardModule,
@@ -45,5 +46,6 @@ export const modules = [
   CalendarModule,
   SelectButtonModule,
   ToggleButtonModule,
-  InputSwitchModule
+  InputSwitchModule,
+  FileUploadModule
 ];

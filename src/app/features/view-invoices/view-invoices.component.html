@@ -31,12 +31,18 @@
       </p-table>
     </p-card>
     <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
-      <p-menubar [model]="menuItems"></p-menubar>
+      <p-menubar [model]="menuItems">
+        <p-fileUpload mode="basic"
+          [customUpload]="true" 
+          (uploadHandler)="uploadInvoices($event)"
+          chooseLabel="Importa" 
+          [auto]="true"></p-fileUpload>
+      </p-menubar>
       <p-card class="p-mt-2">
         <app-update-serial></app-update-serial>
       </p-card>
       <p-card class="p-mt-2" header="Incasari">
-        <p-chart type="pie" [data]="data"></p-chart>
+        <p-chart type="pie" [options]="options" [data]="data"></p-chart>
       </p-card>
     </div>
   </div>

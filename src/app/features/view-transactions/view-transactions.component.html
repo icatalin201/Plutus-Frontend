@@ -36,10 +36,14 @@
     <div class="p-d-flex p-flex-column p-ml-2" style="flex: 1">
       <p-menubar [model]="menuItems"></p-menubar>
       <p-card class="p-mt-2" header="Incasari 2021">
-        <p-chart type="pie" [data]="incomesData"></p-chart>
+        <p-chart type="pie" 
+          [options]="options"
+          [data]="incomesData"></p-chart>
       </p-card>
       <p-card class="p-mt-2" header="Cheltuieli 2021">
-        <p-chart type="pie" [data]="expensesData"></p-chart>
+        <p-chart type="pie" 
+          [options]="options"
+          [data]="expensesData"></p-chart>
       </p-card>
     </div>
   </div>
